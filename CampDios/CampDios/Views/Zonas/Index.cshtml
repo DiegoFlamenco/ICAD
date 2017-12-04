@@ -1,0 +1,62 @@
+﻿@model IEnumerable<CampDios.Modelos.Zona>
+
+@{
+    ViewBag.Title = "Zonas-Inicio";
+}
+
+<center><h2>Zonas-Inicio(Numero de zonas @Model.Count())</h2></center>
+
+<p>
+    <a href="@Url.Action("Create","Zonas")" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Nueva zona</a>&nbsp;
+    <a href="@Url.Action("Index","Comunidad")" class="btn btn-default"><i class="fa fa-book fa-lg" aria-hidden="true"></i> Comunidades</a>&nbsp;
+    <a href="@Url.Action("Index","Grupo")" class="btn btn-default"><i class="fa fa-book fa-lg" aria-hidden="true"></i> Grupos</a>&nbsp;
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Iglesia.Nombre)
+        </th>
+        <th>
+            Pastor de zona
+            <!--@Html.DisplayNameFor(model => model.Miembros.Nombres)-->
+        </th>
+        <th></th>
+        <th>Opciones</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Direccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Iglesia.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Miembros.Nombres)
+        </td>
+        <td> 
+        <td>@Html.ActionLink("Editar", "Edit", new { id = item.IdZona }, new { @class = "btn btn-success" })</td>
+        <td>@Html.ActionLink("Detalles", "Details", null, new { id = item.IdZona }, new { @class = "btn btn-info" })</td>
+        <td>@Html.ActionLink("Borrar", "Delete", null, new { id = item.IdZona }, new { @class = "btn btn-danger" })</td> 
+        </td>
+    </tr>
+}
+
+</table>

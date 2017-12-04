@@ -1,0 +1,70 @@
+﻿@model IEnumerable<CampDios.Modelos.Iglesia>
+
+@{
+    ViewBag.Title = "Iglesias - Inicio";
+}
+
+<center><h2>Iglesias - Inicio (Numero de iglesias @Model.Count())</h2></center>
+
+<p>
+    <a href="@Url.Action("Create","Iglesias")" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Nueva iglesia</a>&nbsp;
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tel2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tel3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            Pastor de iglesia
+            <!--@Html.DisplayNameFor(model => model.Miembros.Nombres)-->
+        </th>
+        <th></th>
+        <th>Opciones</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Direccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tel2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tel3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Miembros.Nombres)
+        </td> 
+        <td>@Html.ActionLink("Editar", "Edit", new { id = item.IdIglesia }, new { @class = "btn btn-success" })</td>
+        <td>@Html.ActionLink("Detalles", "Details", null, new { id = item.IdIglesia }, new { @class = "btn btn-info" })</td>
+        <td>@Html.ActionLink("Borrar", "Delete", null, new { id = item.IdIglesia }, new { @class = "btn btn-danger" })</td> 
+    </tr>
+}
+
+</table>

@@ -1,0 +1,83 @@
+﻿@model CampDios.Modelos.Iglesia
+
+@{
+    ViewBag.Title = "Iglesias - Borrar";
+}
+
+<center><h2>Iglesias - Borrar</h2></center>
+
+<h3>¿Esta seguro que desea borrar esta iglesia?</h3>
+<div> 
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            Dirección
+            <!--@Html.DisplayNameFor(model => model.Direccion)-->
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tel2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tel2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tel3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tel3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            Pastor de iglesia
+            <!--@Html.DisplayNameFor(model => model.Miembros.Nombres)-->
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Miembros.Nombres)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-danger" /> &nbsp;&nbsp;
+            <a href="@Url.Action("Index","Iglesias")" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
+            </a>
+        </div>
+    }
+</div>

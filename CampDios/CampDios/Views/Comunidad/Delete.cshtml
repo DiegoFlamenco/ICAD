@@ -1,0 +1,65 @@
+﻿@model CampDios.Modelos.Comunidad
+
+@{
+    ViewBag.Title = "Comunidad-Borrar";
+}
+
+<center><h2>Comunidad-Borrar</h2></center>
+
+<h3>¿Esta seguro que desea borrar esta comunidad?</h3>
+<div> 
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Miembros.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Miembros.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zona.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zona.Nombre)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-danger" /> &nbsp;&nbsp;
+            <a href="@Url.Action("Index","Comunidad")" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
+            </a>
+        </div>
+    }
+</div>

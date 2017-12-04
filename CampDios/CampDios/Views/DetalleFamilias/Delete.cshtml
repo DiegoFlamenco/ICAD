@@ -1,0 +1,50 @@
+﻿@model CampDios.Modelos.DetalleFamilia
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>¿Esta seguro que desea borrar la relacion de parentesco?</h3>
+<div>
+    <h4>DetalleFamilia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Miembros.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Miembros.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Miembros1.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Miembros1.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Parentescos.Parentesco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Parentescos.Parentesco)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-danger" /> &nbsp;&nbsp;
+            <a href="@Url.Action("Regresar","Index")" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
+            </a>
+        </div>
+    }
+</div>

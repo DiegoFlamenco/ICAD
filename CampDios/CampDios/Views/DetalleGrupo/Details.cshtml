@@ -1,0 +1,37 @@
+﻿@model CampDios.Modelos.DetalleGrupo
+
+@{
+    ViewBag.Title = "Grupo-Detalles de miembros";
+}
+
+<center><h2>Grupo-Detalles de miembros</h2></center>
+
+<div>
+    <h4>DetalleGrupo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Grupo.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Grupo.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Miembros.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Miembros.Nombres)
+        </dd>
+
+    </dl>
+</div>
+ 
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdDetalleGrupo }, new { @class = "btn btn-success" }) &nbsp;&nbsp;
+    <a href="@Url.Action("Index","DetalleGrupo")" class="btn btn-default">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
+    </a>
+</p>

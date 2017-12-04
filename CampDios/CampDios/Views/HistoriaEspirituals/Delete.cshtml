@@ -1,0 +1,55 @@
+﻿@model CampDios.Modelos.HistoriaEspiritual
+
+@{
+    ViewBag.Title = "Historia Espiritual - Borrar";
+}
+
+<center><h2>Historia Espiritual - Borrar</h2></center>
+
+<h3>¿Esta seguro que desea borrar esta historia espiritual?</h3>
+<div> 
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Miembros.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Miembros.Nombres)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaConversion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaConversion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaBautismo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaBautismo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Iglesia.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Iglesia.Nombre)
+        </dd> 
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-danger" /> &nbsp;&nbsp;
+            <a href="@Url.Action("Index","HistoriaEspirituals")" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
+            </a>
+        </div>
+    }
+</div>

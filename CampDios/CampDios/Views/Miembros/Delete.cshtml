@@ -1,0 +1,176 @@
+﻿@model CampDios.Modelos.Miembros
+
+@{
+    ViewBag.Title = "Miembros-Borrar";
+}
+
+<center><h2>Miembros-Borrar</h2></center>
+
+<h3>¿Desea borrar este usuario?</h3>
+<div> 
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Apellidos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apellidos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DUI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DUI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NIT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NIT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaNacimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaNacimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Direccion1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direccion1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Direccion2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direccion2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cel)
+        </dd>
+
+        <dt>
+            Capacitación
+            <!--@Html.DisplayNameFor(model => model.Capacitaciones.Nombre)-->
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Capacitaciones.Nombre)
+        </dd>
+
+        <dt>
+            Estado civil
+            <!--@Html.DisplayNameFor(model => model.EstadoCivil.Estado)-->
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstadoCivil.Estado)
+        </dd>
+
+        <dt>
+            Liderazgo corporativo
+            <!--@Html.DisplayNameFor(model => model.LiderazgoCorporativo.Nombre)-->
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LiderazgoCorporativo.Nombre)
+        </dd>
+
+        <dt>
+            Hermano mayor
+            <!--@Html.DisplayNameFor(model => model.Miembros2.Nombres)-->
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Miembros2.Nombres)
+        </dd>
+
+        <dt>
+            Profesión
+            <!--@Html.DisplayNameFor(model => model.Profesion.Oficio)-->
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Profesion.Oficio)
+        </dd>
+
+        <dt>
+            Liderazgo pastoral
+            <!--@Html.DisplayNameFor(model => model.Roles.Rol)-->
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Roles.Rol)
+        </dd>
+
+        <dt>
+            Sexo
+            <!--@Html.DisplayNameFor(model => model.Sexo1.Sexo1)-->
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sexo1.Sexo1)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-danger" /> &nbsp;&nbsp;
+            <a href="@Url.Action("Index","Miembros")" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
+            </a>
+        </div>
+    }
+</div>

@@ -1,0 +1,76 @@
+﻿@model CampDios.Modelos.Iglesia
+
+@{
+    ViewBag.Title = "Iglesias - Detalles";
+}
+
+<center><h2>Iglesias - Detalles</h2></center>
+
+<div> 
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tel2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tel2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tel3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tel3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            Pastor de iglesia
+            <!--@Html.DisplayNameFor(model => model.Miembros.Nombres)-->
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Miembros.Nombres)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdIglesia }, new { @class = "btn btn-success" }) &nbsp;&nbsp;
+    <a href="@Url.Action("Index","Iglesias")" class="btn btn-default">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
+    </a>
+</p>

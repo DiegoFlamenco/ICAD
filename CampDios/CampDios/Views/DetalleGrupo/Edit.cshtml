@@ -1,0 +1,51 @@
+﻿@model CampDios.Modelos.DetalleGrupo
+
+@{
+    ViewBag.Title = "Grupo-Editar miembro";
+}
+
+<center><h2>Grupo-Editar miembro</h2></center>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal"> 
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.IdDetalleGrupo)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdGrupo, "IdGrupo", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IdGrupo", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdGrupo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdMiembro, "IdMiembro", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IdMiembro", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdMiembro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="@Url.Action("Index","DetalleGrupo")" class="btn btn-default">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
+    </a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -1,0 +1,65 @@
+﻿@model CampDios.Modelos.HistoriaEspiritual
+
+@{
+    ViewBag.Title = "Crear-Historia Espiritual";
+}
+
+<center><h2>Crear - Historia espiritual</h2></center>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal"> 
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.IdMiembro, "Id Miembro", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IdMiembro", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdMiembro, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FechaConversion, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FechaConversion, new { htmlAttributes = new { @class = "form-control" , type = "date", required = "required" } })
+                @Html.ValidationMessageFor(model => model.FechaConversion, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.FechaBautismo, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FechaBautismo, new { htmlAttributes = new { @class = "form-control", type = "date", required = "required" } })
+                @Html.ValidationMessageFor(model => model.FechaBautismo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.IglesiaBautismo, "Iglesia de bautismo", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("IglesiaBautismo", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IglesiaBautismo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    <a href="@Url.Action("Index","HistoriaEspirituals")" class="btn btn-default">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
+    </a>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

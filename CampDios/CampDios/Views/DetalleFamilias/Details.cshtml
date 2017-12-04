@@ -1,0 +1,43 @@
+﻿@model CampDios.Modelos.DetalleFamilia
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<center><h2>Detalle</h2></center>
+
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Miembros.Nombres)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Miembros.Nombres)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Miembros1.Nombres)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Miembros1.Nombres)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Parentescos.Parentesco)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Parentescos.Parentesco)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Editar", "Edit", new { id = Model.IdDetalleFamilia }, new { @class = "btn btn-success" }) &nbsp;&nbsp;
+        <a href="@Url.Action("Index", "DetalleFamilias")" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
+            </a>
+    </p>
