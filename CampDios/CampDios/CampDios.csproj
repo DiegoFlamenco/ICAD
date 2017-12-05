@@ -429,6 +429,7 @@
     <Content Include="Views\DetalleFamilias\Details.cshtml" />
     <Content Include="Views\DetalleFamilias\Edit.cshtml" />
     <Content Include="Views\DetalleFamilias\Index.cshtml" />
+    <Content Include="Views\Iglesias\ZonaDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

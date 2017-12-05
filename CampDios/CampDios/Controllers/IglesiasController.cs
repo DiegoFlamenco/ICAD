@@ -36,6 +36,21 @@ namespace CampDios.Controllers
             return View(iglesia);
         }
 
+        public ActionResult ZonaDetalle(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            //Iglesia iglesia = db.Iglesia.Find(id);
+            Zona zona = db.Zona.Find(id);
+            if (zona == null)
+            {
+                return HttpNotFound();
+            }
+            return View(zona);
+        }
+
         // GET: Iglesias/Create
         public ActionResult Create()
         {

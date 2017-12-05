@@ -1,0 +1,57 @@
+﻿@model IEnumerable<CampDios.Modelos.Zona>
+
+@{
+    ViewBag.Title = "ZonaDetalle";
+}
+
+<h2>ZonaDetalle</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Iglesia.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Miembros.Nombres)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Direccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Iglesia.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Miembros.Nombres)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdZona }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdZona }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdZona })
+        </td>
+    </tr>
+}
+
+</table>
