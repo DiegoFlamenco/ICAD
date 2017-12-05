@@ -47,6 +47,7 @@ namespace CampDios.Modelos
         public Nullable<int> IdRol { get; set; }
         public Nullable<int> IdHMayor { get; set; }
         public Nullable<int> IdCorporativo { get; set; }
+        public Nullable<int> IdIglesia { get; set; }
     
         public virtual Capacitaciones Capacitaciones { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -64,6 +65,7 @@ namespace CampDios.Modelos
         public virtual ICollection<HistoriaEspiritual> HistoriaEspiritual { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Iglesia> Iglesia { get; set; }
+        public virtual Iglesia Iglesia1 { get; set; }
         public virtual LiderazgoCorporativo LiderazgoCorporativo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Miembros> Miembros1 { get; set; }

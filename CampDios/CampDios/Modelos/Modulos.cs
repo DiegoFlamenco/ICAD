@@ -12,12 +12,9 @@ namespace CampDios.Modelos
     using System;
     using System.Collections.Generic;
     
-    public partial class Usuarios
+    public partial class Modulos
     {
-        public int Usuario_Id { get; set; }
-        public string Login { get; set; }
-        public string Contraseña { get; set; }
-        public System.DateTime Fecha_Creacion { get; set; }
-        public int Miembro_Id { get; set; }
+        public int Modulos_Id { get; set; }
+        public string Nombre_Modulo { get; set; }
     }
 }

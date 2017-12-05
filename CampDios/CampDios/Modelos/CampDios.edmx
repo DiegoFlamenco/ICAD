@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="CampDiosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CampDios.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Capacitaciones">
           <Key>
             <PropertyRef Name="IdCapacitacion" />
@@ -133,6 +133,25 @@
           <Property Name="IdRol" Type="int" />
           <Property Name="IdHMayor" Type="int" />
           <Property Name="IdCorporativo" Type="int" />
+          <Property Name="IdIglesia" Type="int" />
+        </EntityType>
+        <EntityType Name="Modulos">
+          <Key>
+            <PropertyRef Name="Modulos_Id" />
+          </Key>
+          <Property Name="Modulos_Id" Type="int" Nullable="false" />
+          <Property Name="Nombre_Modulo" Type="varchar" MaxLength="45" />
+        </EntityType>
+        <!--Errores durante la generación:
+advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
+        <EntityType Name="Opciones">
+          <Key>
+            <PropertyRef Name="Opciones_Id" />
+            <PropertyRef Name="Modulos_Modulos_Id" />
+          </Key>
+          <Property Name="Opciones_Id" Type="int" Nullable="false" />
+          <Property Name="Nombre_Opcion" Type="varchar" MaxLength="45" />
+          <Property Name="Modulos_Modulos_Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Parentescos">
           <Key>
@@ -163,16 +182,6 @@
           <Property Name="IdSexo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Sexo" Type="nchar" MaxLength="1" Nullable="false" />
         </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
-        </EntityType>
         <EntityType Name="Tipo_Grupo">
           <Key>
             <PropertyRef Name="IdTipoGrupo" />
@@ -194,16 +203,26 @@
           <Property Name="IdTipoReunion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="TipoReunion" Type="varchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="USUARIOS">
+        <EntityType Name="Usuarios">
           <Key>
-            <PropertyRef Name="id_usuario" />
+            <PropertyRef Name="Usuario_Id" />
           </Key>
-          <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="UsuarioNombre" Type="varchar" MaxLength="7" Nullable="false" />
-          <Property Name="NombreCompleto" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="password" Type="varchar" MaxLength="100" />
-          <Property Name="confirmpassword" Type="varchar" MaxLength="100" />
-          <Property Name="IdMiembro" Type="int" />
+          <Property Name="Usuario_Id" Type="int" Nullable="false" />
+          <Property Name="Login" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Contraseña" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Fecha_Creacion" Type="datetime" Nullable="false" />
+          <Property Name="Miembro_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios_Opciones">
+          <Key>
+            <PropertyRef Name="idUsuarios_Opciones" />
+          </Key>
+          <Property Name="idUsuarios_Opciones" Type="int" Nullable="false" />
+          <Property Name="Usuarios_Usuario_Id" Type="int" Nullable="false" />
+          <Property Name="Opciones_Opciones_Id" Type="int" Nullable="false" />
+          <Property Name="Lectura" Type="bit" />
+          <Property Name="Escritura" Type="bit" />
+          <Property Name="Edicion" Type="bit" />
         </EntityType>
         <EntityType Name="Zona">
           <Key>
@@ -432,6 +451,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Miembros_Iglesia">
+          <End Role="Iglesia" Type="Self.Iglesia" Multiplicity="0..1" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Iglesia">
+              <PropertyRef Name="IdIglesia" />
+            </Principal>
+            <Dependent Role="Miembros">
+              <PropertyRef Name="IdIglesia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Miembros_LiderasgoCorporativo1">
           <End Role="LiderazgoCorporativo" Type="Self.LiderazgoCorporativo" Multiplicity="0..1" />
           <End Role="Miembros" Type="Self.Miembros" Multiplicity="*" />
@@ -523,7 +554,7 @@
         <Function Name="seleccionar_pastor_iglesia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="seleccionar_pastor_zona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="seleccionar_supervisor_zona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="CampDiosModelStoreContainer">
+        <EntityContainer Name="CampDiosStoreContainer">
           <EntitySet Name="Capacitaciones" EntityType="Self.Capacitaciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comunidad" EntityType="Self.Comunidad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetalleFamilia" EntityType="Self.DetalleFamilia" Schema="dbo" store:Type="Tables" />
@@ -536,16 +567,24 @@
           <EntitySet Name="Iglesia" EntityType="Self.Iglesia" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LiderazgoCorporativo" EntityType="Self.LiderazgoCorporativo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Miembros" EntityType="Self.Miembros" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Modulos" EntityType="Self.Modulos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parentescos" EntityType="Self.Parentescos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profesion" EntityType="Self.Profesion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sexo" EntityType="Self.Sexo" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tipo_Grupo" EntityType="Self.Tipo_Grupo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoOfrenda" EntityType="Self.TipoOfrenda" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoReunion" EntityType="Self.TipoReunion" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="USUARIOS" EntityType="Self.USUARIOS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuarios_Opciones" EntityType="Self.Usuarios_Opciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zona" EntityType="Self.Zona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Opciones" EntityType="Self.Opciones" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Opciones].[Opciones_Id] AS [Opciones_Id], 
+    [Opciones].[Nombre_Opcion] AS [Nombre_Opcion], 
+    [Opciones].[Modulos_Modulos_Id] AS [Modulos_Modulos_Id]
+    FROM [dbo].[Opciones] AS [Opciones]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Comunidad_Miembros1" Association="Self.FK_Comunidad_Miembros1">
             <End Role="Miembros" EntitySet="Miembros" />
             <End Role="Comunidad" EntitySet="Comunidad" />
@@ -618,6 +657,10 @@
             <End Role="EstadoCivil" EntitySet="EstadoCivil" />
             <End Role="Miembros" EntitySet="Miembros" />
           </AssociationSet>
+          <AssociationSet Name="FK_Miembros_Iglesia" Association="Self.FK_Miembros_Iglesia">
+            <End Role="Iglesia" EntitySet="Iglesia" />
+            <End Role="Miembros" EntitySet="Miembros" />
+          </AssociationSet>
           <AssociationSet Name="FK_Miembros_LiderasgoCorporativo1" Association="Self.FK_Miembros_LiderasgoCorporativo1">
             <End Role="LiderazgoCorporativo" EntitySet="LiderazgoCorporativo" />
             <End Role="Miembros" EntitySet="Miembros" />
@@ -647,163 +690,33 @@
             <End Role="Zona" EntitySet="Zona" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="CampDiosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="CampDiosEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Capacitaciones" EntityType="CampDiosModel.Capacitaciones" />
-          <EntitySet Name="Comunidad" EntityType="CampDiosModel.Comunidad" />
-          <EntitySet Name="DetalleFamilia" EntityType="CampDiosModel.DetalleFamilia" />
-          <EntitySet Name="DetalleGrupo" EntityType="CampDiosModel.DetalleGrupo" />
-          <EntitySet Name="Dias" EntityType="CampDiosModel.Dias" />
-          <EntitySet Name="EstadoCivil" EntityType="CampDiosModel.EstadoCivil" />
-          <EntitySet Name="Finanzas" EntityType="CampDiosModel.Finanzas" />
-          <EntitySet Name="Grupo" EntityType="CampDiosModel.Grupo" />
-          <EntitySet Name="HistoriaEspiritual" EntityType="CampDiosModel.HistoriaEspiritual" />
-          <EntitySet Name="Iglesia" EntityType="CampDiosModel.Iglesia" />
-          <EntitySet Name="LiderazgoCorporativo" EntityType="CampDiosModel.LiderazgoCorporativo" />
-          <EntitySet Name="Miembros" EntityType="CampDiosModel.Miembros" />
-          <EntitySet Name="Parentescos" EntityType="CampDiosModel.Parentescos" />
-          <EntitySet Name="Profesion" EntityType="CampDiosModel.Profesion" />
-          <EntitySet Name="Roles" EntityType="CampDiosModel.Roles" />
-          <EntitySet Name="Sexo" EntityType="CampDiosModel.Sexo" />
-          <EntitySet Name="sysdiagrams" EntityType="CampDiosModel.sysdiagrams" />
-          <EntitySet Name="Tipo_Grupo" EntityType="CampDiosModel.Tipo_Grupo" />
-          <EntitySet Name="TipoOfrenda" EntityType="CampDiosModel.TipoOfrenda" />
-          <EntitySet Name="TipoReunion" EntityType="CampDiosModel.TipoReunion" />
-          <EntitySet Name="USUARIOS" EntityType="CampDiosModel.USUARIOS" />
-          <EntitySet Name="Zona" EntityType="CampDiosModel.Zona" />
-          <AssociationSet Name="FK_Miembros_Capacitaciones1" Association="CampDiosModel.FK_Miembros_Capacitaciones1">
-            <End Role="Capacitaciones" EntitySet="Capacitaciones" />
-            <End Role="Miembros" EntitySet="Miembros" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comunidad_Miembros1" Association="CampDiosModel.FK_Comunidad_Miembros1">
-            <End Role="Miembros" EntitySet="Miembros" />
-            <End Role="Comunidad" EntitySet="Comunidad" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Comunidad_Zona1" Association="CampDiosModel.FK_Comunidad_Zona1">
-            <End Role="Zona" EntitySet="Zona" />
-            <End Role="Comunidad" EntitySet="Comunidad" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Grupo_Comunidad1" Association="CampDiosModel.FK_Grupo_Comunidad1">
-            <End Role="Comunidad" EntitySet="Comunidad" />
-            <End Role="Grupo" EntitySet="Grupo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DetalleFamilia_Miembros" Association="CampDiosModel.FK_DetalleFamilia_Miembros">
-            <End Role="Miembros" EntitySet="Miembros" />
-            <End Role="DetalleFamilia" EntitySet="DetalleFamilia" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DetalleFamilia_Miembros1" Association="CampDiosModel.FK_DetalleFamilia_Miembros1">
-            <End Role="Miembros" EntitySet="Miembros" />
-            <End Role="DetalleFamilia" EntitySet="DetalleFamilia" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DetalleFamilia_Parentescos" Association="CampDiosModel.FK_DetalleFamilia_Parentescos">
-            <End Role="Parentescos" EntitySet="Parentescos" />
-            <End Role="DetalleFamilia" EntitySet="DetalleFamilia" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DetalleGrupo_Grupo" Association="CampDiosModel.FK_DetalleGrupo_Grupo">
-            <End Role="Grupo" EntitySet="Grupo" />
-            <End Role="DetalleGrupo" EntitySet="DetalleGrupo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DetalleGrupo_Miembros" Association="CampDiosModel.FK_DetalleGrupo_Miembros">
-            <End Role="Miembros" EntitySet="Miembros" />
-            <End Role="DetalleGrupo" EntitySet="DetalleGrupo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Grupo_Dias" Association="CampDiosModel.FK_Grupo_Dias">
-            <End Role="Dias" EntitySet="Dias" />
-            <End Role="Grupo" EntitySet="Grupo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Miembros_EstadoCivil" Association="CampDiosModel.FK_Miembros_EstadoCivil">
-            <End Role="EstadoCivil" EntitySet="EstadoCivil" />
-            <End Role="Miembros" EntitySet="Miembros" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Finanzas_Miembros" Association="CampDiosModel.FK_Finanzas_Miembros">
-            <End Role="Miembros" EntitySet="Miembros" />
-            <End Role="Finanzas" EntitySet="Finanzas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Finanzas_TipoOfrenda" Association="CampDiosModel.FK_Finanzas_TipoOfrenda">
-            <End Role="TipoOfrenda" EntitySet="TipoOfrenda" />
-            <End Role="Finanzas" EntitySet="Finanzas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Finanzas_TipoReunion" Association="CampDiosModel.FK_Finanzas_TipoReunion">
-            <End Role="TipoReunion" EntitySet="TipoReunion" />
-            <End Role="Finanzas" EntitySet="Finanzas" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Grupo_Tipo_Grupo1" Association="CampDiosModel.FK_Grupo_Tipo_Grupo1">
-            <End Role="Tipo_Grupo" EntitySet="Tipo_Grupo" />
-            <End Role="Grupo" EntitySet="Grupo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HistoriaEspiritual_Iglesia" Association="CampDiosModel.FK_HistoriaEspiritual_Iglesia">
-            <End Role="Iglesia" EntitySet="Iglesia" />
-            <End Role="HistoriaEspiritual" EntitySet="HistoriaEspiritual" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HistoriaEspiritual_Miembros1" Association="CampDiosModel.FK_HistoriaEspiritual_Miembros1">
-            <End Role="Miembros" EntitySet="Miembros" />
-            <End Role="HistoriaEspiritual" EntitySet="HistoriaEspiritual" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Iglesia_Miembros" Association="CampDiosModel.FK_Iglesia_Miembros">
-            <End Role="Miembros" EntitySet="Miembros" />
-            <End Role="Iglesia" EntitySet="Iglesia" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Zona_Iglesia1" Association="CampDiosModel.FK_Zona_Iglesia1">
-            <End Role="Iglesia" EntitySet="Iglesia" />
-            <End Role="Zona" EntitySet="Zona" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Miembros_LiderasgoCorporativo1" Association="CampDiosModel.FK_Miembros_LiderasgoCorporativo1">
-            <End Role="LiderazgoCorporativo" EntitySet="LiderazgoCorporativo" />
-            <End Role="Miembros" EntitySet="Miembros" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Miembros_Miembros" Association="CampDiosModel.FK_Miembros_Miembros">
-            <End Role="Miembros" EntitySet="Miembros" />
-            <End Role="Miembros1" EntitySet="Miembros" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Miembros_Profesion1" Association="CampDiosModel.FK_Miembros_Profesion1">
-            <End Role="Profesion" EntitySet="Profesion" />
-            <End Role="Miembros" EntitySet="Miembros" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Miembros_Roles" Association="CampDiosModel.FK_Miembros_Roles">
-            <End Role="Roles" EntitySet="Roles" />
-            <End Role="Miembros" EntitySet="Miembros" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Miembros_Sexo" Association="CampDiosModel.FK_Miembros_Sexo">
-            <End Role="Sexo" EntitySet="Sexo" />
-            <End Role="Miembros" EntitySet="Miembros" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Zona_Miembros1" Association="CampDiosModel.FK_Zona_Miembros1">
-            <End Role="Miembros" EntitySet="Miembros" />
-            <End Role="Zona" EntitySet="Zona" />
-          </AssociationSet>
-          <FunctionImport Name="seleccionar_lider" ReturnType="Collection(CampDiosModel.seleccionar_lider_Result)" />
-          <FunctionImport Name="seleccionar_pastor_general" ReturnType="Collection(CampDiosModel.seleccionar_pastor_general_Result)" />
-          <FunctionImport Name="seleccionar_pastor_iglesia" ReturnType="Collection(CampDiosModel.seleccionar_pastor_iglesia_Result)" />
-          <FunctionImport Name="seleccionar_aprendiz" ReturnType="Collection(CampDiosModel.seleccionar_aprendiz_Result)" />
-          <FunctionImport Name="seleccionar_miembro" ReturnType="Collection(CampDiosModel.seleccionar_miembro_Result)" />
-          <FunctionImport Name="seleccionar_pastor_zona" ReturnType="Collection(CampDiosModel.seleccionar_pastor_zona_Result)" />
-          <FunctionImport Name="seleccionar_supervisor_zona" ReturnType="Collection(CampDiosModel.seleccionar_supervisor_zona_Result)" />
-        </EntityContainer>
+      <Schema Namespace="CampDios" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Capacitaciones">
           <Key>
             <PropertyRef Name="IdCapacitacion" />
           </Key>
           <Property Name="IdCapacitacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Miembros" Relationship="CampDiosModel.FK_Miembros_Capacitaciones1" FromRole="Capacitaciones" ToRole="Miembros" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_Capacitaciones1" FromRole="Capacitaciones" ToRole="Miembros" />
         </EntityType>
         <EntityType Name="Comunidad">
           <Key>
             <PropertyRef Name="IdComunidad" />
           </Key>
           <Property Name="IdComunidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdLiderComunidad" Type="Int32" Nullable="false" />
           <Property Name="IdZona" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Miembros" Relationship="CampDiosModel.FK_Comunidad_Miembros1" FromRole="Comunidad" ToRole="Miembros" />
-          <NavigationProperty Name="Zona" Relationship="CampDiosModel.FK_Comunidad_Zona1" FromRole="Comunidad" ToRole="Zona" />
-          <NavigationProperty Name="Grupo" Relationship="CampDiosModel.FK_Grupo_Comunidad1" FromRole="Comunidad" ToRole="Grupo" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK_Comunidad_Miembros1" FromRole="Comunidad" ToRole="Miembros" />
+          <NavigationProperty Name="Zona" Relationship="Self.FK_Comunidad_Zona1" FromRole="Comunidad" ToRole="Zona" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_Grupo_Comunidad1" FromRole="Comunidad" ToRole="Grupo" />
         </EntityType>
         <EntityType Name="DetalleFamilia">
           <Key>
@@ -813,9 +726,9 @@
           <Property Name="IdMiembro" Type="Int32" Nullable="false" />
           <Property Name="IdPariente" Type="Int32" Nullable="false" />
           <Property Name="IdParentesco" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Miembros" Relationship="CampDiosModel.FK_DetalleFamilia_Miembros" FromRole="DetalleFamilia" ToRole="Miembros" />
-          <NavigationProperty Name="Miembros1" Relationship="CampDiosModel.FK_DetalleFamilia_Miembros1" FromRole="DetalleFamilia" ToRole="Miembros" />
-          <NavigationProperty Name="Parentescos" Relationship="CampDiosModel.FK_DetalleFamilia_Parentescos" FromRole="DetalleFamilia" ToRole="Parentescos" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK_DetalleFamilia_Miembros" FromRole="DetalleFamilia" ToRole="Miembros" />
+          <NavigationProperty Name="Miembros1" Relationship="Self.FK_DetalleFamilia_Miembros1" FromRole="DetalleFamilia" ToRole="Miembros" />
+          <NavigationProperty Name="Parentescos" Relationship="Self.FK_DetalleFamilia_Parentescos" FromRole="DetalleFamilia" ToRole="Parentescos" />
         </EntityType>
         <EntityType Name="DetalleGrupo">
           <Key>
@@ -824,24 +737,24 @@
           <Property Name="IdDetalleGrupo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="IdGrupo" Type="Int32" Nullable="false" />
           <Property Name="IdMiembro" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Grupo" Relationship="CampDiosModel.FK_DetalleGrupo_Grupo" FromRole="DetalleGrupo" ToRole="Grupo" />
-          <NavigationProperty Name="Miembros" Relationship="CampDiosModel.FK_DetalleGrupo_Miembros" FromRole="DetalleGrupo" ToRole="Miembros" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_DetalleGrupo_Grupo" FromRole="DetalleGrupo" ToRole="Grupo" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK_DetalleGrupo_Miembros" FromRole="DetalleGrupo" ToRole="Miembros" />
         </EntityType>
         <EntityType Name="Dias">
           <Key>
             <PropertyRef Name="IdDia" />
           </Key>
           <Property Name="IdDia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Dia" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="Grupo" Relationship="CampDiosModel.FK_Grupo_Dias" FromRole="Dias" ToRole="Grupo" />
+          <Property Name="Dia" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_Grupo_Dias" FromRole="Dias" ToRole="Grupo" />
         </EntityType>
         <EntityType Name="EstadoCivil">
           <Key>
             <PropertyRef Name="IdEstado" />
           </Key>
           <Property Name="IdEstado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Estado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Miembros" Relationship="CampDiosModel.FK_Miembros_EstadoCivil" FromRole="EstadoCivil" ToRole="Miembros" />
+          <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_EstadoCivil" FromRole="EstadoCivil" ToRole="Miembros" />
         </EntityType>
         <EntityType Name="Finanzas">
           <Key>
@@ -853,26 +766,26 @@
           <Property Name="IdTipoOfrenda" Type="Int32" Nullable="false" />
           <Property Name="Monto" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Miembros" Relationship="CampDiosModel.FK_Finanzas_Miembros" FromRole="Finanzas" ToRole="Miembros" />
-          <NavigationProperty Name="TipoOfrenda" Relationship="CampDiosModel.FK_Finanzas_TipoOfrenda" FromRole="Finanzas" ToRole="TipoOfrenda" />
-          <NavigationProperty Name="TipoReunion" Relationship="CampDiosModel.FK_Finanzas_TipoReunion" FromRole="Finanzas" ToRole="TipoReunion" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK_Finanzas_Miembros" FromRole="Finanzas" ToRole="Miembros" />
+          <NavigationProperty Name="TipoOfrenda" Relationship="Self.FK_Finanzas_TipoOfrenda" FromRole="Finanzas" ToRole="TipoOfrenda" />
+          <NavigationProperty Name="TipoReunion" Relationship="Self.FK_Finanzas_TipoReunion" FromRole="Finanzas" ToRole="TipoReunion" />
         </EntityType>
         <EntityType Name="Grupo">
           <Key>
             <PropertyRef Name="IdGrupo" />
           </Key>
           <Property Name="IdGrupo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="IdComunidad" Type="Int32" Nullable="false" />
           <Property Name="IdDia" Type="Int32" Nullable="false" />
           <Property Name="Hora" Type="Time" Nullable="false" Precision="7" />
           <Property Name="IdTipoGrupo" Type="Int32" />
-          <NavigationProperty Name="Comunidad" Relationship="CampDiosModel.FK_Grupo_Comunidad1" FromRole="Grupo" ToRole="Comunidad" />
-          <NavigationProperty Name="DetalleGrupo" Relationship="CampDiosModel.FK_DetalleGrupo_Grupo" FromRole="Grupo" ToRole="DetalleGrupo" />
-          <NavigationProperty Name="Dias" Relationship="CampDiosModel.FK_Grupo_Dias" FromRole="Grupo" ToRole="Dias" />
-          <NavigationProperty Name="Tipo_Grupo" Relationship="CampDiosModel.FK_Grupo_Tipo_Grupo1" FromRole="Grupo" ToRole="Tipo_Grupo" />
+          <NavigationProperty Name="Comunidad" Relationship="Self.FK_Grupo_Comunidad1" FromRole="Grupo" ToRole="Comunidad" />
+          <NavigationProperty Name="DetalleGrupo" Relationship="Self.FK_DetalleGrupo_Grupo" FromRole="Grupo" ToRole="DetalleGrupo" />
+          <NavigationProperty Name="Dias" Relationship="Self.FK_Grupo_Dias" FromRole="Grupo" ToRole="Dias" />
+          <NavigationProperty Name="Tipo_Grupo" Relationship="Self.FK_Grupo_Tipo_Grupo1" FromRole="Grupo" ToRole="Tipo_Grupo" />
         </EntityType>
         <EntityType Name="HistoriaEspiritual">
           <Key>
@@ -883,41 +796,42 @@
           <Property Name="FechaConversion" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="FechaBautismo" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="IglesiaBautismo" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Iglesia" Relationship="CampDiosModel.FK_HistoriaEspiritual_Iglesia" FromRole="HistoriaEspiritual" ToRole="Iglesia" />
-          <NavigationProperty Name="Miembros" Relationship="CampDiosModel.FK_HistoriaEspiritual_Miembros1" FromRole="HistoriaEspiritual" ToRole="Miembros" />
+          <NavigationProperty Name="Iglesia" Relationship="Self.FK_HistoriaEspiritual_Iglesia" FromRole="HistoriaEspiritual" ToRole="Iglesia" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK_HistoriaEspiritual_Miembros1" FromRole="HistoriaEspiritual" ToRole="Miembros" />
         </EntityType>
         <EntityType Name="Iglesia">
           <Key>
             <PropertyRef Name="IdIglesia" />
           </Key>
           <Property Name="IdIglesia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Tel" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Tel" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Tel2" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Tel3" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdMiembro" Type="Int32" />
-          <NavigationProperty Name="HistoriaEspiritual" Relationship="CampDiosModel.FK_HistoriaEspiritual_Iglesia" FromRole="Iglesia" ToRole="HistoriaEspiritual" />
-          <NavigationProperty Name="Miembros" Relationship="CampDiosModel.FK_Iglesia_Miembros" FromRole="Iglesia" ToRole="Miembros" />
-          <NavigationProperty Name="Zona" Relationship="CampDiosModel.FK_Zona_Iglesia1" FromRole="Iglesia" ToRole="Zona" />
+          <NavigationProperty Name="HistoriaEspiritual" Relationship="Self.FK_HistoriaEspiritual_Iglesia" FromRole="Iglesia" ToRole="HistoriaEspiritual" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK_Iglesia_Miembros" FromRole="Iglesia" ToRole="Miembros" />
+          <NavigationProperty Name="Miembros1" Relationship="Self.FK_Miembros_Iglesia" FromRole="Iglesia" ToRole="Miembros" />
+          <NavigationProperty Name="Zona" Relationship="Self.FK_Zona_Iglesia1" FromRole="Iglesia" ToRole="Zona" />
         </EntityType>
         <EntityType Name="LiderazgoCorporativo">
           <Key>
             <PropertyRef Name="IdCorporativo" />
           </Key>
           <Property Name="IdCorporativo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Miembros" Relationship="CampDiosModel.FK_Miembros_LiderasgoCorporativo1" FromRole="LiderazgoCorporativo" ToRole="Miembros" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_LiderasgoCorporativo1" FromRole="LiderazgoCorporativo" ToRole="Miembros" />
         </EntityType>
         <EntityType Name="Miembros">
           <Key>
             <PropertyRef Name="IdMiembro" />
           </Key>
           <Property Name="IdMiembro" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombres" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Apellidos" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DUI" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="NIT" Type="String" MaxLength="17" FixedLength="false" Unicode="false" />
           <Property Name="FechaNacimiento" Type="DateTime" Nullable="false" Precision="0" />
@@ -934,118 +848,136 @@
           <Property Name="IdRol" Type="Int32" />
           <Property Name="IdHMayor" Type="Int32" />
           <Property Name="IdCorporativo" Type="Int32" />
-          <NavigationProperty Name="Capacitaciones" Relationship="CampDiosModel.FK_Miembros_Capacitaciones1" FromRole="Miembros" ToRole="Capacitaciones" />
-          <NavigationProperty Name="Comunidad" Relationship="CampDiosModel.FK_Comunidad_Miembros1" FromRole="Miembros" ToRole="Comunidad" />
-          <NavigationProperty Name="DetalleFamilia" Relationship="CampDiosModel.FK_DetalleFamilia_Miembros" FromRole="Miembros" ToRole="DetalleFamilia" />
-          <NavigationProperty Name="DetalleFamilia1" Relationship="CampDiosModel.FK_DetalleFamilia_Miembros1" FromRole="Miembros" ToRole="DetalleFamilia" />
-          <NavigationProperty Name="DetalleGrupo" Relationship="CampDiosModel.FK_DetalleGrupo_Miembros" FromRole="Miembros" ToRole="DetalleGrupo" />
-          <NavigationProperty Name="EstadoCivil" Relationship="CampDiosModel.FK_Miembros_EstadoCivil" FromRole="Miembros" ToRole="EstadoCivil" />
-          <NavigationProperty Name="Finanzas" Relationship="CampDiosModel.FK_Finanzas_Miembros" FromRole="Miembros" ToRole="Finanzas" />
-          <NavigationProperty Name="HistoriaEspiritual" Relationship="CampDiosModel.FK_HistoriaEspiritual_Miembros1" FromRole="Miembros" ToRole="HistoriaEspiritual" />
-          <NavigationProperty Name="Iglesia" Relationship="CampDiosModel.FK_Iglesia_Miembros" FromRole="Miembros" ToRole="Iglesia" />
-          <NavigationProperty Name="LiderazgoCorporativo" Relationship="CampDiosModel.FK_Miembros_LiderasgoCorporativo1" FromRole="Miembros" ToRole="LiderazgoCorporativo" />
-          <NavigationProperty Name="Miembros1" Relationship="CampDiosModel.FK_Miembros_Miembros" FromRole="Miembros" ToRole="Miembros1" />
-          <NavigationProperty Name="Miembros2" Relationship="CampDiosModel.FK_Miembros_Miembros" FromRole="Miembros1" ToRole="Miembros" />
-          <NavigationProperty Name="Profesion" Relationship="CampDiosModel.FK_Miembros_Profesion1" FromRole="Miembros" ToRole="Profesion" />
-          <NavigationProperty Name="Roles" Relationship="CampDiosModel.FK_Miembros_Roles" FromRole="Miembros" ToRole="Roles" />
-          <NavigationProperty Name="Sexo1" Relationship="CampDiosModel.FK_Miembros_Sexo" FromRole="Miembros" ToRole="Sexo" />
-          <NavigationProperty Name="Zona" Relationship="CampDiosModel.FK_Zona_Miembros1" FromRole="Miembros" ToRole="Zona" />
+          <Property Name="IdIglesia" Type="Int32" />
+          <NavigationProperty Name="Capacitaciones" Relationship="Self.FK_Miembros_Capacitaciones1" FromRole="Miembros" ToRole="Capacitaciones" />
+          <NavigationProperty Name="Comunidad" Relationship="Self.FK_Comunidad_Miembros1" FromRole="Miembros" ToRole="Comunidad" />
+          <NavigationProperty Name="DetalleFamilia" Relationship="Self.FK_DetalleFamilia_Miembros" FromRole="Miembros" ToRole="DetalleFamilia" />
+          <NavigationProperty Name="DetalleFamilia1" Relationship="Self.FK_DetalleFamilia_Miembros1" FromRole="Miembros" ToRole="DetalleFamilia" />
+          <NavigationProperty Name="DetalleGrupo" Relationship="Self.FK_DetalleGrupo_Miembros" FromRole="Miembros" ToRole="DetalleGrupo" />
+          <NavigationProperty Name="EstadoCivil" Relationship="Self.FK_Miembros_EstadoCivil" FromRole="Miembros" ToRole="EstadoCivil" />
+          <NavigationProperty Name="Finanzas" Relationship="Self.FK_Finanzas_Miembros" FromRole="Miembros" ToRole="Finanzas" />
+          <NavigationProperty Name="HistoriaEspiritual" Relationship="Self.FK_HistoriaEspiritual_Miembros1" FromRole="Miembros" ToRole="HistoriaEspiritual" />
+          <NavigationProperty Name="Iglesia" Relationship="Self.FK_Iglesia_Miembros" FromRole="Miembros" ToRole="Iglesia" />
+          <NavigationProperty Name="Iglesia1" Relationship="Self.FK_Miembros_Iglesia" FromRole="Miembros" ToRole="Iglesia" />
+          <NavigationProperty Name="LiderazgoCorporativo" Relationship="Self.FK_Miembros_LiderasgoCorporativo1" FromRole="Miembros" ToRole="LiderazgoCorporativo" />
+          <NavigationProperty Name="Miembros1" Relationship="Self.FK_Miembros_Miembros" FromRole="Miembros" ToRole="Miembros1" />
+          <NavigationProperty Name="Miembros2" Relationship="Self.FK_Miembros_Miembros" FromRole="Miembros1" ToRole="Miembros" />
+          <NavigationProperty Name="Profesion" Relationship="Self.FK_Miembros_Profesion1" FromRole="Miembros" ToRole="Profesion" />
+          <NavigationProperty Name="Roles" Relationship="Self.FK_Miembros_Roles" FromRole="Miembros" ToRole="Roles" />
+          <NavigationProperty Name="Sexo1" Relationship="Self.FK_Miembros_Sexo" FromRole="Miembros" ToRole="Sexo" />
+          <NavigationProperty Name="Zona" Relationship="Self.FK_Zona_Miembros1" FromRole="Miembros" ToRole="Zona" />
+        </EntityType>
+        <EntityType Name="Modulos">
+          <Key>
+            <PropertyRef Name="Modulos_Id" />
+          </Key>
+          <Property Name="Modulos_Id" Type="Int32" Nullable="false" />
+          <Property Name="Nombre_Modulo" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Parentescos">
           <Key>
             <PropertyRef Name="IdParentesco" />
           </Key>
           <Property Name="IdParentesco" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Parentesco" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="DetalleFamilia" Relationship="CampDiosModel.FK_DetalleFamilia_Parentescos" FromRole="Parentescos" ToRole="DetalleFamilia" />
+          <Property Name="Parentesco" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="DetalleFamilia" Relationship="Self.FK_DetalleFamilia_Parentescos" FromRole="Parentescos" ToRole="DetalleFamilia" />
         </EntityType>
         <EntityType Name="Profesion">
           <Key>
             <PropertyRef Name="IdProfesion" />
           </Key>
           <Property Name="IdProfesion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Oficio" Type="String" Nullable="false" MaxLength="125" FixedLength="false" Unicode="false" />
+          <Property Name="Oficio" Type="String" MaxLength="125" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Miembros" Relationship="CampDiosModel.FK_Miembros_Profesion1" FromRole="Profesion" ToRole="Miembros" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_Profesion1" FromRole="Profesion" ToRole="Miembros" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
             <PropertyRef Name="IdRol" />
           </Key>
           <Property Name="IdRol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Rol" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Miembros" Relationship="CampDiosModel.FK_Miembros_Roles" FromRole="Roles" ToRole="Miembros" />
+          <Property Name="Rol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_Roles" FromRole="Roles" ToRole="Miembros" />
         </EntityType>
         <EntityType Name="Sexo">
           <Key>
             <PropertyRef Name="IdSexo" />
           </Key>
           <Property Name="IdSexo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Sexo1" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="Miembros" Relationship="CampDiosModel.FK_Miembros_Sexo" FromRole="Sexo" ToRole="Miembros" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Sexo1" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_Sexo" FromRole="Sexo" ToRole="Miembros" />
         </EntityType>
         <EntityType Name="Tipo_Grupo">
           <Key>
             <PropertyRef Name="IdTipoGrupo" />
           </Key>
           <Property Name="IdTipoGrupo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Grupo" Relationship="CampDiosModel.FK_Grupo_Tipo_Grupo1" FromRole="Tipo_Grupo" ToRole="Grupo" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Grupo" Relationship="Self.FK_Grupo_Tipo_Grupo1" FromRole="Tipo_Grupo" ToRole="Grupo" />
         </EntityType>
         <EntityType Name="TipoOfrenda">
           <Key>
             <PropertyRef Name="IdTIpoOfrenda" />
           </Key>
           <Property Name="IdTIpoOfrenda" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TipoOfrenda1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Finanzas" Relationship="CampDiosModel.FK_Finanzas_TipoOfrenda" FromRole="TipoOfrenda" ToRole="Finanzas" />
+          <Property Name="TipoOfrenda1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Finanzas" Relationship="Self.FK_Finanzas_TipoOfrenda" FromRole="TipoOfrenda" ToRole="Finanzas" />
         </EntityType>
         <EntityType Name="TipoReunion">
           <Key>
             <PropertyRef Name="IdTipoReunion" />
           </Key>
           <Property Name="IdTipoReunion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TipoReunion1" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Finanzas" Relationship="CampDiosModel.FK_Finanzas_TipoReunion" FromRole="TipoReunion" ToRole="Finanzas" />
+          <Property Name="TipoReunion1" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Finanzas" Relationship="Self.FK_Finanzas_TipoReunion" FromRole="TipoReunion" ToRole="Finanzas" />
         </EntityType>
-        <EntityType Name="USUARIOS">
+        <EntityType Name="Usuarios">
           <Key>
-            <PropertyRef Name="id_usuario" />
+            <PropertyRef Name="Usuario_Id" />
           </Key>
-          <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="UsuarioNombre" Type="String" Nullable="false" MaxLength="7" FixedLength="false" Unicode="false" />
-          <Property Name="NombreCompleto" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="confirmpassword" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="IdMiembro" Type="Int32" />
+          <Property Name="Usuario_Id" Type="Int32" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Contraseña" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Fecha_Creacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Miembro_Id" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuarios_Opciones">
+          <Key>
+            <PropertyRef Name="idUsuarios_Opciones" />
+          </Key>
+          <Property Name="idUsuarios_Opciones" Type="Int32" Nullable="false" />
+          <Property Name="Usuarios_Usuario_Id" Type="Int32" Nullable="false" />
+          <Property Name="Opciones_Opciones_Id" Type="Int32" Nullable="false" />
+          <Property Name="Lectura" Type="Boolean" />
+          <Property Name="Escritura" Type="Boolean" />
+          <Property Name="Edicion" Type="Boolean" />
         </EntityType>
         <EntityType Name="Zona">
           <Key>
             <PropertyRef Name="IdZona" />
           </Key>
           <Property Name="IdZona" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Direccion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IdPastorZona" Type="Int32" Nullable="false" />
           <Property Name="IdIglesia" Type="Int32" />
-          <NavigationProperty Name="Comunidad" Relationship="CampDiosModel.FK_Comunidad_Zona1" FromRole="Zona" ToRole="Comunidad" />
-          <NavigationProperty Name="Iglesia" Relationship="CampDiosModel.FK_Zona_Iglesia1" FromRole="Zona" ToRole="Iglesia" />
-          <NavigationProperty Name="Miembros" Relationship="CampDiosModel.FK_Zona_Miembros1" FromRole="Zona" ToRole="Miembros" />
+          <NavigationProperty Name="Comunidad" Relationship="Self.FK_Comunidad_Zona1" FromRole="Zona" ToRole="Comunidad" />
+          <NavigationProperty Name="Iglesia" Relationship="Self.FK_Zona_Iglesia1" FromRole="Zona" ToRole="Iglesia" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK_Zona_Miembros1" FromRole="Zona" ToRole="Miembros" />
+        </EntityType>
+        <EntityType Name="Opciones">
+          <Key>
+            <PropertyRef Name="Opciones_Id" />
+            <PropertyRef Name="Modulos_Modulos_Id" />
+          </Key>
+          <Property Name="Opciones_Id" Type="Int32" Nullable="false" />
+          <Property Name="Nombre_Opcion" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Modulos_Modulos_Id" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Miembros_Capacitaciones1">
-          <End Type="CampDiosModel.Capacitaciones" Role="Capacitaciones" Multiplicity="0..1" />
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="*" />
+          <End Role="Capacitaciones" Type="Self.Capacitaciones" Multiplicity="0..1" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Capacitaciones">
               <PropertyRef Name="IdCapacitacion" />
@@ -1056,8 +988,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comunidad_Miembros1">
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="1" />
-          <End Type="CampDiosModel.Comunidad" Role="Comunidad" Multiplicity="*" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="1" />
+          <End Role="Comunidad" Type="Self.Comunidad" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
@@ -1068,8 +1000,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Comunidad_Zona1">
-          <End Type="CampDiosModel.Zona" Role="Zona" Multiplicity="1" />
-          <End Type="CampDiosModel.Comunidad" Role="Comunidad" Multiplicity="*" />
+          <End Role="Zona" Type="Self.Zona" Multiplicity="1" />
+          <End Role="Comunidad" Type="Self.Comunidad" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Zona">
               <PropertyRef Name="IdZona" />
@@ -1080,8 +1012,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Grupo_Comunidad1">
-          <End Type="CampDiosModel.Comunidad" Role="Comunidad" Multiplicity="1" />
-          <End Type="CampDiosModel.Grupo" Role="Grupo" Multiplicity="*" />
+          <End Role="Comunidad" Type="Self.Comunidad" Multiplicity="1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Comunidad">
               <PropertyRef Name="IdComunidad" />
@@ -1092,8 +1024,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DetalleFamilia_Miembros">
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="1" />
-          <End Type="CampDiosModel.DetalleFamilia" Role="DetalleFamilia" Multiplicity="*" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="1" />
+          <End Role="DetalleFamilia" Type="Self.DetalleFamilia" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
@@ -1104,8 +1036,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DetalleFamilia_Miembros1">
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="1" />
-          <End Type="CampDiosModel.DetalleFamilia" Role="DetalleFamilia" Multiplicity="*" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="1" />
+          <End Role="DetalleFamilia" Type="Self.DetalleFamilia" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
@@ -1116,8 +1048,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DetalleFamilia_Parentescos">
-          <End Type="CampDiosModel.Parentescos" Role="Parentescos" Multiplicity="1" />
-          <End Type="CampDiosModel.DetalleFamilia" Role="DetalleFamilia" Multiplicity="*" />
+          <End Role="Parentescos" Type="Self.Parentescos" Multiplicity="1" />
+          <End Role="DetalleFamilia" Type="Self.DetalleFamilia" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Parentescos">
               <PropertyRef Name="IdParentesco" />
@@ -1128,8 +1060,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DetalleGrupo_Grupo">
-          <End Type="CampDiosModel.Grupo" Role="Grupo" Multiplicity="1" />
-          <End Type="CampDiosModel.DetalleGrupo" Role="DetalleGrupo" Multiplicity="*" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
+          <End Role="DetalleGrupo" Type="Self.DetalleGrupo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Grupo">
               <PropertyRef Name="IdGrupo" />
@@ -1140,8 +1072,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_DetalleGrupo_Miembros">
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="1" />
-          <End Type="CampDiosModel.DetalleGrupo" Role="DetalleGrupo" Multiplicity="*" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="1" />
+          <End Role="DetalleGrupo" Type="Self.DetalleGrupo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
@@ -1152,8 +1084,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Grupo_Dias">
-          <End Type="CampDiosModel.Dias" Role="Dias" Multiplicity="1" />
-          <End Type="CampDiosModel.Grupo" Role="Grupo" Multiplicity="*" />
+          <End Role="Dias" Type="Self.Dias" Multiplicity="1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Dias">
               <PropertyRef Name="IdDia" />
@@ -1164,8 +1096,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Miembros_EstadoCivil">
-          <End Type="CampDiosModel.EstadoCivil" Role="EstadoCivil" Multiplicity="1" />
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="*" />
+          <End Role="EstadoCivil" Type="Self.EstadoCivil" Multiplicity="1" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="EstadoCivil">
               <PropertyRef Name="IdEstado" />
@@ -1176,8 +1108,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Finanzas_Miembros">
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="1" />
-          <End Type="CampDiosModel.Finanzas" Role="Finanzas" Multiplicity="*" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="1" />
+          <End Role="Finanzas" Type="Self.Finanzas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
@@ -1188,8 +1120,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Finanzas_TipoOfrenda">
-          <End Type="CampDiosModel.TipoOfrenda" Role="TipoOfrenda" Multiplicity="1" />
-          <End Type="CampDiosModel.Finanzas" Role="Finanzas" Multiplicity="*" />
+          <End Role="TipoOfrenda" Type="Self.TipoOfrenda" Multiplicity="1" />
+          <End Role="Finanzas" Type="Self.Finanzas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TipoOfrenda">
               <PropertyRef Name="IdTIpoOfrenda" />
@@ -1200,8 +1132,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Finanzas_TipoReunion">
-          <End Type="CampDiosModel.TipoReunion" Role="TipoReunion" Multiplicity="1" />
-          <End Type="CampDiosModel.Finanzas" Role="Finanzas" Multiplicity="*" />
+          <End Role="TipoReunion" Type="Self.TipoReunion" Multiplicity="1" />
+          <End Role="Finanzas" Type="Self.Finanzas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="TipoReunion">
               <PropertyRef Name="IdTipoReunion" />
@@ -1212,8 +1144,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Grupo_Tipo_Grupo1">
-          <End Type="CampDiosModel.Tipo_Grupo" Role="Tipo_Grupo" Multiplicity="0..1" />
-          <End Type="CampDiosModel.Grupo" Role="Grupo" Multiplicity="*" />
+          <End Role="Tipo_Grupo" Type="Self.Tipo_Grupo" Multiplicity="0..1" />
+          <End Role="Grupo" Type="Self.Grupo" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Tipo_Grupo">
               <PropertyRef Name="IdTipoGrupo" />
@@ -1224,8 +1156,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HistoriaEspiritual_Iglesia">
-          <End Type="CampDiosModel.Iglesia" Role="Iglesia" Multiplicity="1" />
-          <End Type="CampDiosModel.HistoriaEspiritual" Role="HistoriaEspiritual" Multiplicity="*" />
+          <End Role="Iglesia" Type="Self.Iglesia" Multiplicity="1" />
+          <End Role="HistoriaEspiritual" Type="Self.HistoriaEspiritual" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Iglesia">
               <PropertyRef Name="IdIglesia" />
@@ -1236,8 +1168,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_HistoriaEspiritual_Miembros1">
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="1" />
-          <End Type="CampDiosModel.HistoriaEspiritual" Role="HistoriaEspiritual" Multiplicity="*" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="1" />
+          <End Role="HistoriaEspiritual" Type="Self.HistoriaEspiritual" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
@@ -1248,8 +1180,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Iglesia_Miembros">
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="0..1" />
-          <End Type="CampDiosModel.Iglesia" Role="Iglesia" Multiplicity="*" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="0..1" />
+          <End Role="Iglesia" Type="Self.Iglesia" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
@@ -1259,9 +1191,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Miembros_Iglesia">
+          <End Role="Iglesia" Type="Self.Iglesia" Multiplicity="0..1" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Iglesia">
+              <PropertyRef Name="IdIglesia" />
+            </Principal>
+            <Dependent Role="Miembros">
+              <PropertyRef Name="IdIglesia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Zona_Iglesia1">
-          <End Type="CampDiosModel.Iglesia" Role="Iglesia" Multiplicity="0..1" />
-          <End Type="CampDiosModel.Zona" Role="Zona" Multiplicity="*" />
+          <End Role="Iglesia" Type="Self.Iglesia" Multiplicity="0..1" />
+          <End Role="Zona" Type="Self.Zona" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Iglesia">
               <PropertyRef Name="IdIglesia" />
@@ -1272,8 +1216,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Miembros_LiderasgoCorporativo1">
-          <End Type="CampDiosModel.LiderazgoCorporativo" Role="LiderazgoCorporativo" Multiplicity="0..1" />
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="*" />
+          <End Role="LiderazgoCorporativo" Type="Self.LiderazgoCorporativo" Multiplicity="0..1" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="LiderazgoCorporativo">
               <PropertyRef Name="IdCorporativo" />
@@ -1284,8 +1228,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Miembros_Miembros">
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="0..1" />
-          <End Type="CampDiosModel.Miembros" Role="Miembros1" Multiplicity="*" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="0..1" />
+          <End Role="Miembros1" Type="Self.Miembros" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
@@ -1296,8 +1240,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Miembros_Profesion1">
-          <End Type="CampDiosModel.Profesion" Role="Profesion" Multiplicity="0..1" />
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="*" />
+          <End Role="Profesion" Type="Self.Profesion" Multiplicity="0..1" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Profesion">
               <PropertyRef Name="IdProfesion" />
@@ -1308,8 +1252,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Miembros_Roles">
-          <End Type="CampDiosModel.Roles" Role="Roles" Multiplicity="0..1" />
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="*" />
+          <End Role="Roles" Type="Self.Roles" Multiplicity="0..1" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Roles">
               <PropertyRef Name="IdRol" />
@@ -1320,8 +1264,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Miembros_Sexo">
-          <End Type="CampDiosModel.Sexo" Role="Sexo" Multiplicity="1" />
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="*" />
+          <End Role="Sexo" Type="Self.Sexo" Multiplicity="1" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Sexo">
               <PropertyRef Name="IdSexo" />
@@ -1332,8 +1276,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Zona_Miembros1">
-          <End Type="CampDiosModel.Miembros" Role="Miembros" Multiplicity="1" />
-          <End Type="CampDiosModel.Zona" Role="Zona" Multiplicity="*" />
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="1" />
+          <End Role="Zona" Type="Self.Zona" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
@@ -1343,28 +1287,152 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <ComplexType Name="miembros_info_Result">
+        <EntityContainer Name="CampDiosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Capacitaciones" EntityType="Self.Capacitaciones" />
+          <EntitySet Name="Comunidad" EntityType="Self.Comunidad" />
+          <EntitySet Name="DetalleFamilia" EntityType="Self.DetalleFamilia" />
+          <EntitySet Name="DetalleGrupo" EntityType="Self.DetalleGrupo" />
+          <EntitySet Name="Dias" EntityType="Self.Dias" />
+          <EntitySet Name="EstadoCivil" EntityType="Self.EstadoCivil" />
+          <EntitySet Name="Finanzas" EntityType="Self.Finanzas" />
+          <EntitySet Name="Grupo" EntityType="Self.Grupo" />
+          <EntitySet Name="HistoriaEspiritual" EntityType="Self.HistoriaEspiritual" />
+          <EntitySet Name="Iglesia" EntityType="Self.Iglesia" />
+          <EntitySet Name="LiderazgoCorporativo" EntityType="Self.LiderazgoCorporativo" />
+          <EntitySet Name="Miembros" EntityType="Self.Miembros" />
+          <EntitySet Name="Modulos" EntityType="Self.Modulos" />
+          <EntitySet Name="Parentescos" EntityType="Self.Parentescos" />
+          <EntitySet Name="Profesion" EntityType="Self.Profesion" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="Sexo" EntityType="Self.Sexo" />
+          <EntitySet Name="Tipo_Grupo" EntityType="Self.Tipo_Grupo" />
+          <EntitySet Name="TipoOfrenda" EntityType="Self.TipoOfrenda" />
+          <EntitySet Name="TipoReunion" EntityType="Self.TipoReunion" />
+          <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
+          <EntitySet Name="Usuarios_Opciones" EntityType="Self.Usuarios_Opciones" />
+          <EntitySet Name="Zona" EntityType="Self.Zona" />
+          <EntitySet Name="Opciones" EntityType="Self.Opciones" />
+          <AssociationSet Name="FK_Miembros_Capacitaciones1" Association="Self.FK_Miembros_Capacitaciones1">
+            <End Role="Capacitaciones" EntitySet="Capacitaciones" />
+            <End Role="Miembros" EntitySet="Miembros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comunidad_Miembros1" Association="Self.FK_Comunidad_Miembros1">
+            <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="Comunidad" EntitySet="Comunidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comunidad_Zona1" Association="Self.FK_Comunidad_Zona1">
+            <End Role="Zona" EntitySet="Zona" />
+            <End Role="Comunidad" EntitySet="Comunidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Comunidad1" Association="Self.FK_Grupo_Comunidad1">
+            <End Role="Comunidad" EntitySet="Comunidad" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleFamilia_Miembros" Association="Self.FK_DetalleFamilia_Miembros">
+            <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="DetalleFamilia" EntitySet="DetalleFamilia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleFamilia_Miembros1" Association="Self.FK_DetalleFamilia_Miembros1">
+            <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="DetalleFamilia" EntitySet="DetalleFamilia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleFamilia_Parentescos" Association="Self.FK_DetalleFamilia_Parentescos">
+            <End Role="Parentescos" EntitySet="Parentescos" />
+            <End Role="DetalleFamilia" EntitySet="DetalleFamilia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleGrupo_Grupo" Association="Self.FK_DetalleGrupo_Grupo">
+            <End Role="Grupo" EntitySet="Grupo" />
+            <End Role="DetalleGrupo" EntitySet="DetalleGrupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleGrupo_Miembros" Association="Self.FK_DetalleGrupo_Miembros">
+            <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="DetalleGrupo" EntitySet="DetalleGrupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Dias" Association="Self.FK_Grupo_Dias">
+            <End Role="Dias" EntitySet="Dias" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miembros_EstadoCivil" Association="Self.FK_Miembros_EstadoCivil">
+            <End Role="EstadoCivil" EntitySet="EstadoCivil" />
+            <End Role="Miembros" EntitySet="Miembros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Finanzas_Miembros" Association="Self.FK_Finanzas_Miembros">
+            <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="Finanzas" EntitySet="Finanzas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Finanzas_TipoOfrenda" Association="Self.FK_Finanzas_TipoOfrenda">
+            <End Role="TipoOfrenda" EntitySet="TipoOfrenda" />
+            <End Role="Finanzas" EntitySet="Finanzas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Finanzas_TipoReunion" Association="Self.FK_Finanzas_TipoReunion">
+            <End Role="TipoReunion" EntitySet="TipoReunion" />
+            <End Role="Finanzas" EntitySet="Finanzas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Grupo_Tipo_Grupo1" Association="Self.FK_Grupo_Tipo_Grupo1">
+            <End Role="Tipo_Grupo" EntitySet="Tipo_Grupo" />
+            <End Role="Grupo" EntitySet="Grupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoriaEspiritual_Iglesia" Association="Self.FK_HistoriaEspiritual_Iglesia">
+            <End Role="Iglesia" EntitySet="Iglesia" />
+            <End Role="HistoriaEspiritual" EntitySet="HistoriaEspiritual" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HistoriaEspiritual_Miembros1" Association="Self.FK_HistoriaEspiritual_Miembros1">
+            <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="HistoriaEspiritual" EntitySet="HistoriaEspiritual" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Iglesia_Miembros" Association="Self.FK_Iglesia_Miembros">
+            <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="Iglesia" EntitySet="Iglesia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miembros_Iglesia" Association="Self.FK_Miembros_Iglesia">
+            <End Role="Iglesia" EntitySet="Iglesia" />
+            <End Role="Miembros" EntitySet="Miembros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zona_Iglesia1" Association="Self.FK_Zona_Iglesia1">
+            <End Role="Iglesia" EntitySet="Iglesia" />
+            <End Role="Zona" EntitySet="Zona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miembros_LiderasgoCorporativo1" Association="Self.FK_Miembros_LiderasgoCorporativo1">
+            <End Role="LiderazgoCorporativo" EntitySet="LiderazgoCorporativo" />
+            <End Role="Miembros" EntitySet="Miembros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miembros_Miembros" Association="Self.FK_Miembros_Miembros">
+            <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="Miembros1" EntitySet="Miembros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miembros_Profesion1" Association="Self.FK_Miembros_Profesion1">
+            <End Role="Profesion" EntitySet="Profesion" />
+            <End Role="Miembros" EntitySet="Miembros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miembros_Roles" Association="Self.FK_Miembros_Roles">
+            <End Role="Roles" EntitySet="Roles" />
+            <End Role="Miembros" EntitySet="Miembros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miembros_Sexo" Association="Self.FK_Miembros_Sexo">
+            <End Role="Sexo" EntitySet="Sexo" />
+            <End Role="Miembros" EntitySet="Miembros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zona_Miembros1" Association="Self.FK_Zona_Miembros1">
+            <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="Zona" EntitySet="Zona" />
+          </AssociationSet>
+          <FunctionImport Name="seleccionar_aprendiz" ReturnType="Collection(CampDios.seleccionar_aprendiz_Result)" />
+          <FunctionImport Name="seleccionar_lider" ReturnType="Collection(CampDios.seleccionar_lider_Result)" />
+          <FunctionImport Name="seleccionar_miembro" ReturnType="Collection(CampDios.seleccionar_miembro_Result)" />
+          <FunctionImport Name="seleccionar_pastor_general" ReturnType="Collection(CampDios.seleccionar_pastor_general_Result)" />
+          <FunctionImport Name="seleccionar_pastor_iglesia" ReturnType="Collection(CampDios.seleccionar_pastor_iglesia_Result)" />
+          <FunctionImport Name="seleccionar_pastor_zona" ReturnType="Collection(CampDios.seleccionar_pastor_zona_Result)" />
+          <FunctionImport Name="seleccionar_supervisor_zona" ReturnType="Collection(CampDios.seleccionar_supervisor_zona_Result)" />
+        </EntityContainer>
+        <ComplexType Name="seleccionar_aprendiz_Result">
           <Property Type="Int32" Name="IdMiembro" Nullable="false" />
-          <Property Type="String" Name="Nombres" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="Apellidos" Nullable="false" MaxLength="50" />
-          <Property Type="String" Name="DUI" Nullable="true" MaxLength="10" />
-          <Property Type="String" Name="NIT" Nullable="true" MaxLength="17" />
-          <Property Type="DateTime" Name="FechaNacimiento" Nullable="false" />
-          <Property Type="String" Name="Direccion" Nullable="true" />
-          <Property Type="String" Name="Direccion1" Nullable="true" />
-          <Property Type="String" Name="Direccion2" Nullable="true" />
-          <Property Type="String" Name="Email" Nullable="true" MaxLength="50" />
-          <Property Type="String" Name="Tel" Nullable="true" MaxLength="9" />
-          <Property Type="String" Name="Cel" Nullable="true" MaxLength="9" />
-          <Property Type="Int32" Name="Sexo" Nullable="false" />
-          <Property Type="Int32" Name="IdEstadoCivil" Nullable="false" />
-          <Property Type="Int32" Name="IdProfesion" Nullable="true" />
-          <Property Type="Int32" Name="IdCapacitacion" Nullable="true" />
-          <Property Type="Int32" Name="IdRol" Nullable="true" />
-          <Property Type="Int32" Name="IdHMayor" Nullable="true" />
-          <Property Type="Int32" Name="IdCorporativo" Nullable="true" />
+          <Property Type="String" Name="Nombres" Nullable="true" MaxLength="103" />
         </ComplexType>
         <ComplexType Name="seleccionar_lider_Result">
+          <Property Type="Int32" Name="IdMiembro" Nullable="false" />
+          <Property Type="String" Name="Nombres" Nullable="true" MaxLength="103" />
+        </ComplexType>
+        <ComplexType Name="seleccionar_miembro_Result">
           <Property Type="Int32" Name="IdMiembro" Nullable="false" />
           <Property Type="String" Name="Nombres" Nullable="true" MaxLength="103" />
         </ComplexType>
@@ -1376,14 +1444,6 @@
           <Property Type="Int32" Name="IdMiembro" Nullable="false" />
           <Property Type="String" Name="Nombres" Nullable="true" MaxLength="103" />
         </ComplexType>
-        <ComplexType Name="seleccionar_aprendiz_Result">
-          <Property Type="Int32" Name="IdMiembro" Nullable="false" />
-          <Property Type="String" Name="Nombres" Nullable="true" MaxLength="103" />
-        </ComplexType>
-        <ComplexType Name="seleccionar_miembro_Result">
-          <Property Type="Int32" Name="IdMiembro" Nullable="false" />
-          <Property Type="String" Name="Nombres" Nullable="true" MaxLength="103" />
-        </ComplexType>
         <ComplexType Name="seleccionar_pastor_zona_Result">
           <Property Type="Int32" Name="IdMiembro" Nullable="false" />
           <Property Type="String" Name="Nombres" Nullable="true" MaxLength="103" />
@@ -1392,296 +1452,314 @@
           <Property Type="Int32" Name="IdMiembro" Nullable="false" />
           <Property Type="String" Name="Nombres" Nullable="true" MaxLength="103" />
         </ComplexType>
-        </Schema>
+      </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="CampDiosModelStoreContainer" CdmEntityContainer="CampDiosEntities">
+        <EntityContainerMapping StorageEntityContainer="CampDiosStoreContainer" CdmEntityContainer="CampDiosEntities">
           <EntitySetMapping Name="Capacitaciones">
-            <EntityTypeMapping TypeName="CampDiosModel.Capacitaciones">
+            <EntityTypeMapping TypeName="CampDios.Capacitaciones">
               <MappingFragment StoreEntitySet="Capacitaciones">
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="IdCapacitacion" ColumnName="IdCapacitacion" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Comunidad">
-            <EntityTypeMapping TypeName="CampDiosModel.Comunidad">
+            <EntityTypeMapping TypeName="CampDios.Comunidad">
               <MappingFragment StoreEntitySet="Comunidad">
-                <ScalarProperty Name="IdZona" ColumnName="IdZona" />
-                <ScalarProperty Name="IdLiderComunidad" ColumnName="IdLiderComunidad" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="IdComunidad" ColumnName="IdComunidad" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="IdLiderComunidad" ColumnName="IdLiderComunidad" />
+                <ScalarProperty Name="IdZona" ColumnName="IdZona" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DetalleFamilia">
-            <EntityTypeMapping TypeName="CampDiosModel.DetalleFamilia">
+            <EntityTypeMapping TypeName="CampDios.DetalleFamilia">
               <MappingFragment StoreEntitySet="DetalleFamilia">
-                <ScalarProperty Name="IdParentesco" ColumnName="IdParentesco" />
-                <ScalarProperty Name="IdPariente" ColumnName="IdPariente" />
-                <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="IdDetalleFamilia" ColumnName="IdDetalleFamilia" />
+                <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
+                <ScalarProperty Name="IdPariente" ColumnName="IdPariente" />
+                <ScalarProperty Name="IdParentesco" ColumnName="IdParentesco" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DetalleGrupo">
-            <EntityTypeMapping TypeName="CampDiosModel.DetalleGrupo">
+            <EntityTypeMapping TypeName="CampDios.DetalleGrupo">
               <MappingFragment StoreEntitySet="DetalleGrupo">
-                <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
-                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
                 <ScalarProperty Name="IdDetalleGrupo" ColumnName="IdDetalleGrupo" />
+                <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
+                <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Dias">
-            <EntityTypeMapping TypeName="CampDiosModel.Dias">
+            <EntityTypeMapping TypeName="CampDios.Dias">
               <MappingFragment StoreEntitySet="Dias">
-                <ScalarProperty Name="Dia" ColumnName="Dia" />
                 <ScalarProperty Name="IdDia" ColumnName="IdDia" />
+                <ScalarProperty Name="Dia" ColumnName="Dia" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EstadoCivil">
-            <EntityTypeMapping TypeName="CampDiosModel.EstadoCivil">
+            <EntityTypeMapping TypeName="CampDios.EstadoCivil">
               <MappingFragment StoreEntitySet="EstadoCivil">
-                <ScalarProperty Name="Estado" ColumnName="Estado" />
                 <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="Estado" ColumnName="Estado" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Finanzas">
-            <EntityTypeMapping TypeName="CampDiosModel.Finanzas">
+            <EntityTypeMapping TypeName="CampDios.Finanzas">
               <MappingFragment StoreEntitySet="Finanzas">
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Monto" ColumnName="Monto" />
-                <ScalarProperty Name="IdTipoOfrenda" ColumnName="IdTipoOfrenda" />
-                <ScalarProperty Name="IdTipoReunion" ColumnName="IdTipoReunion" />
-                <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="IdFinanza" ColumnName="IdFinanza" />
+                <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
+                <ScalarProperty Name="IdTipoReunion" ColumnName="IdTipoReunion" />
+                <ScalarProperty Name="IdTipoOfrenda" ColumnName="IdTipoOfrenda" />
+                <ScalarProperty Name="Monto" ColumnName="Monto" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Grupo">
-            <EntityTypeMapping TypeName="CampDiosModel.Grupo">
+            <EntityTypeMapping TypeName="CampDios.Grupo">
               <MappingFragment StoreEntitySet="Grupo">
-                <ScalarProperty Name="IdTipoGrupo" ColumnName="IdTipoGrupo" />
-                <ScalarProperty Name="Hora" ColumnName="Hora" />
-                <ScalarProperty Name="IdDia" ColumnName="IdDia" />
-                <ScalarProperty Name="IdComunidad" ColumnName="IdComunidad" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="IdComunidad" ColumnName="IdComunidad" />
+                <ScalarProperty Name="IdDia" ColumnName="IdDia" />
+                <ScalarProperty Name="Hora" ColumnName="Hora" />
+                <ScalarProperty Name="IdTipoGrupo" ColumnName="IdTipoGrupo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="HistoriaEspiritual">
-            <EntityTypeMapping TypeName="CampDiosModel.HistoriaEspiritual">
+            <EntityTypeMapping TypeName="CampDios.HistoriaEspiritual">
               <MappingFragment StoreEntitySet="HistoriaEspiritual">
-                <ScalarProperty Name="IglesiaBautismo" ColumnName="IglesiaBautismo" />
-                <ScalarProperty Name="FechaBautismo" ColumnName="FechaBautismo" />
-                <ScalarProperty Name="FechaConversion" ColumnName="FechaConversion" />
-                <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="IdHistoria" ColumnName="IdHistoria" />
+                <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
+                <ScalarProperty Name="FechaConversion" ColumnName="FechaConversion" />
+                <ScalarProperty Name="FechaBautismo" ColumnName="FechaBautismo" />
+                <ScalarProperty Name="IglesiaBautismo" ColumnName="IglesiaBautismo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Iglesia">
-            <EntityTypeMapping TypeName="CampDiosModel.Iglesia">
+            <EntityTypeMapping TypeName="CampDios.Iglesia">
               <MappingFragment StoreEntitySet="Iglesia">
-                <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Tel3" ColumnName="Tel3" />
-                <ScalarProperty Name="Tel2" ColumnName="Tel2" />
-                <ScalarProperty Name="Tel" ColumnName="Tel" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="IdIglesia" ColumnName="IdIglesia" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="Tel2" ColumnName="Tel2" />
+                <ScalarProperty Name="Tel3" ColumnName="Tel3" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LiderazgoCorporativo">
-            <EntityTypeMapping TypeName="CampDiosModel.LiderazgoCorporativo">
+            <EntityTypeMapping TypeName="CampDios.LiderazgoCorporativo">
               <MappingFragment StoreEntitySet="LiderazgoCorporativo">
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="IdCorporativo" ColumnName="IdCorporativo" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Miembros">
-            <EntityTypeMapping TypeName="CampDiosModel.Miembros">
+            <EntityTypeMapping TypeName="CampDios.Miembros">
               <MappingFragment StoreEntitySet="Miembros">
-                <ScalarProperty Name="IdCorporativo" ColumnName="IdCorporativo" />
-                <ScalarProperty Name="IdHMayor" ColumnName="IdHMayor" />
-                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
-                <ScalarProperty Name="IdCapacitacion" ColumnName="IdCapacitacion" />
-                <ScalarProperty Name="IdProfesion" ColumnName="IdProfesion" />
-                <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
-                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
-                <ScalarProperty Name="Cel" ColumnName="Cel" />
-                <ScalarProperty Name="Tel" ColumnName="Tel" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Direccion2" ColumnName="Direccion2" />
-                <ScalarProperty Name="Direccion1" ColumnName="Direccion1" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
-                <ScalarProperty Name="NIT" ColumnName="NIT" />
-                <ScalarProperty Name="DUI" ColumnName="DUI" />
-                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
-                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="DUI" ColumnName="DUI" />
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Direccion1" ColumnName="Direccion1" />
+                <ScalarProperty Name="Direccion2" ColumnName="Direccion2" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="Cel" ColumnName="Cel" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
+                <ScalarProperty Name="IdProfesion" ColumnName="IdProfesion" />
+                <ScalarProperty Name="IdCapacitacion" ColumnName="IdCapacitacion" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="IdHMayor" ColumnName="IdHMayor" />
+                <ScalarProperty Name="IdCorporativo" ColumnName="IdCorporativo" />
+                <ScalarProperty Name="IdIglesia" ColumnName="IdIglesia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Modulos">
+            <EntityTypeMapping TypeName="CampDios.Modulos">
+              <MappingFragment StoreEntitySet="Modulos">
+                <ScalarProperty Name="Modulos_Id" ColumnName="Modulos_Id" />
+                <ScalarProperty Name="Nombre_Modulo" ColumnName="Nombre_Modulo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Parentescos">
-            <EntityTypeMapping TypeName="CampDiosModel.Parentescos">
+            <EntityTypeMapping TypeName="CampDios.Parentescos">
               <MappingFragment StoreEntitySet="Parentescos">
-                <ScalarProperty Name="Parentesco" ColumnName="Parentesco" />
                 <ScalarProperty Name="IdParentesco" ColumnName="IdParentesco" />
+                <ScalarProperty Name="Parentesco" ColumnName="Parentesco" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Profesion">
-            <EntityTypeMapping TypeName="CampDiosModel.Profesion">
+            <EntityTypeMapping TypeName="CampDios.Profesion">
               <MappingFragment StoreEntitySet="Profesion">
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Oficio" ColumnName="Oficio" />
                 <ScalarProperty Name="IdProfesion" ColumnName="IdProfesion" />
+                <ScalarProperty Name="Oficio" ColumnName="Oficio" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="CampDiosModel.Roles">
+            <EntityTypeMapping TypeName="CampDios.Roles">
               <MappingFragment StoreEntitySet="Roles">
-                <ScalarProperty Name="Rol" ColumnName="Rol" />
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sexo">
-            <EntityTypeMapping TypeName="CampDiosModel.Sexo">
+            <EntityTypeMapping TypeName="CampDios.Sexo">
               <MappingFragment StoreEntitySet="Sexo">
-                <ScalarProperty Name="Sexo1" ColumnName="Sexo" />
                 <ScalarProperty Name="IdSexo" ColumnName="IdSexo" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="CampDiosModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="definition" ColumnName="definition" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="Sexo1" ColumnName="Sexo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tipo_Grupo">
-            <EntityTypeMapping TypeName="CampDiosModel.Tipo_Grupo">
+            <EntityTypeMapping TypeName="CampDios.Tipo_Grupo">
               <MappingFragment StoreEntitySet="Tipo_Grupo">
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="IdTipoGrupo" ColumnName="IdTipoGrupo" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TipoOfrenda">
-            <EntityTypeMapping TypeName="CampDiosModel.TipoOfrenda">
+            <EntityTypeMapping TypeName="CampDios.TipoOfrenda">
               <MappingFragment StoreEntitySet="TipoOfrenda">
-                <ScalarProperty Name="TipoOfrenda1" ColumnName="TipoOfrenda" />
                 <ScalarProperty Name="IdTIpoOfrenda" ColumnName="IdTIpoOfrenda" />
+                <ScalarProperty Name="TipoOfrenda1" ColumnName="TipoOfrenda" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TipoReunion">
-            <EntityTypeMapping TypeName="CampDiosModel.TipoReunion">
+            <EntityTypeMapping TypeName="CampDios.TipoReunion">
               <MappingFragment StoreEntitySet="TipoReunion">
-                <ScalarProperty Name="TipoReunion1" ColumnName="TipoReunion" />
                 <ScalarProperty Name="IdTipoReunion" ColumnName="IdTipoReunion" />
+                <ScalarProperty Name="TipoReunion1" ColumnName="TipoReunion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="USUARIOS">
-            <EntityTypeMapping TypeName="CampDiosModel.USUARIOS">
-              <MappingFragment StoreEntitySet="USUARIOS">
-                <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
-                <ScalarProperty Name="confirmpassword" ColumnName="confirmpassword" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
-                <ScalarProperty Name="UsuarioNombre" ColumnName="UsuarioNombre" />
-                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <EntitySetMapping Name="Usuarios">
+            <EntityTypeMapping TypeName="CampDios.Usuarios">
+              <MappingFragment StoreEntitySet="Usuarios">
+                <ScalarProperty Name="Usuario_Id" ColumnName="Usuario_Id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+                <ScalarProperty Name="Fecha_Creacion" ColumnName="Fecha_Creacion" />
+                <ScalarProperty Name="Miembro_Id" ColumnName="Miembro_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuarios_Opciones">
+            <EntityTypeMapping TypeName="CampDios.Usuarios_Opciones">
+              <MappingFragment StoreEntitySet="Usuarios_Opciones">
+                <ScalarProperty Name="idUsuarios_Opciones" ColumnName="idUsuarios_Opciones" />
+                <ScalarProperty Name="Usuarios_Usuario_Id" ColumnName="Usuarios_Usuario_Id" />
+                <ScalarProperty Name="Opciones_Opciones_Id" ColumnName="Opciones_Opciones_Id" />
+                <ScalarProperty Name="Lectura" ColumnName="Lectura" />
+                <ScalarProperty Name="Escritura" ColumnName="Escritura" />
+                <ScalarProperty Name="Edicion" ColumnName="Edicion" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Zona">
-            <EntityTypeMapping TypeName="CampDiosModel.Zona">
+            <EntityTypeMapping TypeName="CampDios.Zona">
               <MappingFragment StoreEntitySet="Zona">
-                <ScalarProperty Name="IdIglesia" ColumnName="IdIglesia" />
-                <ScalarProperty Name="IdPastorZona" ColumnName="IdPastorZona" />
-                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
-                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
-                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
                 <ScalarProperty Name="IdZona" ColumnName="IdZona" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="IdPastorZona" ColumnName="IdPastorZona" />
+                <ScalarProperty Name="IdIglesia" ColumnName="IdIglesia" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_lider" FunctionName="CampDiosModel.Store.seleccionar_lider">
+          <EntitySetMapping Name="Opciones">
+            <EntityTypeMapping TypeName="CampDios.Opciones">
+              <MappingFragment StoreEntitySet="Opciones">
+                <ScalarProperty Name="Opciones_Id" ColumnName="Opciones_Id" />
+                <ScalarProperty Name="Nombre_Opcion" ColumnName="Nombre_Opcion" />
+                <ScalarProperty Name="Modulos_Modulos_Id" ColumnName="Modulos_Modulos_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="seleccionar_aprendiz" FunctionName="CampDios.Store.seleccionar_aprendiz">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_lider_Result">
+              <ComplexTypeMapping TypeName="CampDios.seleccionar_aprendiz_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_pastor_general" FunctionName="CampDiosModel.Store.seleccionar_pastor_general">
+          <FunctionImportMapping FunctionImportName="seleccionar_lider" FunctionName="CampDios.Store.seleccionar_lider">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_pastor_general_Result">
+              <ComplexTypeMapping TypeName="CampDios.seleccionar_lider_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_pastor_iglesia" FunctionName="CampDiosModel.Store.seleccionar_pastor_iglesia">
+          <FunctionImportMapping FunctionImportName="seleccionar_miembro" FunctionName="CampDios.Store.seleccionar_miembro">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_pastor_iglesia_Result">
+              <ComplexTypeMapping TypeName="CampDios.seleccionar_miembro_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_aprendiz" FunctionName="CampDiosModel.Store.seleccionar_aprendiz">
+          <FunctionImportMapping FunctionImportName="seleccionar_pastor_general" FunctionName="CampDios.Store.seleccionar_pastor_general">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_aprendiz_Result">
+              <ComplexTypeMapping TypeName="CampDios.seleccionar_pastor_general_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_miembro" FunctionName="CampDiosModel.Store.seleccionar_miembro">
+          <FunctionImportMapping FunctionImportName="seleccionar_pastor_iglesia" FunctionName="CampDios.Store.seleccionar_pastor_iglesia">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_miembro_Result">
+              <ComplexTypeMapping TypeName="CampDios.seleccionar_pastor_iglesia_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_pastor_zona" FunctionName="CampDiosModel.Store.seleccionar_pastor_zona">
+          <FunctionImportMapping FunctionImportName="seleccionar_pastor_zona" FunctionName="CampDios.Store.seleccionar_pastor_zona">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_pastor_zona_Result">
+              <ComplexTypeMapping TypeName="CampDios.seleccionar_pastor_zona_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_supervisor_zona" FunctionName="CampDiosModel.Store.seleccionar_supervisor_zona">
+          <FunctionImportMapping FunctionImportName="seleccionar_supervisor_zona" FunctionName="CampDios.Store.seleccionar_supervisor_zona">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_supervisor_zona_Result">
+              <ComplexTypeMapping TypeName="CampDios.seleccionar_supervisor_zona_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>

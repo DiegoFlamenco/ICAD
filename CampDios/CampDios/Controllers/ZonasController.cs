@@ -40,9 +40,8 @@ namespace CampDios.Controllers
         public ActionResult Create()
         {
             ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre");
-            var result = db.Database.SqlQuery<seleccionar_pastor_zona_Result>("exec seleccionar_lider"); //llamando al procedimiento almacenado "seleccionar_pastor_zona"
-            ViewBag.IdLiderComunidad = new SelectList(result.ToList(), "IdMiembro", "Nombres"); // pasando lo que viene del Stored Procedure a el dropdown
-            ViewBag.IdPastorZona = new SelectList(db.Miembros, "IdMiembro", "Nombres");
+            var result = db.Database.SqlQuery<seleccionar_pastor_zona_Result>("exec seleccionar_pastor_zona"); //llamando al procedimiento almacenado "seleccionar_pastor_zona"
+            ViewBag.IdPastorZona = new SelectList(result.ToList(), "IdMiembro", "Nombres");// pasando lo que viene del Stored Procedure a el dropdown
             return View();
         }
 

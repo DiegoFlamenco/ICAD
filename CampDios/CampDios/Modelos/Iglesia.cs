@@ -18,6 +18,7 @@ namespace CampDios.Modelos
         public Iglesia()
         {
             this.HistoriaEspiritual = new HashSet<HistoriaEspiritual>();
+            this.Miembros1 = new HashSet<Miembros>();
             this.Zona = new HashSet<Zona>();
         }
     
@@ -33,6 +34,8 @@ namespace CampDios.Modelos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HistoriaEspiritual> HistoriaEspiritual { get; set; }
         public virtual Miembros Miembros { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Miembros> Miembros1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Zona> Zona { get; set; }
     }

@@ -231,6 +231,24 @@
     <Compile Include="Modelos\LiderazgoCorporativo.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\Miembros.cs">
+      <DependentUpon>CampDios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Modelos\Modulos.cs">
+      <DependentUpon>CampDios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Modelos\Opciones.cs">
+      <DependentUpon>CampDios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Modelos\Parentescos.cs">
+      <DependentUpon>CampDios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Modelos\Profesion.cs">
+      <DependentUpon>CampDios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Modelos\Roles.cs">
+      <DependentUpon>CampDios.tt</DependentUpon>
+    </Compile>
     <Compile Include="Modelos\seleccionar_aprendiz_Result.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>
@@ -252,26 +270,7 @@
     <Compile Include="Modelos\seleccionar_supervisor_zona_Result.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>
-    <Compile Include="Modelos\ViewModel\Miembros-Edad.cs" />
-    <Compile Include="Modelos\Miembros.cs">
-      <DependentUpon>CampDios.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Modelos\miembros_info_Result.cs">
-      <DependentUpon>CampDios.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Modelos\Parentescos.cs">
-      <DependentUpon>CampDios.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Modelos\Profesion.cs">
-      <DependentUpon>CampDios.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Modelos\Roles.cs">
-      <DependentUpon>CampDios.tt</DependentUpon>
-    </Compile>
     <Compile Include="Modelos\Sexo.cs">
-      <DependentUpon>CampDios.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Modelos\sysdiagrams.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>
     <Compile Include="Modelos\TipoOfrenda.cs">
@@ -283,9 +282,13 @@
     <Compile Include="Modelos\Tipo_Grupo.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>
-    <Compile Include="Modelos\USUARIOS.cs">
+    <Compile Include="Modelos\Usuarios.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\Usuarios_Opciones.cs">
+      <DependentUpon>CampDios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Modelos\ViewModel\Miembros-Edad.cs" />
     <Compile Include="Modelos\Zona.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>

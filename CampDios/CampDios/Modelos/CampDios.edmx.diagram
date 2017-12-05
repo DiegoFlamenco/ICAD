@@ -4,54 +4,57 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="49c7ab7a37804ecf896824297cce781c" Name="Diagram1">
-        <EntityTypeShape EntityType="CampDiosModel.Capacitaciones" Width="1.5" PointX="0.75" PointY="14.5" />
-        <EntityTypeShape EntityType="CampDiosModel.Comunidad" Width="1.5" PointX="8.25" PointY="8.75" />
-        <EntityTypeShape EntityType="CampDiosModel.DetalleFamilia" Width="1.5" PointX="5.25" PointY="5" />
-        <EntityTypeShape EntityType="CampDiosModel.DetalleGrupo" Width="1.5" PointX="12.75" PointY="9.125" />
-        <EntityTypeShape EntityType="CampDiosModel.Dias" Width="1.5" PointX="8.25" PointY="6.125" />
-        <EntityTypeShape EntityType="CampDiosModel.EstadoCivil" Width="1.5" PointX="0.75" PointY="4.5" />
-        <EntityTypeShape EntityType="CampDiosModel.Finanzas" Width="1.5" PointX="5.25" PointY="8.75" />
-        <EntityTypeShape EntityType="CampDiosModel.Grupo" Width="1.5" PointX="10.5" PointY="8.5" />
-        <EntityTypeShape EntityType="CampDiosModel.HistoriaEspiritual" Width="1.5" PointX="7.5" PointY="14.375" />
-        <EntityTypeShape EntityType="CampDiosModel.Iglesia" Width="1.5" PointX="5.25" PointY="21.75" />
-        <EntityTypeShape EntityType="CampDiosModel.LiderazgoCorporativo" Width="1.5" PointX="0.75" PointY="9.25" />
-        <EntityTypeShape EntityType="CampDiosModel.Miembros" Width="1.5" PointX="3" PointY="6.25" />
-        <EntityTypeShape EntityType="CampDiosModel.Parentescos" Width="1.5" PointX="3" PointY="3.375" />
-        <EntityTypeShape EntityType="CampDiosModel.Profesion" Width="1.5" PointX="0.75" PointY="17" />
-        <EntityTypeShape EntityType="CampDiosModel.Roles" Width="1.5" PointX="0.75" PointY="12.125" />
-        <EntityTypeShape EntityType="CampDiosModel.Sexo" Width="1.5" PointX="0.75" PointY="6.75" />
-        <EntityTypeShape EntityType="CampDiosModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" />
-        <EntityTypeShape EntityType="CampDiosModel.Tipo_Grupo" Width="1.5" PointX="8.25" PointY="3.5" />
-        <EntityTypeShape EntityType="CampDiosModel.TipoOfrenda" Width="1.5" PointX="3" PointY="15.125" />
-        <EntityTypeShape EntityType="CampDiosModel.TipoReunion" Width="1.5" PointX="3" PointY="17.5" />
-        <EntityTypeShape EntityType="CampDiosModel.USUARIOS" Width="1.5" PointX="10.75" PointY="0.75" />
-        <EntityTypeShape EntityType="CampDiosModel.Zona" Width="1.5" PointX="10.5" PointY="15.25" />
-        <AssociationConnector Association="CampDiosModel.FK_Miembros_Capacitaciones1" />
-        <AssociationConnector Association="CampDiosModel.FK_Comunidad_Miembros1" />
-        <AssociationConnector Association="CampDiosModel.FK_Comunidad_Zona1" />
-        <AssociationConnector Association="CampDiosModel.FK_Grupo_Comunidad1" />
-        <AssociationConnector Association="CampDiosModel.FK_DetalleFamilia_Miembros" />
-        <AssociationConnector Association="CampDiosModel.FK_DetalleFamilia_Miembros1" />
-        <AssociationConnector Association="CampDiosModel.FK_DetalleFamilia_Parentescos" />
-        <AssociationConnector Association="CampDiosModel.FK_DetalleGrupo_Grupo" />
-        <AssociationConnector Association="CampDiosModel.FK_DetalleGrupo_Miembros" />
-        <AssociationConnector Association="CampDiosModel.FK_Grupo_Dias" />
-        <AssociationConnector Association="CampDiosModel.FK_Miembros_EstadoCivil" />
-        <AssociationConnector Association="CampDiosModel.FK_Finanzas_Miembros" />
-        <AssociationConnector Association="CampDiosModel.FK_Finanzas_TipoOfrenda" />
-        <AssociationConnector Association="CampDiosModel.FK_Finanzas_TipoReunion" />
-        <AssociationConnector Association="CampDiosModel.FK_Grupo_Tipo_Grupo1" />
-        <AssociationConnector Association="CampDiosModel.FK_HistoriaEspiritual_Iglesia" />
-        <AssociationConnector Association="CampDiosModel.FK_HistoriaEspiritual_Miembros1" />
-        <AssociationConnector Association="CampDiosModel.FK_Iglesia_Miembros" />
-        <AssociationConnector Association="CampDiosModel.FK_Zona_Iglesia1" />
-        <AssociationConnector Association="CampDiosModel.FK_Miembros_LiderasgoCorporativo1" />
-        <AssociationConnector Association="CampDiosModel.FK_Miembros_Miembros" />
-        <AssociationConnector Association="CampDiosModel.FK_Miembros_Profesion1" />
-        <AssociationConnector Association="CampDiosModel.FK_Miembros_Roles" />
-        <AssociationConnector Association="CampDiosModel.FK_Miembros_Sexo" />
-        <AssociationConnector Association="CampDiosModel.FK_Zona_Miembros1" />
+      <Diagram DiagramId="fce2b1806f01482cb5effaa891123358" Name="Diagram1">
+        <EntityTypeShape EntityType="CampDios.Capacitaciones" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Comunidad" Width="1.5" PointX="5.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.DetalleFamilia" Width="1.5" PointX="8.25" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.DetalleGrupo" Width="1.5" PointX="12.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Dias" Width="1.5" PointX="8.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.EstadoCivil" Width="1.5" PointX="0.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Finanzas" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Grupo" Width="1.5" PointX="10.5" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.HistoriaEspiritual" Width="1.5" PointX="7.5" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Iglesia" Width="1.5" PointX="5.25" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.LiderazgoCorporativo" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Miembros" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Modulos" Width="1.5" PointX="8.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Parentescos" Width="1.5" PointX="6" PointY="2.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Profesion" Width="1.5" PointX="0.75" PointY="12.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Roles" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Sexo" Width="1.5" PointX="0.75" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Tipo_Grupo" Width="1.5" PointX="8.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.TipoOfrenda" Width="1.5" PointX="3" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.TipoReunion" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Usuarios" Width="1.5" PointX="10.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Usuarios_Opciones" Width="1.5" PointX="10.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Zona" Width="1.5" PointX="10.5" PointY="15.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="CampDios.Opciones" Width="1.5" PointX="12.75" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="CampDios.FK_Miembros_Capacitaciones1" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Comunidad_Miembros1" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Comunidad_Zona1" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Grupo_Comunidad1" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_DetalleFamilia_Miembros" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_DetalleFamilia_Miembros1" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_DetalleFamilia_Parentescos" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_DetalleGrupo_Grupo" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_DetalleGrupo_Miembros" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Grupo_Dias" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Miembros_EstadoCivil" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Finanzas_Miembros" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Finanzas_TipoOfrenda" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Finanzas_TipoReunion" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Grupo_Tipo_Grupo1" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_HistoriaEspiritual_Iglesia" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_HistoriaEspiritual_Miembros1" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Iglesia_Miembros" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Miembros_Iglesia" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Zona_Iglesia1" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Miembros_LiderasgoCorporativo1" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Miembros_Miembros" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Miembros_Profesion1" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Miembros_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Miembros_Sexo" ManuallyRouted="false" />
+        <AssociationConnector Association="CampDios.FK_Zona_Miembros1" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

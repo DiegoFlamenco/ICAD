@@ -12,12 +12,10 @@ namespace CampDios.Modelos
     using System;
     using System.Collections.Generic;
     
-    public partial class sysdiagrams
+    public partial class Opciones
     {
-        public string name { get; set; }
-        public int principal_id { get; set; }
-        public int diagram_id { get; set; }
-        public Nullable<int> version { get; set; }
-        public byte[] definition { get; set; }
+        public int Opciones_Id { get; set; }
+        public string Nombre_Opcion { get; set; }
+        public int Modulos_Modulos_Id { get; set; }
     }
 }
