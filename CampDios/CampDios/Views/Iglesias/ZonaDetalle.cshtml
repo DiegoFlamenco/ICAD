@@ -6,9 +6,6 @@
 
 <h2>ZonaDetalle</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
@@ -46,12 +43,13 @@
         <td>
             @Html.DisplayFor(modelItem => item.Miembros.Nombres)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdZona }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdZona }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdZona })
-        </td>
     </tr>
 }
 
 </table>
+
+<div>
+    <a href="@Url.Action("Index","Comunidad")" class="btn btn-default">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
+    </a>
+</div>
