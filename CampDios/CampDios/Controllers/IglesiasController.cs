@@ -1,4 +1,4 @@
-﻿using System;
+﻿ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
@@ -38,17 +38,20 @@ namespace CampDios.Controllers
 
         public ActionResult ZonaDetalle(int? id)
         {
-            if (id == null)
+            /*if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            //Iglesia iglesia = db.Iglesia.Find(id);
-            Zona zona = db.Zona.Find(id);
+            Zona zona = db.Zona.Where(z => z.IdIglesia == id);
             if (zona == null)
             {
                 return HttpNotFound();
             }
+            return View(zona);*/
+ 
+            var zona = db.Zona.Where(z => z.IdIglesia == id);
             return View(zona);
+
         }
 
         // GET: Iglesias/Create
