@@ -1,0 +1,82 @@
+﻿@model CampDios.Modelos.Grupo
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>GrupoDetalle</title>
+</head>
+<body>
+    <div>
+        <h4>Grupo</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Descripcion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Descripcion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Direccion)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Hora)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Hora)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Comunidad.Nombre)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Comunidad.Nombre)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Dias.Dia)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Dias.Dia)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.Tipo_Grupo.Descripcion)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.Tipo_Grupo.Descripcion)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.IdGrupo }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
