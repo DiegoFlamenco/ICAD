@@ -62,6 +62,8 @@ namespace CampDios.Controllers
                     IdCorporativo=a.LiderazgoCorporativo.IdCorporativo,
                     NombreCorporativo=a.LiderazgoCorporativo.Nombre
 
+                   
+
                 }).ToList();
             //var miembros = db.Miembros.Include(m => m.Capacitaciones).Include(m => m.EstadoCivil).Include(m => m.LiderazgoCorporativo).Include(m => m.Miembros2).Include(m => m.Profesion).Include(m => m.Roles).Include(m => m.Sexo1);
 
@@ -93,6 +95,7 @@ namespace CampDios.Controllers
             ViewBag.IdProfesion = new SelectList(db.Profesion, "IdProfesion", "Oficio"); 
             ViewBag.IdRol = new SelectList(db.Roles, "IdRol", "Rol");
             ViewBag.Sexo = new SelectList(db.Sexo, "IdSexo", "Sexo1");
+            ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre");
             return View();
         }
 
@@ -101,7 +104,7 @@ namespace CampDios.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdMiembro,Nombres,Apellidos,DUI,NIT,FechaNacimiento,Direccion,Direccion1,Direccion2,Email,Tel,Cel,Sexo,IdEstadoCivil,IdProfesion,IdCapacitacion,IdRol,IdHMayor,IdCorporativo")] Miembros miembros)
+        public ActionResult Create([Bind(Include = "IdMiembro,Nombres,Apellidos,DUI,NIT,FechaNacimiento,Direccion,Direccion1,Direccion2,Email,Tel,Cel,Sexo,IdEstadoCivil,IdProfesion,IdCapacitacion,IdRol,IdHMayor,IdCorporativo,IdIglesia")] Miembros miembros)
         {
             if (ModelState.IsValid)
             {
@@ -118,6 +121,7 @@ namespace CampDios.Controllers
            
             ViewBag.IdRol = new SelectList(db.Roles, "IdRol", "Rol", miembros.IdRol);
             ViewBag.Sexo = new SelectList(db.Sexo, "IdSexo", "Sexo1", miembros.Sexo);
+            ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre", miembros.IdIglesia);
             return View(miembros);
         }
 
@@ -140,6 +144,7 @@ namespace CampDios.Controllers
             ViewBag.IdProfesion = new SelectList(db.Profesion, "IdProfesion", "Oficio", miembros.IdProfesion);
             ViewBag.IdRol = new SelectList(db.Roles, "IdRol", "Rol", miembros.IdRol);
             ViewBag.Sexo = new SelectList(db.Sexo, "IdSexo", "Sexo1", miembros.Sexo);
+            ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre", miembros.IdIglesia);
             return View(miembros);
         }
 
@@ -148,7 +153,7 @@ namespace CampDios.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdMiembro,Nombres,Apellidos,DUI,NIT,FechaNacimiento,Direccion,Direccion1,Direccion2,Email,Tel,Cel,Sexo,IdEstadoCivil,IdProfesion,IdCapacitacion,IdRol,IdHMayor,IdCorporativo")] Miembros miembros)
+        public ActionResult Edit([Bind(Include = "IdMiembro,Nombres,Apellidos,DUI,NIT,FechaNacimiento,Direccion,Direccion1,Direccion2,Email,Tel,Cel,Sexo,IdEstadoCivil,IdProfesion,IdCapacitacion,IdRol,IdHMayor,IdCorporativo,IdIglesia")] Miembros miembros)
         {
             if (ModelState.IsValid)
             {
@@ -163,6 +168,7 @@ namespace CampDios.Controllers
             ViewBag.IdProfesion = new SelectList(db.Profesion, "IdProfesion", "Oficio", miembros.IdProfesion);
             ViewBag.IdRol = new SelectList(db.Roles, "IdRol", "Rol", miembros.IdRol);
             ViewBag.Sexo = new SelectList(db.Sexo, "IdSexo", "Sexo1", miembros.Sexo);
+            ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre",miembros.IdIglesia);
             return View(miembros);
         }
 
