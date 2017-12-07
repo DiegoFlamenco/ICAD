@@ -38,21 +38,16 @@ namespace CampDios.Controllers
 
         public ActionResult ZonaDetalle(int? id)
         {
-            /*if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Zona zona = db.Zona.Where(z => z.IdIglesia == id);
-            if (zona == null)
-            {
-                return HttpNotFound();
-            }
-            return View(zona);*/
- 
             var zona = db.Zona.Where(z => z.IdIglesia == id);
             return View(zona);
-
         }
+
+        public ActionResult MiembrosDetalle(int? id)
+        {
+            var miembro = db.Miembros.Where(m => m.IdIglesia == id);
+            return View(miembro);
+        }
+
 
         // GET: Iglesias/Create
         public ActionResult Create()

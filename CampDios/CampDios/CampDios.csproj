@@ -431,6 +431,7 @@
     <Content Include="Views\DetalleFamilias\Index.cshtml" />
     <Content Include="Views\Iglesias\ZonaDetalle.cshtml" />
     <Content Include="Views\Comunidad\GrupoDetalle.cshtml" />
+    <Content Include="Views\Iglesias\MiembrosDetalle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
