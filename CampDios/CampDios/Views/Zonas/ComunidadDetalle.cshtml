@@ -6,49 +6,57 @@
 
 <h2>ComunidadDetalle</h2>
 
-<div>
-    <h4>Comunidad</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
+<p>
+    <a href="@Url.Action("Create","Comunidad")" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Nueva comunidad</a>&nbsp;
+    <a href="@Url.Action("Index","Zonas")" class="btn btn-default"><i class="fa fa-book fa-lg" aria-hidden="true"></i> Zonas</a>&nbsp;
+    <a href="@Url.Action("Index","Grupo")" class="btn btn-default"><i class="fa fa-book fa-lg" aria-hidden="true"></i> Grupos</a>&nbsp;
+</p>
+<table class="table">
+    <tr>
+        <th>
             @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-
-        <dt>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-
-        <dt>
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Direccion)
-        </dt>
+        </th>
+        <th>
+            Lider de comunidad
+            <!--@Html.DisplayNameFor(model => model.Miembros.Nombres)-->
+        </th>
+        <th>
+            Zona
+            <!--@Html.DisplayNameFor(model => model.Zona.Nombre)-->
+        </th>
+        <th></th>
+        <th>Opciones</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Miembros.Nombres)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Zona.Nombre)
+            </td>
+            <td>@Html.ActionLink("Editar", "Edit", new { id = item.IdComunidad }, new { @class = "btn btn-success" })</td>
+            <td>@Html.ActionLink("Detalles", "Details", null, new { id = item.IdComunidad }, new { @class = "btn btn-info" })</td>
+            <td>@Html.ActionLink("Borrar", "Delete", null, new { id = item.IdComunidad }, new { @class = "btn btn-danger" })</td>
+            <td>@Html.ActionLink("Grupos", "GrupoDetalle", null, new { id = item.IdComunidad }, new { @class = "btn btn-primary" })</td>
+        </tr>
+    }
+</table>
 
-        <dd>
-            @Html.DisplayFor(model => model.Direccion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Miembros.Nombres)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Miembros.Nombres)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Zona.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Zona.Nombre)
-        </dd>
-
-    </dl>
-</div>

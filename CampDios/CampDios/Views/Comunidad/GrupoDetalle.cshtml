@@ -1,4 +1,4 @@
-﻿@model CampDios.Modelos.Grupo
+﻿@model IEnumerable<CampDios.Modelos.Grupo>
 
 @{
     ViewBag.Title = "GrupoDetalle";
@@ -6,69 +6,70 @@
 
 <h2>GrupoDetalle</h2>
 
-<div>
-    <h4>Grupo</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nombre)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Direccion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Direccion)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Hora)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Hora)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Comunidad.Nombre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Comunidad.Nombre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Dias.Dia)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Dias.Dia)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Tipo_Grupo.Descripcion)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Tipo_Grupo.Descripcion)
-        </dd>
-
-    </dl>
-</div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdGrupo }) |
-    @Html.ActionLink("Back to List", "Index")
+    <a href="@Url.Action("Create","Grupo")" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Nuevo grupo</a>&nbsp;
+    <a href="@Url.Action("Index","DetalleGrupo")" class="btn btn-success"><i class="fa fa-book fa-lg" aria-hidden="true"></i> Miembros de grupos</a>&nbsp;
+    <a href="@Url.Action("Index","Zonas")" class="btn btn-default"><i class="fa fa-book fa-lg" aria-hidden="true"></i> Zonas</a>&nbsp;
+    <a href="@Url.Action("Index","Comunidad")" class="btn btn-default"><i class="fa fa-book fa-lg" aria-hidden="true"></i> Comunidades</a>&nbsp;
 </p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Hora)
+        </th>
+        <th>
+            Comunidad
+            <!--@Html.DisplayNameFor(model => model.Comunidad.Nombre)-->
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dias.Dia)
+        </th>
+        <th>
+            Tipo de grupo
+            <!--@Html.DisplayNameFor(model => model.Tipo_Grupo.Descripcion)-->
+        </th>
+        <th></th>
+        <th>Opciones</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Direccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hora)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comunidad.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dias.Dia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tipo_Grupo.Descripcion)
+            </td>
+            <td>@Html.ActionLink("Editar", "Edit", new { id = item.IdGrupo }, new { @class = "btn btn-success" })</td>
+            <td>@Html.ActionLink("Detalles", "Details", null, new { id = item.IdGrupo }, new { @class = "btn btn-info" })</td>
+            <td>@Html.ActionLink("Borrar", "Delete", null, new { id = item.IdGrupo }, new { @class = "btn btn-danger" })</td>
+        </tr>
+    }
+</table>
+

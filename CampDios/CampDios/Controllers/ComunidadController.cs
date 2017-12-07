@@ -36,13 +36,11 @@ namespace CampDios.Controllers
             return View(comunidad);
         }
 
-       public ActionResult GrupoDetalleint(int? id)
+       public ActionResult GrupoDetalle(int? id)
         {
             var grupo = db.Grupo.Where(g => g.IdComunidad == id);
             return View(grupo);
-
-            //var grupo = db.Grupo.Include(g => g.Comunidad).Include(g => g.Dias).Include(g => g.Tipo_Grupo);
-            //return View(grupo.ToList());
+            
         }
 
         // GET: Comunidad/Create
