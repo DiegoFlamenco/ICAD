@@ -36,6 +36,14 @@ namespace CampDios.Controllers
             return View(zona);
         }
 
+        public ActionResult ComunidadDetalle(int? id)
+        {
+            
+            var comunidad = db.Comunidad.Where(c => c.IdZona == id);
+            return View(comunidad);
+
+        }
+
         // GET: Zonas/Create
         public ActionResult Create()
         {
