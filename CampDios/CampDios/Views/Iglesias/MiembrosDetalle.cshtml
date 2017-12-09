@@ -9,6 +9,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.IdMiembro)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Nombres)
         </th>
         <th>
@@ -27,6 +30,9 @@
 @foreach (var item in Model) {
     <tr>
         <td>
+            @Html.DisplayFor(modelItem => item.IdMiembro)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.Nombres)
         </td>
         <td>
@@ -40,8 +46,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.Sexo1.Sexo1)
         </td>
-        
-    </tr>
+        <td><a href="@Url.Action("Edit","Miembros", new { id = item.IdMiembro })" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Editar</a>&nbsp;</td>
+        <td><a href="@Url.Action("Details","Miembros", new { id = item.IdMiembro })" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Detalles</a>&nbsp;</td>
+        <td><a href="@Url.Action("Delete","Miembros", new { id = item.IdMiembro })" class="btn btn-danger"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Borrar</a>&nbsp;</td>
+
+</tr>
 }
 
 </table>

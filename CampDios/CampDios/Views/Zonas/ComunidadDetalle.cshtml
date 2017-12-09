@@ -14,6 +14,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.IdComunidad)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Nombre)
         </th>
         <th>
@@ -38,6 +41,9 @@
     {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.IdComunidad)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
             <td>
@@ -52,10 +58,10 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Zona.Nombre)
             </td>
-            <td>@Html.ActionLink("Editar", "Edit", new { id = item.IdComunidad }, new { @class = "btn btn-success" })</td>
-            <td>@Html.ActionLink("Detalles", "Details", null, new { id = item.IdComunidad }, new { @class = "btn btn-info" })</td>
-            <td>@Html.ActionLink("Borrar", "Delete", null, new { id = item.IdComunidad }, new { @class = "btn btn-danger" })</td>
-            <td>@Html.ActionLink("Grupos", "GrupoDetalle", null, new { id = item.IdComunidad }, new { @class = "btn btn-primary" })</td>
+            <td><a href="@Url.Action("Edit","Comunidad", new { id = item.IdComunidad })" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Editar</a>&nbsp;</td>
+            <td><a href="@Url.Action("Details","Comunidad", new { id = item.IdComunidad })" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Detalles</a>&nbsp;</td>
+            <td><a href="@Url.Action("Delete","Comunidad", new { id = item.IdComunidad })" class="btn btn-danger"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Borrar</a>&nbsp;</td>
+            <td><a href="@Url.Action("GrupoDetalle","Comunidad", new { id = item.IdComunidad })" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Grupos</a>&nbsp;</td>
         </tr>
     }
 </table>
