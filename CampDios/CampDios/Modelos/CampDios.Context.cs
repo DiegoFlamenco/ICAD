@@ -40,6 +40,7 @@ namespace CampDios.Modelos
         public virtual DbSet<LiderazgoCorporativo> LiderazgoCorporativo { get; set; }
         public virtual DbSet<Miembros> Miembros { get; set; }
         public virtual DbSet<Modulos> Modulos { get; set; }
+        public virtual DbSet<Opciones> Opciones { get; set; }
         public virtual DbSet<Parentescos> Parentescos { get; set; }
         public virtual DbSet<Profesion> Profesion { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
@@ -50,7 +51,6 @@ namespace CampDios.Modelos
         public virtual DbSet<Usuarios> Usuarios { get; set; }
         public virtual DbSet<Usuarios_Opciones> Usuarios_Opciones { get; set; }
         public virtual DbSet<Zona> Zona { get; set; }
-        public virtual DbSet<Opciones> Opciones { get; set; }
     
         public virtual ObjectResult<seleccionar_aprendiz_Result> seleccionar_aprendiz()
         {

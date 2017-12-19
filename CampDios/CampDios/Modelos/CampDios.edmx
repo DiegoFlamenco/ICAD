@@ -139,18 +139,15 @@
           <Key>
             <PropertyRef Name="Modulos_Id" />
           </Key>
-          <Property Name="Modulos_Id" Type="int" Nullable="false" />
-          <Property Name="Nombre_Modulo" Type="varchar" MaxLength="45" />
+          <Property Name="Modulos_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre_Modulos" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
-        <!--Errores durante la generación:
-advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene definida ninguna clave principal. Se ha inferido la clave y la definición se creado como una vista o tabla de solo lectura.-->
         <EntityType Name="Opciones">
           <Key>
             <PropertyRef Name="Opciones_Id" />
-            <PropertyRef Name="Modulos_Modulos_Id" />
           </Key>
-          <Property Name="Opciones_Id" Type="int" Nullable="false" />
-          <Property Name="Nombre_Opcion" Type="varchar" MaxLength="45" />
+          <Property Name="Opciones_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombre_Opciones" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="Modulos_Modulos_Id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Parentescos">
@@ -205,24 +202,24 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
         </EntityType>
         <EntityType Name="Usuarios">
           <Key>
-            <PropertyRef Name="Usuario_Id" />
+            <PropertyRef Name="Usuarios_id" />
           </Key>
-          <Property Name="Usuario_Id" Type="int" Nullable="false" />
+          <Property Name="Usuarios_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Login" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="Contraseña" Type="varchar" MaxLength="45" Nullable="false" />
-          <Property Name="Fecha_Creacion" Type="datetime" Nullable="false" />
-          <Property Name="Miembro_Id" Type="int" Nullable="false" />
+          <Property Name="Fecha_creacion" Type="datetime" />
+          <Property Name="Miembro_id" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Usuarios_Opciones">
           <Key>
-            <PropertyRef Name="idUsuarios_Opciones" />
+            <PropertyRef Name="idUsuario_Opciones" />
           </Key>
-          <Property Name="idUsuarios_Opciones" Type="int" Nullable="false" />
+          <Property Name="idUsuario_Opciones" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Usuarios_Usuario_Id" Type="int" Nullable="false" />
           <Property Name="Opciones_Opciones_Id" Type="int" Nullable="false" />
-          <Property Name="Lectura" Type="bit" />
-          <Property Name="Escritura" Type="bit" />
-          <Property Name="Edicion" Type="bit" />
+          <Property Name="Lectura" Type="bit" Nullable="false" />
+          <Property Name="Escritura" Type="bit" Nullable="false" />
+          <Property Name="Edicion" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Zona">
           <Key>
@@ -523,6 +520,54 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Miembros_Usuarios">
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Miembros">
+              <PropertyRef Name="IdMiembro" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="Miembro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Modulo_Opciones">
+          <End Role="Modulos" Type="Self.Modulos" Multiplicity="1" />
+          <End Role="Opciones" Type="Self.Opciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulos">
+              <PropertyRef Name="Modulos_Id" />
+            </Principal>
+            <Dependent Role="Opciones">
+              <PropertyRef Name="Modulos_Modulos_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Opciones">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Usuarios_Opciones" Type="Self.Usuarios_Opciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Usuarios_id" />
+            </Principal>
+            <Dependent Role="Usuarios_Opciones">
+              <PropertyRef Name="Usuarios_Usuario_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Opciones_Opciones">
+          <End Role="Opciones" Type="Self.Opciones" Multiplicity="1" />
+          <End Role="Usuarios_Opciones" Type="Self.Usuarios_Opciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opciones">
+              <PropertyRef Name="Opciones_Id" />
+            </Principal>
+            <Dependent Role="Usuarios_Opciones">
+              <PropertyRef Name="Opciones_Opciones_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Zona_Iglesia1">
           <End Role="Iglesia" Type="Self.Iglesia" Multiplicity="0..1" />
           <End Role="Zona" Type="Self.Zona" Multiplicity="*" />
@@ -568,6 +613,7 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
           <EntitySet Name="LiderazgoCorporativo" EntityType="Self.LiderazgoCorporativo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Miembros" EntityType="Self.Miembros" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Modulos" EntityType="Self.Modulos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Opciones" EntityType="Self.Opciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parentescos" EntityType="Self.Parentescos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profesion" EntityType="Self.Profesion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
@@ -578,13 +624,6 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Usuarios_Opciones" EntityType="Self.Usuarios_Opciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Zona" EntityType="Self.Zona" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Opciones" EntityType="Self.Opciones" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Opciones].[Opciones_Id] AS [Opciones_Id], 
-    [Opciones].[Nombre_Opcion] AS [Nombre_Opcion], 
-    [Opciones].[Modulos_Modulos_Id] AS [Modulos_Modulos_Id]
-    FROM [dbo].[Opciones] AS [Opciones]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Comunidad_Miembros1" Association="Self.FK_Comunidad_Miembros1">
             <End Role="Miembros" EntitySet="Miembros" />
             <End Role="Comunidad" EntitySet="Comunidad" />
@@ -680,6 +719,22 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
           <AssociationSet Name="FK_Miembros_Sexo" Association="Self.FK_Miembros_Sexo">
             <End Role="Sexo" EntitySet="Sexo" />
             <End Role="Miembros" EntitySet="Miembros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Miembros_Usuarios" Association="Self.FK_Miembros_Usuarios">
+            <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Modulo_Opciones" Association="Self.FK_Modulo_Opciones">
+            <End Role="Modulos" EntitySet="Modulos" />
+            <End Role="Opciones" EntitySet="Opciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Opciones" Association="Self.FK_Usuario_Opciones">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Usuarios_Opciones" EntitySet="Usuarios_Opciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Opciones_Opciones" Association="Self.FK_Usuario_Opciones_Opciones">
+            <End Role="Opciones" EntitySet="Opciones" />
+            <End Role="Usuarios_Opciones" EntitySet="Usuarios_Opciones" />
           </AssociationSet>
           <AssociationSet Name="FK_Zona_Iglesia1" Association="Self.FK_Zona_Iglesia1">
             <End Role="Iglesia" EntitySet="Iglesia" />
@@ -865,14 +920,26 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
           <NavigationProperty Name="Profesion" Relationship="Self.FK_Miembros_Profesion1" FromRole="Miembros" ToRole="Profesion" />
           <NavigationProperty Name="Roles" Relationship="Self.FK_Miembros_Roles" FromRole="Miembros" ToRole="Roles" />
           <NavigationProperty Name="Sexo1" Relationship="Self.FK_Miembros_Sexo" FromRole="Miembros" ToRole="Sexo" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Miembros_Usuarios" FromRole="Miembros" ToRole="Usuarios" />
           <NavigationProperty Name="Zona" Relationship="Self.FK_Zona_Miembros1" FromRole="Miembros" ToRole="Zona" />
         </EntityType>
         <EntityType Name="Modulos">
           <Key>
             <PropertyRef Name="Modulos_Id" />
           </Key>
-          <Property Name="Modulos_Id" Type="Int32" Nullable="false" />
-          <Property Name="Nombre_Modulo" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Modulos_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_Modulos" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Opciones" Relationship="Self.FK_Modulo_Opciones" FromRole="Modulos" ToRole="Opciones" />
+        </EntityType>
+        <EntityType Name="Opciones">
+          <Key>
+            <PropertyRef Name="Opciones_Id" />
+          </Key>
+          <Property Name="Opciones_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombre_Opciones" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Modulos_Modulos_Id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Modulos" Relationship="Self.FK_Modulo_Opciones" FromRole="Opciones" ToRole="Modulos" />
+          <NavigationProperty Name="Usuarios_Opciones" Relationship="Self.FK_Usuario_Opciones_Opciones" FromRole="Opciones" ToRole="Usuarios_Opciones" />
         </EntityType>
         <EntityType Name="Parentescos">
           <Key>
@@ -933,24 +1000,28 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
         </EntityType>
         <EntityType Name="Usuarios">
           <Key>
-            <PropertyRef Name="Usuario_Id" />
+            <PropertyRef Name="Usuarios_id" />
           </Key>
-          <Property Name="Usuario_Id" Type="Int32" Nullable="false" />
+          <Property Name="Usuarios_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Login" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Contraseña" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Fecha_Creacion" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Miembro_Id" Type="Int32" Nullable="false" />
+          <Property Name="Fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="Miembro_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_Usuarios" FromRole="Usuarios" ToRole="Miembros" />
+          <NavigationProperty Name="Usuarios_Opciones" Relationship="Self.FK_Usuario_Opciones" FromRole="Usuarios" ToRole="Usuarios_Opciones" />
         </EntityType>
         <EntityType Name="Usuarios_Opciones">
           <Key>
-            <PropertyRef Name="idUsuarios_Opciones" />
+            <PropertyRef Name="idUsuario_Opciones" />
           </Key>
-          <Property Name="idUsuarios_Opciones" Type="Int32" Nullable="false" />
+          <Property Name="idUsuario_Opciones" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Usuarios_Usuario_Id" Type="Int32" Nullable="false" />
           <Property Name="Opciones_Opciones_Id" Type="Int32" Nullable="false" />
-          <Property Name="Lectura" Type="Boolean" />
-          <Property Name="Escritura" Type="Boolean" />
-          <Property Name="Edicion" Type="Boolean" />
+          <Property Name="Lectura" Type="Boolean" Nullable="false" />
+          <Property Name="Escritura" Type="Boolean" Nullable="false" />
+          <Property Name="Edicion" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Opciones" Relationship="Self.FK_Usuario_Opciones_Opciones" FromRole="Usuarios_Opciones" ToRole="Opciones" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Usuario_Opciones" FromRole="Usuarios_Opciones" ToRole="Usuarios" />
         </EntityType>
         <EntityType Name="Zona">
           <Key>
@@ -965,15 +1036,6 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
           <NavigationProperty Name="Comunidad" Relationship="Self.FK_Comunidad_Zona1" FromRole="Zona" ToRole="Comunidad" />
           <NavigationProperty Name="Iglesia" Relationship="Self.FK_Zona_Iglesia1" FromRole="Zona" ToRole="Iglesia" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_Zona_Miembros1" FromRole="Zona" ToRole="Miembros" />
-        </EntityType>
-        <EntityType Name="Opciones">
-          <Key>
-            <PropertyRef Name="Opciones_Id" />
-            <PropertyRef Name="Modulos_Modulos_Id" />
-          </Key>
-          <Property Name="Opciones_Id" Type="Int32" Nullable="false" />
-          <Property Name="Nombre_Opcion" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="Modulos_Modulos_Id" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="FK_Miembros_Capacitaciones1">
           <End Role="Capacitaciones" Type="Self.Capacitaciones" Multiplicity="0..1" />
@@ -1275,6 +1337,18 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Miembros_Usuarios">
+          <End Role="Miembros" Type="Self.Miembros" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Miembros">
+              <PropertyRef Name="IdMiembro" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="Miembro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Zona_Miembros1">
           <End Role="Miembros" Type="Self.Miembros" Multiplicity="1" />
           <End Role="Zona" Type="Self.Zona" Multiplicity="*" />
@@ -1284,6 +1358,42 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
             </Principal>
             <Dependent Role="Zona">
               <PropertyRef Name="IdPastorZona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Modulo_Opciones">
+          <End Role="Modulos" Type="Self.Modulos" Multiplicity="1" />
+          <End Role="Opciones" Type="Self.Opciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Modulos">
+              <PropertyRef Name="Modulos_Id" />
+            </Principal>
+            <Dependent Role="Opciones">
+              <PropertyRef Name="Modulos_Modulos_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Opciones_Opciones">
+          <End Role="Opciones" Type="Self.Opciones" Multiplicity="1" />
+          <End Role="Usuarios_Opciones" Type="Self.Usuarios_Opciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Opciones">
+              <PropertyRef Name="Opciones_Id" />
+            </Principal>
+            <Dependent Role="Usuarios_Opciones">
+              <PropertyRef Name="Opciones_Opciones_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Opciones">
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
+          <End Role="Usuarios_Opciones" Type="Self.Usuarios_Opciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuarios">
+              <PropertyRef Name="Usuarios_id" />
+            </Principal>
+            <Dependent Role="Usuarios_Opciones">
+              <PropertyRef Name="Usuarios_Usuario_Id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1301,6 +1411,7 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
           <EntitySet Name="LiderazgoCorporativo" EntityType="Self.LiderazgoCorporativo" />
           <EntitySet Name="Miembros" EntityType="Self.Miembros" />
           <EntitySet Name="Modulos" EntityType="Self.Modulos" />
+          <EntitySet Name="Opciones" EntityType="Self.Opciones" />
           <EntitySet Name="Parentescos" EntityType="Self.Parentescos" />
           <EntitySet Name="Profesion" EntityType="Self.Profesion" />
           <EntitySet Name="Roles" EntityType="Self.Roles" />
@@ -1311,7 +1422,6 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
           <EntitySet Name="Usuarios" EntityType="Self.Usuarios" />
           <EntitySet Name="Usuarios_Opciones" EntityType="Self.Usuarios_Opciones" />
           <EntitySet Name="Zona" EntityType="Self.Zona" />
-          <EntitySet Name="Opciones" EntityType="Self.Opciones" />
           <AssociationSet Name="FK_Miembros_Capacitaciones1" Association="Self.FK_Miembros_Capacitaciones1">
             <End Role="Capacitaciones" EntitySet="Capacitaciones" />
             <End Role="Miembros" EntitySet="Miembros" />
@@ -1412,9 +1522,25 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
             <End Role="Sexo" EntitySet="Sexo" />
             <End Role="Miembros" EntitySet="Miembros" />
           </AssociationSet>
+          <AssociationSet Name="FK_Miembros_Usuarios" Association="Self.FK_Miembros_Usuarios">
+            <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
           <AssociationSet Name="FK_Zona_Miembros1" Association="Self.FK_Zona_Miembros1">
             <End Role="Miembros" EntitySet="Miembros" />
             <End Role="Zona" EntitySet="Zona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Modulo_Opciones" Association="Self.FK_Modulo_Opciones">
+            <End Role="Modulos" EntitySet="Modulos" />
+            <End Role="Opciones" EntitySet="Opciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Opciones_Opciones" Association="Self.FK_Usuario_Opciones_Opciones">
+            <End Role="Opciones" EntitySet="Opciones" />
+            <End Role="Usuarios_Opciones" EntitySet="Usuarios_Opciones" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Opciones" Association="Self.FK_Usuario_Opciones">
+            <End Role="Usuarios" EntitySet="Usuarios" />
+            <End Role="Usuarios_Opciones" EntitySet="Usuarios_Opciones" />
           </AssociationSet>
           <FunctionImport Name="seleccionar_aprendiz" ReturnType="Collection(CampDios.seleccionar_aprendiz_Result)" />
           <FunctionImport Name="seleccionar_lider" ReturnType="Collection(CampDios.seleccionar_lider_Result)" />
@@ -1604,7 +1730,16 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
             <EntityTypeMapping TypeName="CampDios.Modulos">
               <MappingFragment StoreEntitySet="Modulos">
                 <ScalarProperty Name="Modulos_Id" ColumnName="Modulos_Id" />
-                <ScalarProperty Name="Nombre_Modulo" ColumnName="Nombre_Modulo" />
+                <ScalarProperty Name="Nombre_Modulos" ColumnName="Nombre_Modulos" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Opciones">
+            <EntityTypeMapping TypeName="CampDios.Opciones">
+              <MappingFragment StoreEntitySet="Opciones">
+                <ScalarProperty Name="Opciones_Id" ColumnName="Opciones_Id" />
+                <ScalarProperty Name="Nombre_Opciones" ColumnName="Nombre_Opciones" />
+                <ScalarProperty Name="Modulos_Modulos_Id" ColumnName="Modulos_Modulos_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1668,18 +1803,18 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
           <EntitySetMapping Name="Usuarios">
             <EntityTypeMapping TypeName="CampDios.Usuarios">
               <MappingFragment StoreEntitySet="Usuarios">
-                <ScalarProperty Name="Usuario_Id" ColumnName="Usuario_Id" />
+                <ScalarProperty Name="Usuarios_id" ColumnName="Usuarios_id" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
-                <ScalarProperty Name="Fecha_Creacion" ColumnName="Fecha_Creacion" />
-                <ScalarProperty Name="Miembro_Id" ColumnName="Miembro_Id" />
+                <ScalarProperty Name="Fecha_creacion" ColumnName="Fecha_creacion" />
+                <ScalarProperty Name="Miembro_id" ColumnName="Miembro_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Usuarios_Opciones">
             <EntityTypeMapping TypeName="CampDios.Usuarios_Opciones">
               <MappingFragment StoreEntitySet="Usuarios_Opciones">
-                <ScalarProperty Name="idUsuarios_Opciones" ColumnName="idUsuarios_Opciones" />
+                <ScalarProperty Name="idUsuario_Opciones" ColumnName="idUsuario_Opciones" />
                 <ScalarProperty Name="Usuarios_Usuario_Id" ColumnName="Usuarios_Usuario_Id" />
                 <ScalarProperty Name="Opciones_Opciones_Id" ColumnName="Opciones_Opciones_Id" />
                 <ScalarProperty Name="Lectura" ColumnName="Lectura" />
@@ -1697,15 +1832,6 @@ advertencia 6002: La tabla o vista 'DB_A27118_ICAD.dbo.Opciones' no tiene defini
                 <ScalarProperty Name="Direccion" ColumnName="Direccion" />
                 <ScalarProperty Name="IdPastorZona" ColumnName="IdPastorZona" />
                 <ScalarProperty Name="IdIglesia" ColumnName="IdIglesia" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Opciones">
-            <EntityTypeMapping TypeName="CampDios.Opciones">
-              <MappingFragment StoreEntitySet="Opciones">
-                <ScalarProperty Name="Opciones_Id" ColumnName="Opciones_Id" />
-                <ScalarProperty Name="Nombre_Opcion" ColumnName="Nombre_Opcion" />
-                <ScalarProperty Name="Modulos_Modulos_Id" ColumnName="Modulos_Modulos_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

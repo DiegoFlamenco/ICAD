@@ -18,10 +18,10 @@
             @Html.DisplayNameFor(model => model.Contraseña)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Fecha_Creacion)
+            @Html.DisplayNameFor(model => model.Fecha_creacion)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Miembro_Id)
+            @Html.DisplayNameFor(model => model.Miembro_id)
         </th>
         <th></th>
     </tr>
@@ -35,15 +35,15 @@
             @Html.DisplayFor(modelItem => item.Contraseña)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Fecha_Creacion)
+            @Html.DisplayFor(modelItem => item.Fecha_creacion)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Miembro_Id)
+            @Html.DisplayFor(modelItem => item.Miembro_id)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Usuario_Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Usuario_Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Usuario_Id })
+            @Html.ActionLink("Edit", "Edit", new { id=item.Usuarios_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Usuarios_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Usuarios_id })
         </td>
     </tr>
 }

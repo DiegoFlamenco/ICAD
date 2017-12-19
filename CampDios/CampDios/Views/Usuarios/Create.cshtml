@@ -32,18 +32,18 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Fecha_Creacion, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Fecha_creacion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Fecha_Creacion, new { htmlAttributes = new { @class = "form-control", placeholder = @DateTime.Now } })
-                @Html.ValidationMessageFor(model => model.Fecha_Creacion, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Fecha_creacion, new { htmlAttributes = new { @class = "form-control", placeholder = @DateTime.Now } })
+                @Html.ValidationMessageFor(model => model.Fecha_creacion, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Miembro_Id,"Miembro_Id", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Miembro_id,"Miembro_id", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("Miembro_Id", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Miembro_Id, "", new { @class = "text-danger" })
+                @Html.DropDownList("Miembro_id", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Miembro_id, "", new { @class = "text-danger" })
             </div>
         </div>
 

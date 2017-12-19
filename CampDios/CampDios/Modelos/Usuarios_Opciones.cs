@@ -14,11 +14,14 @@ namespace CampDios.Modelos
     
     public partial class Usuarios_Opciones
     {
-        public int idUsuarios_Opciones { get; set; }
+        public int idUsuario_Opciones { get; set; }
         public int Usuarios_Usuario_Id { get; set; }
         public int Opciones_Opciones_Id { get; set; }
-        public Nullable<bool> Lectura { get; set; }
-        public Nullable<bool> Escritura { get; set; }
-        public Nullable<bool> Edicion { get; set; }
+        public bool Lectura { get; set; }
+        public bool Escritura { get; set; }
+        public bool Edicion { get; set; }
+    
+        public virtual Opciones Opciones { get; set; }
+        public virtual Usuarios Usuarios { get; set; }
     }
 }

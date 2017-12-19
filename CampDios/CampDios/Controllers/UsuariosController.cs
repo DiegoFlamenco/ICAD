@@ -47,7 +47,7 @@ namespace CampDios.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Usuario_Id,Login,Contraseña,Fecha_Creacion,Miembro_Id")] Usuarios usuarios)
+        public ActionResult Create([Bind(Include = "Usuarios_id,Login,Contraseña,Fecha_creacion,Miembro_id")] Usuarios usuarios)
         {
             if (ModelState.IsValid)
             {
@@ -55,7 +55,7 @@ namespace CampDios.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Miembro_Id = new SelectList(db.Miembros, "IdMiembro", "Nombres", usuarios.Miembro_Id);
+            ViewBag.Miembro_Id = new SelectList(db.Miembros, "IdMiembro", "Nombres", usuarios.Miembro_id);
             return View(usuarios);
         }
 
@@ -80,7 +80,7 @@ namespace CampDios.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Usuario_Id,Login,Contraseña,Fecha_Creacion,Miembro_Id")] Usuarios usuarios)
+        public ActionResult Edit([Bind(Include = "Usuarios_id,Login,Contraseña,Fecha_creacion,Miembro_id")] Usuarios usuarios)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace CampDios.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Miembro_Id = new SelectList(db.Miembros, "IdMiembro", "Nombres", usuarios.Miembro_Id);
+            ViewBag.Miembro_Id = new SelectList(db.Miembros, "IdMiembro", "Nombres", usuarios.Miembro_id);
             return View(usuarios);
         }
 

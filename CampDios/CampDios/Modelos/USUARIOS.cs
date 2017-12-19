@@ -14,10 +14,20 @@ namespace CampDios.Modelos
     
     public partial class Usuarios
     {
-        public int Usuario_Id { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Usuarios()
+        {
+            this.Usuarios_Opciones = new HashSet<Usuarios_Opciones>();
+        }
+    
+        public int Usuarios_id { get; set; }
         public string Login { get; set; }
         public string Contraseña { get; set; }
-        public System.DateTime Fecha_Creacion { get; set; }
-        public int Miembro_Id { get; set; }
+        public Nullable<System.DateTime> Fecha_creacion { get; set; }
+        public int Miembro_id { get; set; }
+    
+        public virtual Miembros Miembros { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Usuarios_Opciones> Usuarios_Opciones { get; set; }
     }
 }
