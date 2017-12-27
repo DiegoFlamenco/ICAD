@@ -20,5 +20,6 @@ namespace CampDios.Modelos
     
         public virtual Grupo Grupo { get; set; }
         public virtual Miembros Miembros { get; set; }
+        public virtual Pastores Pastores { get; set; }
     }
 }

@@ -12,21 +12,17 @@ namespace CampDios.Modelos
     using System;
     using System.Collections.Generic;
     
-    public partial class Profesion
+    public partial class RolesPastor
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Profesion()
+        public RolesPastor()
         {
-            this.Miembros = new HashSet<Miembros>();
             this.Pastores = new HashSet<Pastores>();
         }
     
-        public int IdProfesion { get; set; }
-        public string Oficio { get; set; }
-        public string Descripcion { get; set; }
+        public int IdRolPastor { get; set; }
+        public string RolPastor { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Miembros> Miembros { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Pastores> Pastores { get; set; }
     }

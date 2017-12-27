@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CampDios.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="CampDiosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Capacitaciones">
           <Key>
             <PropertyRef Name="IdCapacitacion" />
@@ -157,6 +157,31 @@
           <Property Name="IdParentesco" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Parentesco" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="Pastores">
+          <Key>
+            <PropertyRef Name="IdPastor" />
+          </Key>
+          <Property Name="IdPastor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nombres" Type="varchar" MaxLength="50" />
+          <Property Name="Apellidos" Type="varchar" MaxLength="50" />
+          <Property Name="DUI" Type="varchar" MaxLength="50" />
+          <Property Name="NIT" Type="varchar" MaxLength="50" />
+          <Property Name="FechaNacimiento" Type="date" />
+          <Property Name="Direccion" Type="varchar" MaxLength="200" />
+          <Property Name="Direccion1" Type="varchar" MaxLength="200" />
+          <Property Name="Direccion2" Type="varchar" MaxLength="200" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="Tel" Type="varchar" MaxLength="9" />
+          <Property Name="Cel" Type="varchar" MaxLength="9" />
+          <Property Name="Sexo" Type="int" />
+          <Property Name="IdEstadoCivil" Type="int" Nullable="false" />
+          <Property Name="IdProfesion" Type="int" Nullable="false" />
+          <Property Name="IdCapacitacion" Type="int" Nullable="false" />
+          <Property Name="IdRolPastor" Type="int" Nullable="false" />
+          <Property Name="IdHMayor" Type="int" Nullable="false" />
+          <Property Name="IdCorporativo" Type="int" Nullable="false" />
+          <Property Name="IdIglesia" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Profesion">
           <Key>
             <PropertyRef Name="IdProfesion" />
@@ -171,6 +196,13 @@
           </Key>
           <Property Name="IdRol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Rol" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RolesPastor">
+          <Key>
+            <PropertyRef Name="IdRolPastor" />
+          </Key>
+          <Property Name="IdRolPastor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RolPastor" Type="varchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="Sexo">
           <Key>
@@ -244,6 +276,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Comunidad_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="Comunidad" Type="Self.Comunidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
+            </Principal>
+            <Dependent Role="Comunidad">
+              <PropertyRef Name="IdLiderComunidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Comunidad_Zona1">
           <End Role="Zona" Type="Self.Zona" Multiplicity="1" />
           <End Role="Comunidad" Type="Self.Comunidad" Multiplicity="*" />
@@ -292,6 +336,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DetalleFamilia_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="DetalleFamilia" Type="Self.DetalleFamilia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
+            </Principal>
+            <Dependent Role="DetalleFamilia">
+              <PropertyRef Name="IdMiembro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleFamilia_Pastores1">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="DetalleFamilia" Type="Self.DetalleFamilia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
+            </Principal>
+            <Dependent Role="DetalleFamilia">
+              <PropertyRef Name="IdPariente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DetalleGrupo_Grupo">
           <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
           <End Role="DetalleGrupo" Type="Self.DetalleGrupo" Multiplicity="*" />
@@ -316,12 +384,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DetalleGrupo_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="DetalleGrupo" Type="Self.DetalleGrupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
+            </Principal>
+            <Dependent Role="DetalleGrupo">
+              <PropertyRef Name="IdMiembro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Finanzas_Miembros">
           <End Role="Miembros" Type="Self.Miembros" Multiplicity="1" />
           <End Role="Finanzas" Type="Self.Finanzas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
+            </Principal>
+            <Dependent Role="Finanzas">
+              <PropertyRef Name="IdMiembro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Finanzas_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="Finanzas" Type="Self.Finanzas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
             </Principal>
             <Dependent Role="Finanzas">
               <PropertyRef Name="IdMiembro" />
@@ -412,12 +504,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_HistoriaEspiritual_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="HistoriaEspiritual" Type="Self.HistoriaEspiritual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
+            </Principal>
+            <Dependent Role="HistoriaEspiritual">
+              <PropertyRef Name="IdMiembro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Iglesia_Miembros">
           <End Role="Miembros" Type="Self.Miembros" Multiplicity="0..1" />
           <End Role="Iglesia" Type="Self.Iglesia" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
+            </Principal>
+            <Dependent Role="Iglesia">
+              <PropertyRef Name="IdMiembro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Iglesia_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="0..1" />
+          <End Role="Iglesia" Type="Self.Iglesia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
             </Principal>
             <Dependent Role="Iglesia">
               <PropertyRef Name="IdMiembro" />
@@ -544,6 +660,114 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pastores_Capacitaciones">
+          <End Role="Capacitaciones" Type="Self.Capacitaciones" Multiplicity="1" />
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Capacitaciones">
+              <PropertyRef Name="IdCapacitacion" />
+            </Principal>
+            <Dependent Role="Pastores">
+              <PropertyRef Name="IdCapacitacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pastores_EstadoCivil">
+          <End Role="EstadoCivil" Type="Self.EstadoCivil" Multiplicity="1" />
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoCivil">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Pastores">
+              <PropertyRef Name="IdEstadoCivil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pastores_Iglesia">
+          <End Role="Iglesia" Type="Self.Iglesia" Multiplicity="1" />
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Iglesia">
+              <PropertyRef Name="IdIglesia" />
+            </Principal>
+            <Dependent Role="Pastores">
+              <PropertyRef Name="IdIglesia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pastores_LiderazgoCorporativo">
+          <End Role="LiderazgoCorporativo" Type="Self.LiderazgoCorporativo" Multiplicity="1" />
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LiderazgoCorporativo">
+              <PropertyRef Name="IdCorporativo" />
+            </Principal>
+            <Dependent Role="Pastores">
+              <PropertyRef Name="IdCorporativo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pastores_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="Pastores1" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
+            </Principal>
+            <Dependent Role="Pastores1">
+              <PropertyRef Name="IdHMayor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pastores_Profesion">
+          <End Role="Profesion" Type="Self.Profesion" Multiplicity="1" />
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesion">
+              <PropertyRef Name="IdProfesion" />
+            </Principal>
+            <Dependent Role="Pastores">
+              <PropertyRef Name="IdProfesion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pastores_Roles">
+          <End Role="RolesPastor" Type="Self.RolesPastor" Multiplicity="1" />
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RolesPastor">
+              <PropertyRef Name="IdRolPastor" />
+            </Principal>
+            <Dependent Role="Pastores">
+              <PropertyRef Name="IdRolPastor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pastores_Sexo">
+          <End Role="Sexo" Type="Self.Sexo" Multiplicity="0..1" />
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sexo">
+              <PropertyRef Name="IdSexo" />
+            </Principal>
+            <Dependent Role="Pastores">
+              <PropertyRef Name="Sexo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pastores_Usuarios">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="Miembro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Usuario_Opciones">
           <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
           <End Role="Usuarios_Opciones" Type="Self.Usuarios_Opciones" Multiplicity="*" />
@@ -592,6 +816,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Zona_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="Zona" Type="Self.Zona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
+            </Principal>
+            <Dependent Role="Zona">
+              <PropertyRef Name="IdPastorZona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Function Name="seleccionar_aprendiz" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="seleccionar_lider" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="seleccionar_miembro" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -599,7 +835,7 @@
         <Function Name="seleccionar_pastor_iglesia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="seleccionar_pastor_zona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="seleccionar_supervisor_zona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="CampDiosStoreContainer">
+        <EntityContainer Name="CampDiosModelStoreContainer">
           <EntitySet Name="Capacitaciones" EntityType="Self.Capacitaciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comunidad" EntityType="Self.Comunidad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetalleFamilia" EntityType="Self.DetalleFamilia" Schema="dbo" store:Type="Tables" />
@@ -615,8 +851,10 @@
           <EntitySet Name="Modulos" EntityType="Self.Modulos" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Opciones" EntityType="Self.Opciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Parentescos" EntityType="Self.Parentescos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pastores" EntityType="Self.Pastores" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profesion" EntityType="Self.Profesion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RolesPastor" EntityType="Self.RolesPastor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sexo" EntityType="Self.Sexo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tipo_Grupo" EntityType="Self.Tipo_Grupo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoOfrenda" EntityType="Self.TipoOfrenda" Schema="dbo" store:Type="Tables" />
@@ -626,6 +864,10 @@
           <EntitySet Name="Zona" EntityType="Self.Zona" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Comunidad_Miembros1" Association="Self.FK_Comunidad_Miembros1">
             <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="Comunidad" EntitySet="Comunidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comunidad_Pastores" Association="Self.FK_Comunidad_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
             <End Role="Comunidad" EntitySet="Comunidad" />
           </AssociationSet>
           <AssociationSet Name="FK_Comunidad_Zona1" Association="Self.FK_Comunidad_Zona1">
@@ -644,6 +886,14 @@
             <End Role="Parentescos" EntitySet="Parentescos" />
             <End Role="DetalleFamilia" EntitySet="DetalleFamilia" />
           </AssociationSet>
+          <AssociationSet Name="FK_DetalleFamilia_Pastores" Association="Self.FK_DetalleFamilia_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
+            <End Role="DetalleFamilia" EntitySet="DetalleFamilia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleFamilia_Pastores1" Association="Self.FK_DetalleFamilia_Pastores1">
+            <End Role="Pastores" EntitySet="Pastores" />
+            <End Role="DetalleFamilia" EntitySet="DetalleFamilia" />
+          </AssociationSet>
           <AssociationSet Name="FK_DetalleGrupo_Grupo" Association="Self.FK_DetalleGrupo_Grupo">
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="DetalleGrupo" EntitySet="DetalleGrupo" />
@@ -652,8 +902,16 @@
             <End Role="Miembros" EntitySet="Miembros" />
             <End Role="DetalleGrupo" EntitySet="DetalleGrupo" />
           </AssociationSet>
+          <AssociationSet Name="FK_DetalleGrupo_Pastores" Association="Self.FK_DetalleGrupo_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
+            <End Role="DetalleGrupo" EntitySet="DetalleGrupo" />
+          </AssociationSet>
           <AssociationSet Name="FK_Finanzas_Miembros" Association="Self.FK_Finanzas_Miembros">
             <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="Finanzas" EntitySet="Finanzas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Finanzas_Pastores" Association="Self.FK_Finanzas_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
             <End Role="Finanzas" EntitySet="Finanzas" />
           </AssociationSet>
           <AssociationSet Name="FK_Finanzas_TipoOfrenda" Association="Self.FK_Finanzas_TipoOfrenda">
@@ -684,8 +942,16 @@
             <End Role="Miembros" EntitySet="Miembros" />
             <End Role="HistoriaEspiritual" EntitySet="HistoriaEspiritual" />
           </AssociationSet>
+          <AssociationSet Name="FK_HistoriaEspiritual_Pastores" Association="Self.FK_HistoriaEspiritual_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
+            <End Role="HistoriaEspiritual" EntitySet="HistoriaEspiritual" />
+          </AssociationSet>
           <AssociationSet Name="FK_Iglesia_Miembros" Association="Self.FK_Iglesia_Miembros">
             <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="Iglesia" EntitySet="Iglesia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Iglesia_Pastores" Association="Self.FK_Iglesia_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
             <End Role="Iglesia" EntitySet="Iglesia" />
           </AssociationSet>
           <AssociationSet Name="FK_Miembros_Capacitaciones1" Association="Self.FK_Miembros_Capacitaciones1">
@@ -728,6 +994,42 @@
             <End Role="Modulos" EntitySet="Modulos" />
             <End Role="Opciones" EntitySet="Opciones" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pastores_Capacitaciones" Association="Self.FK_Pastores_Capacitaciones">
+            <End Role="Capacitaciones" EntitySet="Capacitaciones" />
+            <End Role="Pastores" EntitySet="Pastores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pastores_EstadoCivil" Association="Self.FK_Pastores_EstadoCivil">
+            <End Role="EstadoCivil" EntitySet="EstadoCivil" />
+            <End Role="Pastores" EntitySet="Pastores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pastores_Iglesia" Association="Self.FK_Pastores_Iglesia">
+            <End Role="Iglesia" EntitySet="Iglesia" />
+            <End Role="Pastores" EntitySet="Pastores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pastores_LiderazgoCorporativo" Association="Self.FK_Pastores_LiderazgoCorporativo">
+            <End Role="LiderazgoCorporativo" EntitySet="LiderazgoCorporativo" />
+            <End Role="Pastores" EntitySet="Pastores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pastores_Pastores" Association="Self.FK_Pastores_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
+            <End Role="Pastores1" EntitySet="Pastores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pastores_Profesion" Association="Self.FK_Pastores_Profesion">
+            <End Role="Profesion" EntitySet="Profesion" />
+            <End Role="Pastores" EntitySet="Pastores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pastores_Roles" Association="Self.FK_Pastores_Roles">
+            <End Role="RolesPastor" EntitySet="RolesPastor" />
+            <End Role="Pastores" EntitySet="Pastores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pastores_Sexo" Association="Self.FK_Pastores_Sexo">
+            <End Role="Sexo" EntitySet="Sexo" />
+            <End Role="Pastores" EntitySet="Pastores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pastores_Usuarios" Association="Self.FK_Pastores_Usuarios">
+            <End Role="Pastores" EntitySet="Pastores" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
           <AssociationSet Name="FK_Usuario_Opciones" Association="Self.FK_Usuario_Opciones">
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Usuarios_Opciones" EntitySet="Usuarios_Opciones" />
@@ -744,12 +1046,16 @@
             <End Role="Miembros" EntitySet="Miembros" />
             <End Role="Zona" EntitySet="Zona" />
           </AssociationSet>
+          <AssociationSet Name="FK_Zona_Pastores" Association="Self.FK_Zona_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
+            <End Role="Zona" EntitySet="Zona" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="CampDios" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="CampDiosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Capacitaciones">
           <Key>
             <PropertyRef Name="IdCapacitacion" />
@@ -758,6 +1064,7 @@
           <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_Capacitaciones1" FromRole="Capacitaciones" ToRole="Miembros" />
+          <NavigationProperty Name="Pastores" Relationship="Self.FK_Pastores_Capacitaciones" FromRole="Capacitaciones" ToRole="Pastores" />
         </EntityType>
         <EntityType Name="Comunidad">
           <Key>
@@ -770,6 +1077,7 @@
           <Property Name="IdLiderComunidad" Type="Int32" Nullable="false" />
           <Property Name="IdZona" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_Comunidad_Miembros1" FromRole="Comunidad" ToRole="Miembros" />
+          <NavigationProperty Name="Pastores" Relationship="Self.FK_Comunidad_Pastores" FromRole="Comunidad" ToRole="Pastores" />
           <NavigationProperty Name="Zona" Relationship="Self.FK_Comunidad_Zona1" FromRole="Comunidad" ToRole="Zona" />
           <NavigationProperty Name="Grupo" Relationship="Self.FK_Grupo_Comunidad1" FromRole="Comunidad" ToRole="Grupo" />
         </EntityType>
@@ -784,6 +1092,8 @@
           <NavigationProperty Name="Miembros" Relationship="Self.FK_DetalleFamilia_Miembros" FromRole="DetalleFamilia" ToRole="Miembros" />
           <NavigationProperty Name="Miembros1" Relationship="Self.FK_DetalleFamilia_Miembros1" FromRole="DetalleFamilia" ToRole="Miembros" />
           <NavigationProperty Name="Parentescos" Relationship="Self.FK_DetalleFamilia_Parentescos" FromRole="DetalleFamilia" ToRole="Parentescos" />
+          <NavigationProperty Name="Pastores" Relationship="Self.FK_DetalleFamilia_Pastores" FromRole="DetalleFamilia" ToRole="Pastores" />
+          <NavigationProperty Name="Pastores1" Relationship="Self.FK_DetalleFamilia_Pastores1" FromRole="DetalleFamilia" ToRole="Pastores" />
         </EntityType>
         <EntityType Name="DetalleGrupo">
           <Key>
@@ -794,6 +1104,7 @@
           <Property Name="IdMiembro" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Grupo" Relationship="Self.FK_DetalleGrupo_Grupo" FromRole="DetalleGrupo" ToRole="Grupo" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_DetalleGrupo_Miembros" FromRole="DetalleGrupo" ToRole="Miembros" />
+          <NavigationProperty Name="Pastores" Relationship="Self.FK_DetalleGrupo_Pastores" FromRole="DetalleGrupo" ToRole="Pastores" />
         </EntityType>
         <EntityType Name="Dias">
           <Key>
@@ -810,6 +1121,7 @@
           <Property Name="IdEstado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_EstadoCivil" FromRole="EstadoCivil" ToRole="Miembros" />
+          <NavigationProperty Name="Pastores" Relationship="Self.FK_Pastores_EstadoCivil" FromRole="EstadoCivil" ToRole="Pastores" />
         </EntityType>
         <EntityType Name="Finanzas">
           <Key>
@@ -822,6 +1134,7 @@
           <Property Name="Monto" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_Finanzas_Miembros" FromRole="Finanzas" ToRole="Miembros" />
+          <NavigationProperty Name="Pastores" Relationship="Self.FK_Finanzas_Pastores" FromRole="Finanzas" ToRole="Pastores" />
           <NavigationProperty Name="TipoOfrenda" Relationship="Self.FK_Finanzas_TipoOfrenda" FromRole="Finanzas" ToRole="TipoOfrenda" />
           <NavigationProperty Name="TipoReunion" Relationship="Self.FK_Finanzas_TipoReunion" FromRole="Finanzas" ToRole="TipoReunion" />
         </EntityType>
@@ -853,6 +1166,7 @@
           <Property Name="IglesiaBautismo" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Iglesia" Relationship="Self.FK_HistoriaEspiritual_Iglesia" FromRole="HistoriaEspiritual" ToRole="Iglesia" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_HistoriaEspiritual_Miembros1" FromRole="HistoriaEspiritual" ToRole="Miembros" />
+          <NavigationProperty Name="Pastores" Relationship="Self.FK_HistoriaEspiritual_Pastores" FromRole="HistoriaEspiritual" ToRole="Pastores" />
         </EntityType>
         <EntityType Name="Iglesia">
           <Key>
@@ -868,7 +1182,9 @@
           <Property Name="IdMiembro" Type="Int32" />
           <NavigationProperty Name="HistoriaEspiritual" Relationship="Self.FK_HistoriaEspiritual_Iglesia" FromRole="Iglesia" ToRole="HistoriaEspiritual" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_Iglesia_Miembros" FromRole="Iglesia" ToRole="Miembros" />
+          <NavigationProperty Name="Pastores" Relationship="Self.FK_Iglesia_Pastores" FromRole="Iglesia" ToRole="Pastores" />
           <NavigationProperty Name="Miembros1" Relationship="Self.FK_Miembros_Iglesia" FromRole="Iglesia" ToRole="Miembros" />
+          <NavigationProperty Name="Pastores1" Relationship="Self.FK_Pastores_Iglesia" FromRole="Iglesia" ToRole="Pastores" />
           <NavigationProperty Name="Zona" Relationship="Self.FK_Zona_Iglesia1" FromRole="Iglesia" ToRole="Zona" />
         </EntityType>
         <EntityType Name="LiderazgoCorporativo">
@@ -879,6 +1195,7 @@
           <Property Name="Nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_LiderasgoCorporativo1" FromRole="LiderazgoCorporativo" ToRole="Miembros" />
+          <NavigationProperty Name="Pastores" Relationship="Self.FK_Pastores_LiderazgoCorporativo" FromRole="LiderazgoCorporativo" ToRole="Pastores" />
         </EntityType>
         <EntityType Name="Miembros">
           <Key>
@@ -949,6 +1266,49 @@
           <Property Name="Parentesco" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="DetalleFamilia" Relationship="Self.FK_DetalleFamilia_Parentescos" FromRole="Parentescos" ToRole="DetalleFamilia" />
         </EntityType>
+        <EntityType Name="Pastores">
+          <Key>
+            <PropertyRef Name="IdPastor" />
+          </Key>
+          <Property Name="IdPastor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nombres" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Apellidos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="DUI" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NIT" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="FechaNacimiento" Type="DateTime" Precision="0" />
+          <Property Name="Direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion1" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Direccion2" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Tel" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="Cel" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="Sexo" Type="Int32" />
+          <Property Name="IdEstadoCivil" Type="Int32" Nullable="false" />
+          <Property Name="IdProfesion" Type="Int32" Nullable="false" />
+          <Property Name="IdCapacitacion" Type="Int32" Nullable="false" />
+          <Property Name="IdRolPastor" Type="Int32" Nullable="false" />
+          <Property Name="IdHMayor" Type="Int32" Nullable="false" />
+          <Property Name="IdCorporativo" Type="Int32" Nullable="false" />
+          <Property Name="IdIglesia" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Capacitaciones" Relationship="Self.FK_Pastores_Capacitaciones" FromRole="Pastores" ToRole="Capacitaciones" />
+          <NavigationProperty Name="Comunidad" Relationship="Self.FK_Comunidad_Pastores" FromRole="Pastores" ToRole="Comunidad" />
+          <NavigationProperty Name="DetalleFamilia" Relationship="Self.FK_DetalleFamilia_Pastores" FromRole="Pastores" ToRole="DetalleFamilia" />
+          <NavigationProperty Name="DetalleFamilia1" Relationship="Self.FK_DetalleFamilia_Pastores1" FromRole="Pastores" ToRole="DetalleFamilia" />
+          <NavigationProperty Name="DetalleGrupo" Relationship="Self.FK_DetalleGrupo_Pastores" FromRole="Pastores" ToRole="DetalleGrupo" />
+          <NavigationProperty Name="EstadoCivil" Relationship="Self.FK_Pastores_EstadoCivil" FromRole="Pastores" ToRole="EstadoCivil" />
+          <NavigationProperty Name="Finanzas" Relationship="Self.FK_Finanzas_Pastores" FromRole="Pastores" ToRole="Finanzas" />
+          <NavigationProperty Name="HistoriaEspiritual" Relationship="Self.FK_HistoriaEspiritual_Pastores" FromRole="Pastores" ToRole="HistoriaEspiritual" />
+          <NavigationProperty Name="Iglesia" Relationship="Self.FK_Iglesia_Pastores" FromRole="Pastores" ToRole="Iglesia" />
+          <NavigationProperty Name="Iglesia1" Relationship="Self.FK_Pastores_Iglesia" FromRole="Pastores" ToRole="Iglesia" />
+          <NavigationProperty Name="LiderazgoCorporativo" Relationship="Self.FK_Pastores_LiderazgoCorporativo" FromRole="Pastores" ToRole="LiderazgoCorporativo" />
+          <NavigationProperty Name="Pastores1" Relationship="Self.FK_Pastores_Pastores" FromRole="Pastores" ToRole="Pastores1" />
+          <NavigationProperty Name="Pastores2" Relationship="Self.FK_Pastores_Pastores" FromRole="Pastores1" ToRole="Pastores" />
+          <NavigationProperty Name="Profesion" Relationship="Self.FK_Pastores_Profesion" FromRole="Pastores" ToRole="Profesion" />
+          <NavigationProperty Name="RolesPastor" Relationship="Self.FK_Pastores_Roles" FromRole="Pastores" ToRole="RolesPastor" />
+          <NavigationProperty Name="Sexo1" Relationship="Self.FK_Pastores_Sexo" FromRole="Pastores" ToRole="Sexo" />
+          <NavigationProperty Name="Usuarios" Relationship="Self.FK_Pastores_Usuarios" FromRole="Pastores" ToRole="Usuarios" />
+          <NavigationProperty Name="Zona" Relationship="Self.FK_Zona_Pastores" FromRole="Pastores" ToRole="Zona" />
+        </EntityType>
         <EntityType Name="Profesion">
           <Key>
             <PropertyRef Name="IdProfesion" />
@@ -957,6 +1317,7 @@
           <Property Name="Oficio" Type="String" MaxLength="125" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_Profesion1" FromRole="Profesion" ToRole="Miembros" />
+          <NavigationProperty Name="Pastores" Relationship="Self.FK_Pastores_Profesion" FromRole="Profesion" ToRole="Pastores" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -966,6 +1327,14 @@
           <Property Name="Rol" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_Roles" FromRole="Roles" ToRole="Miembros" />
         </EntityType>
+        <EntityType Name="RolesPastor">
+          <Key>
+            <PropertyRef Name="IdRolPastor" />
+          </Key>
+          <Property Name="IdRolPastor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RolPastor" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Pastores" Relationship="Self.FK_Pastores_Roles" FromRole="RolesPastor" ToRole="Pastores" />
+        </EntityType>
         <EntityType Name="Sexo">
           <Key>
             <PropertyRef Name="IdSexo" />
@@ -973,6 +1342,7 @@
           <Property Name="IdSexo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Sexo1" Type="String" MaxLength="1" FixedLength="true" Unicode="true" Nullable="false" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_Sexo" FromRole="Sexo" ToRole="Miembros" />
+          <NavigationProperty Name="Pastores" Relationship="Self.FK_Pastores_Sexo" FromRole="Sexo" ToRole="Pastores" />
         </EntityType>
         <EntityType Name="Tipo_Grupo">
           <Key>
@@ -1008,6 +1378,7 @@
           <Property Name="Fecha_creacion" Type="DateTime" Precision="3" />
           <Property Name="Miembro_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_Usuarios" FromRole="Usuarios" ToRole="Miembros" />
+          <NavigationProperty Name="Pastores" Relationship="Self.FK_Pastores_Usuarios" FromRole="Usuarios" ToRole="Pastores" />
           <NavigationProperty Name="Usuarios_Opciones" Relationship="Self.FK_Usuario_Opciones" FromRole="Usuarios" ToRole="Usuarios_Opciones" />
         </EntityType>
         <EntityType Name="Usuarios_Opciones">
@@ -1036,6 +1407,7 @@
           <NavigationProperty Name="Comunidad" Relationship="Self.FK_Comunidad_Zona1" FromRole="Zona" ToRole="Comunidad" />
           <NavigationProperty Name="Iglesia" Relationship="Self.FK_Zona_Iglesia1" FromRole="Zona" ToRole="Iglesia" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_Zona_Miembros1" FromRole="Zona" ToRole="Miembros" />
+          <NavigationProperty Name="Pastores" Relationship="Self.FK_Zona_Pastores" FromRole="Zona" ToRole="Pastores" />
         </EntityType>
         <Association Name="FK_Miembros_Capacitaciones1">
           <End Role="Capacitaciones" Type="Self.Capacitaciones" Multiplicity="0..1" />
@@ -1049,12 +1421,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pastores_Capacitaciones">
+          <End Role="Capacitaciones" Type="Self.Capacitaciones" Multiplicity="1" />
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Capacitaciones">
+              <PropertyRef Name="IdCapacitacion" />
+            </Principal>
+            <Dependent Role="Pastores">
+              <PropertyRef Name="IdCapacitacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Comunidad_Miembros1">
           <End Role="Miembros" Type="Self.Miembros" Multiplicity="1" />
           <End Role="Comunidad" Type="Self.Comunidad" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
+            </Principal>
+            <Dependent Role="Comunidad">
+              <PropertyRef Name="IdLiderComunidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Comunidad_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="Comunidad" Type="Self.Comunidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
             </Principal>
             <Dependent Role="Comunidad">
               <PropertyRef Name="IdLiderComunidad" />
@@ -1121,6 +1517,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DetalleFamilia_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="DetalleFamilia" Type="Self.DetalleFamilia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
+            </Principal>
+            <Dependent Role="DetalleFamilia">
+              <PropertyRef Name="IdMiembro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleFamilia_Pastores1">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="DetalleFamilia" Type="Self.DetalleFamilia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
+            </Principal>
+            <Dependent Role="DetalleFamilia">
+              <PropertyRef Name="IdPariente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DetalleGrupo_Grupo">
           <End Role="Grupo" Type="Self.Grupo" Multiplicity="1" />
           <End Role="DetalleGrupo" Type="Self.DetalleGrupo" Multiplicity="*" />
@@ -1139,6 +1559,18 @@
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
+            </Principal>
+            <Dependent Role="DetalleGrupo">
+              <PropertyRef Name="IdMiembro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DetalleGrupo_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="DetalleGrupo" Type="Self.DetalleGrupo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
             </Principal>
             <Dependent Role="DetalleGrupo">
               <PropertyRef Name="IdMiembro" />
@@ -1169,12 +1601,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pastores_EstadoCivil">
+          <End Role="EstadoCivil" Type="Self.EstadoCivil" Multiplicity="1" />
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EstadoCivil">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Pastores">
+              <PropertyRef Name="IdEstadoCivil" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Finanzas_Miembros">
           <End Role="Miembros" Type="Self.Miembros" Multiplicity="1" />
           <End Role="Finanzas" Type="Self.Finanzas" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
+            </Principal>
+            <Dependent Role="Finanzas">
+              <PropertyRef Name="IdMiembro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Finanzas_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="Finanzas" Type="Self.Finanzas" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
             </Principal>
             <Dependent Role="Finanzas">
               <PropertyRef Name="IdMiembro" />
@@ -1241,12 +1697,36 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_HistoriaEspiritual_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="HistoriaEspiritual" Type="Self.HistoriaEspiritual" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
+            </Principal>
+            <Dependent Role="HistoriaEspiritual">
+              <PropertyRef Name="IdMiembro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Iglesia_Miembros">
           <End Role="Miembros" Type="Self.Miembros" Multiplicity="0..1" />
           <End Role="Iglesia" Type="Self.Iglesia" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Miembros">
               <PropertyRef Name="IdMiembro" />
+            </Principal>
+            <Dependent Role="Iglesia">
+              <PropertyRef Name="IdMiembro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Iglesia_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="0..1" />
+          <End Role="Iglesia" Type="Self.Iglesia" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
             </Principal>
             <Dependent Role="Iglesia">
               <PropertyRef Name="IdMiembro" />
@@ -1261,6 +1741,18 @@
               <PropertyRef Name="IdIglesia" />
             </Principal>
             <Dependent Role="Miembros">
+              <PropertyRef Name="IdIglesia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pastores_Iglesia">
+          <End Role="Iglesia" Type="Self.Iglesia" Multiplicity="1" />
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Iglesia">
+              <PropertyRef Name="IdIglesia" />
+            </Principal>
+            <Dependent Role="Pastores">
               <PropertyRef Name="IdIglesia" />
             </Dependent>
           </ReferentialConstraint>
@@ -1285,6 +1777,18 @@
               <PropertyRef Name="IdCorporativo" />
             </Principal>
             <Dependent Role="Miembros">
+              <PropertyRef Name="IdCorporativo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pastores_LiderazgoCorporativo">
+          <End Role="LiderazgoCorporativo" Type="Self.LiderazgoCorporativo" Multiplicity="1" />
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LiderazgoCorporativo">
+              <PropertyRef Name="IdCorporativo" />
+            </Principal>
+            <Dependent Role="Pastores">
               <PropertyRef Name="IdCorporativo" />
             </Dependent>
           </ReferentialConstraint>
@@ -1385,6 +1889,78 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Pastores_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="Pastores1" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
+            </Principal>
+            <Dependent Role="Pastores1">
+              <PropertyRef Name="IdHMayor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pastores_Profesion">
+          <End Role="Profesion" Type="Self.Profesion" Multiplicity="1" />
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Profesion">
+              <PropertyRef Name="IdProfesion" />
+            </Principal>
+            <Dependent Role="Pastores">
+              <PropertyRef Name="IdProfesion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pastores_Roles">
+          <End Role="RolesPastor" Type="Self.RolesPastor" Multiplicity="1" />
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RolesPastor">
+              <PropertyRef Name="IdRolPastor" />
+            </Principal>
+            <Dependent Role="Pastores">
+              <PropertyRef Name="IdRolPastor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pastores_Sexo">
+          <End Role="Sexo" Type="Self.Sexo" Multiplicity="0..1" />
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sexo">
+              <PropertyRef Name="IdSexo" />
+            </Principal>
+            <Dependent Role="Pastores">
+              <PropertyRef Name="Sexo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pastores_Usuarios">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
+            </Principal>
+            <Dependent Role="Usuarios">
+              <PropertyRef Name="Miembro_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Zona_Pastores">
+          <End Role="Pastores" Type="Self.Pastores" Multiplicity="1" />
+          <End Role="Zona" Type="Self.Zona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pastores">
+              <PropertyRef Name="IdPastor" />
+            </Principal>
+            <Dependent Role="Zona">
+              <PropertyRef Name="IdPastorZona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Usuario_Opciones">
           <End Role="Usuarios" Type="Self.Usuarios" Multiplicity="1" />
           <End Role="Usuarios_Opciones" Type="Self.Usuarios_Opciones" Multiplicity="*" />
@@ -1413,8 +1989,10 @@
           <EntitySet Name="Modulos" EntityType="Self.Modulos" />
           <EntitySet Name="Opciones" EntityType="Self.Opciones" />
           <EntitySet Name="Parentescos" EntityType="Self.Parentescos" />
+          <EntitySet Name="Pastores" EntityType="Self.Pastores" />
           <EntitySet Name="Profesion" EntityType="Self.Profesion" />
           <EntitySet Name="Roles" EntityType="Self.Roles" />
+          <EntitySet Name="RolesPastor" EntityType="Self.RolesPastor" />
           <EntitySet Name="Sexo" EntityType="Self.Sexo" />
           <EntitySet Name="Tipo_Grupo" EntityType="Self.Tipo_Grupo" />
           <EntitySet Name="TipoOfrenda" EntityType="Self.TipoOfrenda" />
@@ -1426,8 +2004,16 @@
             <End Role="Capacitaciones" EntitySet="Capacitaciones" />
             <End Role="Miembros" EntitySet="Miembros" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pastores_Capacitaciones" Association="Self.FK_Pastores_Capacitaciones">
+            <End Role="Capacitaciones" EntitySet="Capacitaciones" />
+            <End Role="Pastores" EntitySet="Pastores" />
+          </AssociationSet>
           <AssociationSet Name="FK_Comunidad_Miembros1" Association="Self.FK_Comunidad_Miembros1">
             <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="Comunidad" EntitySet="Comunidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Comunidad_Pastores" Association="Self.FK_Comunidad_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
             <End Role="Comunidad" EntitySet="Comunidad" />
           </AssociationSet>
           <AssociationSet Name="FK_Comunidad_Zona1" Association="Self.FK_Comunidad_Zona1">
@@ -1450,12 +2036,24 @@
             <End Role="Parentescos" EntitySet="Parentescos" />
             <End Role="DetalleFamilia" EntitySet="DetalleFamilia" />
           </AssociationSet>
+          <AssociationSet Name="FK_DetalleFamilia_Pastores" Association="Self.FK_DetalleFamilia_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
+            <End Role="DetalleFamilia" EntitySet="DetalleFamilia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleFamilia_Pastores1" Association="Self.FK_DetalleFamilia_Pastores1">
+            <End Role="Pastores" EntitySet="Pastores" />
+            <End Role="DetalleFamilia" EntitySet="DetalleFamilia" />
+          </AssociationSet>
           <AssociationSet Name="FK_DetalleGrupo_Grupo" Association="Self.FK_DetalleGrupo_Grupo">
             <End Role="Grupo" EntitySet="Grupo" />
             <End Role="DetalleGrupo" EntitySet="DetalleGrupo" />
           </AssociationSet>
           <AssociationSet Name="FK_DetalleGrupo_Miembros" Association="Self.FK_DetalleGrupo_Miembros">
             <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="DetalleGrupo" EntitySet="DetalleGrupo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DetalleGrupo_Pastores" Association="Self.FK_DetalleGrupo_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
             <End Role="DetalleGrupo" EntitySet="DetalleGrupo" />
           </AssociationSet>
           <AssociationSet Name="FK_Grupo_Dias" Association="Self.FK_Grupo_Dias">
@@ -1466,8 +2064,16 @@
             <End Role="EstadoCivil" EntitySet="EstadoCivil" />
             <End Role="Miembros" EntitySet="Miembros" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pastores_EstadoCivil" Association="Self.FK_Pastores_EstadoCivil">
+            <End Role="EstadoCivil" EntitySet="EstadoCivil" />
+            <End Role="Pastores" EntitySet="Pastores" />
+          </AssociationSet>
           <AssociationSet Name="FK_Finanzas_Miembros" Association="Self.FK_Finanzas_Miembros">
             <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="Finanzas" EntitySet="Finanzas" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Finanzas_Pastores" Association="Self.FK_Finanzas_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
             <End Role="Finanzas" EntitySet="Finanzas" />
           </AssociationSet>
           <AssociationSet Name="FK_Finanzas_TipoOfrenda" Association="Self.FK_Finanzas_TipoOfrenda">
@@ -1490,13 +2096,25 @@
             <End Role="Miembros" EntitySet="Miembros" />
             <End Role="HistoriaEspiritual" EntitySet="HistoriaEspiritual" />
           </AssociationSet>
+          <AssociationSet Name="FK_HistoriaEspiritual_Pastores" Association="Self.FK_HistoriaEspiritual_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
+            <End Role="HistoriaEspiritual" EntitySet="HistoriaEspiritual" />
+          </AssociationSet>
           <AssociationSet Name="FK_Iglesia_Miembros" Association="Self.FK_Iglesia_Miembros">
             <End Role="Miembros" EntitySet="Miembros" />
+            <End Role="Iglesia" EntitySet="Iglesia" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Iglesia_Pastores" Association="Self.FK_Iglesia_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
             <End Role="Iglesia" EntitySet="Iglesia" />
           </AssociationSet>
           <AssociationSet Name="FK_Miembros_Iglesia" Association="Self.FK_Miembros_Iglesia">
             <End Role="Iglesia" EntitySet="Iglesia" />
             <End Role="Miembros" EntitySet="Miembros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pastores_Iglesia" Association="Self.FK_Pastores_Iglesia">
+            <End Role="Iglesia" EntitySet="Iglesia" />
+            <End Role="Pastores" EntitySet="Pastores" />
           </AssociationSet>
           <AssociationSet Name="FK_Zona_Iglesia1" Association="Self.FK_Zona_Iglesia1">
             <End Role="Iglesia" EntitySet="Iglesia" />
@@ -1505,6 +2123,10 @@
           <AssociationSet Name="FK_Miembros_LiderasgoCorporativo1" Association="Self.FK_Miembros_LiderasgoCorporativo1">
             <End Role="LiderazgoCorporativo" EntitySet="LiderazgoCorporativo" />
             <End Role="Miembros" EntitySet="Miembros" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pastores_LiderazgoCorporativo" Association="Self.FK_Pastores_LiderazgoCorporativo">
+            <End Role="LiderazgoCorporativo" EntitySet="LiderazgoCorporativo" />
+            <End Role="Pastores" EntitySet="Pastores" />
           </AssociationSet>
           <AssociationSet Name="FK_Miembros_Miembros" Association="Self.FK_Miembros_Miembros">
             <End Role="Miembros" EntitySet="Miembros" />
@@ -1538,17 +2160,41 @@
             <End Role="Opciones" EntitySet="Opciones" />
             <End Role="Usuarios_Opciones" EntitySet="Usuarios_Opciones" />
           </AssociationSet>
+          <AssociationSet Name="FK_Pastores_Pastores" Association="Self.FK_Pastores_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
+            <End Role="Pastores1" EntitySet="Pastores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pastores_Profesion" Association="Self.FK_Pastores_Profesion">
+            <End Role="Profesion" EntitySet="Profesion" />
+            <End Role="Pastores" EntitySet="Pastores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pastores_Roles" Association="Self.FK_Pastores_Roles">
+            <End Role="RolesPastor" EntitySet="RolesPastor" />
+            <End Role="Pastores" EntitySet="Pastores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pastores_Sexo" Association="Self.FK_Pastores_Sexo">
+            <End Role="Sexo" EntitySet="Sexo" />
+            <End Role="Pastores" EntitySet="Pastores" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pastores_Usuarios" Association="Self.FK_Pastores_Usuarios">
+            <End Role="Pastores" EntitySet="Pastores" />
+            <End Role="Usuarios" EntitySet="Usuarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Zona_Pastores" Association="Self.FK_Zona_Pastores">
+            <End Role="Pastores" EntitySet="Pastores" />
+            <End Role="Zona" EntitySet="Zona" />
+          </AssociationSet>
           <AssociationSet Name="FK_Usuario_Opciones" Association="Self.FK_Usuario_Opciones">
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Usuarios_Opciones" EntitySet="Usuarios_Opciones" />
           </AssociationSet>
-          <FunctionImport Name="seleccionar_aprendiz" ReturnType="Collection(CampDios.seleccionar_aprendiz_Result)" />
-          <FunctionImport Name="seleccionar_lider" ReturnType="Collection(CampDios.seleccionar_lider_Result)" />
-          <FunctionImport Name="seleccionar_miembro" ReturnType="Collection(CampDios.seleccionar_miembro_Result)" />
-          <FunctionImport Name="seleccionar_pastor_general" ReturnType="Collection(CampDios.seleccionar_pastor_general_Result)" />
-          <FunctionImport Name="seleccionar_pastor_iglesia" ReturnType="Collection(CampDios.seleccionar_pastor_iglesia_Result)" />
-          <FunctionImport Name="seleccionar_pastor_zona" ReturnType="Collection(CampDios.seleccionar_pastor_zona_Result)" />
-          <FunctionImport Name="seleccionar_supervisor_zona" ReturnType="Collection(CampDios.seleccionar_supervisor_zona_Result)" />
+          <FunctionImport Name="seleccionar_aprendiz" ReturnType="Collection(CampDiosModel.seleccionar_aprendiz_Result)" />
+          <FunctionImport Name="seleccionar_lider" ReturnType="Collection(CampDiosModel.seleccionar_lider_Result)" />
+          <FunctionImport Name="seleccionar_miembro" ReturnType="Collection(CampDiosModel.seleccionar_miembro_Result)" />
+          <FunctionImport Name="seleccionar_pastor_general" ReturnType="Collection(CampDiosModel.seleccionar_pastor_general_Result)" />
+          <FunctionImport Name="seleccionar_pastor_iglesia" ReturnType="Collection(CampDiosModel.seleccionar_pastor_iglesia_Result)" />
+          <FunctionImport Name="seleccionar_pastor_zona" ReturnType="Collection(CampDiosModel.seleccionar_pastor_zona_Result)" />
+          <FunctionImport Name="seleccionar_supervisor_zona" ReturnType="Collection(CampDiosModel.seleccionar_supervisor_zona_Result)" />
         </EntityContainer>
         <ComplexType Name="seleccionar_aprendiz_Result">
           <Property Type="Int32" Name="IdMiembro" Nullable="false" />
@@ -1583,9 +2229,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="CampDiosStoreContainer" CdmEntityContainer="CampDiosEntities">
+        <EntityContainerMapping StorageEntityContainer="CampDiosModelStoreContainer" CdmEntityContainer="CampDiosEntities">
           <EntitySetMapping Name="Capacitaciones">
-            <EntityTypeMapping TypeName="CampDios.Capacitaciones">
+            <EntityTypeMapping TypeName="CampDiosModel.Capacitaciones">
               <MappingFragment StoreEntitySet="Capacitaciones">
                 <ScalarProperty Name="IdCapacitacion" ColumnName="IdCapacitacion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1594,7 +2240,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Comunidad">
-            <EntityTypeMapping TypeName="CampDios.Comunidad">
+            <EntityTypeMapping TypeName="CampDiosModel.Comunidad">
               <MappingFragment StoreEntitySet="Comunidad">
                 <ScalarProperty Name="IdComunidad" ColumnName="IdComunidad" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1606,7 +2252,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DetalleFamilia">
-            <EntityTypeMapping TypeName="CampDios.DetalleFamilia">
+            <EntityTypeMapping TypeName="CampDiosModel.DetalleFamilia">
               <MappingFragment StoreEntitySet="DetalleFamilia">
                 <ScalarProperty Name="IdDetalleFamilia" ColumnName="IdDetalleFamilia" />
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
@@ -1616,7 +2262,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DetalleGrupo">
-            <EntityTypeMapping TypeName="CampDios.DetalleGrupo">
+            <EntityTypeMapping TypeName="CampDiosModel.DetalleGrupo">
               <MappingFragment StoreEntitySet="DetalleGrupo">
                 <ScalarProperty Name="IdDetalleGrupo" ColumnName="IdDetalleGrupo" />
                 <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
@@ -1625,7 +2271,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Dias">
-            <EntityTypeMapping TypeName="CampDios.Dias">
+            <EntityTypeMapping TypeName="CampDiosModel.Dias">
               <MappingFragment StoreEntitySet="Dias">
                 <ScalarProperty Name="IdDia" ColumnName="IdDia" />
                 <ScalarProperty Name="Dia" ColumnName="Dia" />
@@ -1633,7 +2279,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EstadoCivil">
-            <EntityTypeMapping TypeName="CampDios.EstadoCivil">
+            <EntityTypeMapping TypeName="CampDiosModel.EstadoCivil">
               <MappingFragment StoreEntitySet="EstadoCivil">
                 <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
@@ -1641,7 +2287,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Finanzas">
-            <EntityTypeMapping TypeName="CampDios.Finanzas">
+            <EntityTypeMapping TypeName="CampDiosModel.Finanzas">
               <MappingFragment StoreEntitySet="Finanzas">
                 <ScalarProperty Name="IdFinanza" ColumnName="IdFinanza" />
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
@@ -1653,7 +2299,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Grupo">
-            <EntityTypeMapping TypeName="CampDios.Grupo">
+            <EntityTypeMapping TypeName="CampDiosModel.Grupo">
               <MappingFragment StoreEntitySet="Grupo">
                 <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1667,7 +2313,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="HistoriaEspiritual">
-            <EntityTypeMapping TypeName="CampDios.HistoriaEspiritual">
+            <EntityTypeMapping TypeName="CampDiosModel.HistoriaEspiritual">
               <MappingFragment StoreEntitySet="HistoriaEspiritual">
                 <ScalarProperty Name="IdHistoria" ColumnName="IdHistoria" />
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
@@ -1678,7 +2324,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Iglesia">
-            <EntityTypeMapping TypeName="CampDios.Iglesia">
+            <EntityTypeMapping TypeName="CampDiosModel.Iglesia">
               <MappingFragment StoreEntitySet="Iglesia">
                 <ScalarProperty Name="IdIglesia" ColumnName="IdIglesia" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1692,7 +2338,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LiderazgoCorporativo">
-            <EntityTypeMapping TypeName="CampDios.LiderazgoCorporativo">
+            <EntityTypeMapping TypeName="CampDiosModel.LiderazgoCorporativo">
               <MappingFragment StoreEntitySet="LiderazgoCorporativo">
                 <ScalarProperty Name="IdCorporativo" ColumnName="IdCorporativo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1701,7 +2347,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Miembros">
-            <EntityTypeMapping TypeName="CampDios.Miembros">
+            <EntityTypeMapping TypeName="CampDiosModel.Miembros">
               <MappingFragment StoreEntitySet="Miembros">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
@@ -1727,7 +2373,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Modulos">
-            <EntityTypeMapping TypeName="CampDios.Modulos">
+            <EntityTypeMapping TypeName="CampDiosModel.Modulos">
               <MappingFragment StoreEntitySet="Modulos">
                 <ScalarProperty Name="Modulos_Id" ColumnName="Modulos_Id" />
                 <ScalarProperty Name="Nombre_Modulos" ColumnName="Nombre_Modulos" />
@@ -1735,7 +2381,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Opciones">
-            <EntityTypeMapping TypeName="CampDios.Opciones">
+            <EntityTypeMapping TypeName="CampDiosModel.Opciones">
               <MappingFragment StoreEntitySet="Opciones">
                 <ScalarProperty Name="Opciones_Id" ColumnName="Opciones_Id" />
                 <ScalarProperty Name="Nombre_Opciones" ColumnName="Nombre_Opciones" />
@@ -1744,15 +2390,41 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Parentescos">
-            <EntityTypeMapping TypeName="CampDios.Parentescos">
+            <EntityTypeMapping TypeName="CampDiosModel.Parentescos">
               <MappingFragment StoreEntitySet="Parentescos">
                 <ScalarProperty Name="IdParentesco" ColumnName="IdParentesco" />
                 <ScalarProperty Name="Parentesco" ColumnName="Parentesco" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Pastores">
+            <EntityTypeMapping TypeName="CampDiosModel.Pastores">
+              <MappingFragment StoreEntitySet="Pastores">
+                <ScalarProperty Name="IdPastor" ColumnName="IdPastor" />
+                <ScalarProperty Name="Nombres" ColumnName="Nombres" />
+                <ScalarProperty Name="Apellidos" ColumnName="Apellidos" />
+                <ScalarProperty Name="DUI" ColumnName="DUI" />
+                <ScalarProperty Name="NIT" ColumnName="NIT" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Direccion1" ColumnName="Direccion1" />
+                <ScalarProperty Name="Direccion2" ColumnName="Direccion2" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Tel" ColumnName="Tel" />
+                <ScalarProperty Name="Cel" ColumnName="Cel" />
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="IdEstadoCivil" ColumnName="IdEstadoCivil" />
+                <ScalarProperty Name="IdProfesion" ColumnName="IdProfesion" />
+                <ScalarProperty Name="IdCapacitacion" ColumnName="IdCapacitacion" />
+                <ScalarProperty Name="IdRolPastor" ColumnName="IdRolPastor" />
+                <ScalarProperty Name="IdHMayor" ColumnName="IdHMayor" />
+                <ScalarProperty Name="IdCorporativo" ColumnName="IdCorporativo" />
+                <ScalarProperty Name="IdIglesia" ColumnName="IdIglesia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Profesion">
-            <EntityTypeMapping TypeName="CampDios.Profesion">
+            <EntityTypeMapping TypeName="CampDiosModel.Profesion">
               <MappingFragment StoreEntitySet="Profesion">
                 <ScalarProperty Name="IdProfesion" ColumnName="IdProfesion" />
                 <ScalarProperty Name="Oficio" ColumnName="Oficio" />
@@ -1761,15 +2433,23 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="CampDios.Roles">
+            <EntityTypeMapping TypeName="CampDiosModel.Roles">
               <MappingFragment StoreEntitySet="Roles">
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
                 <ScalarProperty Name="Rol" ColumnName="Rol" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="RolesPastor">
+            <EntityTypeMapping TypeName="CampDiosModel.RolesPastor">
+              <MappingFragment StoreEntitySet="RolesPastor">
+                <ScalarProperty Name="IdRolPastor" ColumnName="IdRolPastor" />
+                <ScalarProperty Name="RolPastor" ColumnName="RolPastor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Sexo">
-            <EntityTypeMapping TypeName="CampDios.Sexo">
+            <EntityTypeMapping TypeName="CampDiosModel.Sexo">
               <MappingFragment StoreEntitySet="Sexo">
                 <ScalarProperty Name="IdSexo" ColumnName="IdSexo" />
                 <ScalarProperty Name="Sexo1" ColumnName="Sexo" />
@@ -1777,7 +2457,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tipo_Grupo">
-            <EntityTypeMapping TypeName="CampDios.Tipo_Grupo">
+            <EntityTypeMapping TypeName="CampDiosModel.Tipo_Grupo">
               <MappingFragment StoreEntitySet="Tipo_Grupo">
                 <ScalarProperty Name="IdTipoGrupo" ColumnName="IdTipoGrupo" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -1785,7 +2465,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TipoOfrenda">
-            <EntityTypeMapping TypeName="CampDios.TipoOfrenda">
+            <EntityTypeMapping TypeName="CampDiosModel.TipoOfrenda">
               <MappingFragment StoreEntitySet="TipoOfrenda">
                 <ScalarProperty Name="IdTIpoOfrenda" ColumnName="IdTIpoOfrenda" />
                 <ScalarProperty Name="TipoOfrenda1" ColumnName="TipoOfrenda" />
@@ -1793,7 +2473,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TipoReunion">
-            <EntityTypeMapping TypeName="CampDios.TipoReunion">
+            <EntityTypeMapping TypeName="CampDiosModel.TipoReunion">
               <MappingFragment StoreEntitySet="TipoReunion">
                 <ScalarProperty Name="IdTipoReunion" ColumnName="IdTipoReunion" />
                 <ScalarProperty Name="TipoReunion1" ColumnName="TipoReunion" />
@@ -1801,7 +2481,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Usuarios">
-            <EntityTypeMapping TypeName="CampDios.Usuarios">
+            <EntityTypeMapping TypeName="CampDiosModel.Usuarios">
               <MappingFragment StoreEntitySet="Usuarios">
                 <ScalarProperty Name="Usuarios_id" ColumnName="Usuarios_id" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
@@ -1812,7 +2492,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Usuarios_Opciones">
-            <EntityTypeMapping TypeName="CampDios.Usuarios_Opciones">
+            <EntityTypeMapping TypeName="CampDiosModel.Usuarios_Opciones">
               <MappingFragment StoreEntitySet="Usuarios_Opciones">
                 <ScalarProperty Name="idUsuario_Opciones" ColumnName="idUsuario_Opciones" />
                 <ScalarProperty Name="Usuarios_Usuario_Id" ColumnName="Usuarios_Usuario_Id" />
@@ -1824,7 +2504,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Zona">
-            <EntityTypeMapping TypeName="CampDios.Zona">
+            <EntityTypeMapping TypeName="CampDiosModel.Zona">
               <MappingFragment StoreEntitySet="Zona">
                 <ScalarProperty Name="IdZona" ColumnName="IdZona" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -1835,57 +2515,57 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_aprendiz" FunctionName="CampDios.Store.seleccionar_aprendiz">
+          <FunctionImportMapping FunctionImportName="seleccionar_aprendiz" FunctionName="CampDiosModel.Store.seleccionar_aprendiz">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDios.seleccionar_aprendiz_Result">
+              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_aprendiz_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_lider" FunctionName="CampDios.Store.seleccionar_lider">
+          <FunctionImportMapping FunctionImportName="seleccionar_lider" FunctionName="CampDiosModel.Store.seleccionar_lider">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDios.seleccionar_lider_Result">
+              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_lider_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_miembro" FunctionName="CampDios.Store.seleccionar_miembro">
+          <FunctionImportMapping FunctionImportName="seleccionar_miembro" FunctionName="CampDiosModel.Store.seleccionar_miembro">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDios.seleccionar_miembro_Result">
+              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_miembro_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_pastor_general" FunctionName="CampDios.Store.seleccionar_pastor_general">
+          <FunctionImportMapping FunctionImportName="seleccionar_pastor_general" FunctionName="CampDiosModel.Store.seleccionar_pastor_general">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDios.seleccionar_pastor_general_Result">
+              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_pastor_general_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_pastor_iglesia" FunctionName="CampDios.Store.seleccionar_pastor_iglesia">
+          <FunctionImportMapping FunctionImportName="seleccionar_pastor_iglesia" FunctionName="CampDiosModel.Store.seleccionar_pastor_iglesia">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDios.seleccionar_pastor_iglesia_Result">
+              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_pastor_iglesia_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_pastor_zona" FunctionName="CampDios.Store.seleccionar_pastor_zona">
+          <FunctionImportMapping FunctionImportName="seleccionar_pastor_zona" FunctionName="CampDiosModel.Store.seleccionar_pastor_zona">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDios.seleccionar_pastor_zona_Result">
+              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_pastor_zona_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_supervisor_zona" FunctionName="CampDios.Store.seleccionar_supervisor_zona">
+          <FunctionImportMapping FunctionImportName="seleccionar_supervisor_zona" FunctionName="CampDiosModel.Store.seleccionar_supervisor_zona">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDios.seleccionar_supervisor_zona_Result">
+              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_supervisor_zona_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>

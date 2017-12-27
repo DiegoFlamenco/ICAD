@@ -22,6 +22,7 @@ namespace CampDios.Modelos
         public string Descripcion { get; set; }
     
         public virtual Miembros Miembros { get; set; }
+        public virtual Pastores Pastores { get; set; }
         public virtual TipoOfrenda TipoOfrenda { get; set; }
         public virtual TipoReunion TipoReunion { get; set; }
     }

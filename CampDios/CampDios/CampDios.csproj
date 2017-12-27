@@ -244,10 +244,16 @@
     <Compile Include="Modelos\Parentescos.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\Pastores.cs">
+      <DependentUpon>CampDios.tt</DependentUpon>
+    </Compile>
     <Compile Include="Modelos\Profesion.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>
     <Compile Include="Modelos\Roles.cs">
+      <DependentUpon>CampDios.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Modelos\RolesPastor.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>
     <Compile Include="Modelos\seleccionar_aprendiz_Result.cs">

@@ -18,6 +18,7 @@ namespace CampDios.Modelos
         public EstadoCivil()
         {
             this.Miembros = new HashSet<Miembros>();
+            this.Pastores = new HashSet<Pastores>();
         }
     
         public int IdEstado { get; set; }
@@ -25,5 +26,7 @@ namespace CampDios.Modelos
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Miembros> Miembros { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Pastores> Pastores { get; set; }
     }
 }

@@ -27,6 +27,7 @@ namespace CampDios.Modelos
         public int Miembro_id { get; set; }
     
         public virtual Miembros Miembros { get; set; }
+        public virtual Pastores Pastores { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuarios_Opciones> Usuarios_Opciones { get; set; }
     }

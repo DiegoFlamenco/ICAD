@@ -42,8 +42,10 @@ namespace CampDios.Modelos
         public virtual DbSet<Modulos> Modulos { get; set; }
         public virtual DbSet<Opciones> Opciones { get; set; }
         public virtual DbSet<Parentescos> Parentescos { get; set; }
+        public virtual DbSet<Pastores> Pastores { get; set; }
         public virtual DbSet<Profesion> Profesion { get; set; }
         public virtual DbSet<Roles> Roles { get; set; }
+        public virtual DbSet<RolesPastor> RolesPastor { get; set; }
         public virtual DbSet<Sexo> Sexo { get; set; }
         public virtual DbSet<Tipo_Grupo> Tipo_Grupo { get; set; }
         public virtual DbSet<TipoOfrenda> TipoOfrenda { get; set; }
