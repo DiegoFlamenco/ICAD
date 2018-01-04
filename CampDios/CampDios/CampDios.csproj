@@ -179,6 +179,7 @@
     <Compile Include="Controllers\IglesiasController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MiembrosController.cs" />
+    <Compile Include="Controllers\PastoresController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
     <Compile Include="Controllers\ZonasController.cs" />
     <Compile Include="Global.asax.cs">
@@ -446,6 +447,11 @@
     <Content Include="Views\Usuarios\Edit.cshtml" />
     <Content Include="Views\Usuarios\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Pastores\Create.cshtml" />
+    <Content Include="Views\Pastores\Delete.cshtml" />
+    <Content Include="Views\Pastores\Details.cshtml" />
+    <Content Include="Views\Pastores\Edit.cshtml" />
+    <Content Include="Views\Pastores\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
