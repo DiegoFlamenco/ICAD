@@ -1,20 +1,19 @@
 ﻿@model IEnumerable<CampDios.Modelos.Pastores>
 
 @{
-    Layout = null;
+    ViewBag.Title = "Miembros-Inicio";
 }
 
-<!DOCTYPE html>
-
-<html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
 </head>
-<body>
     <p>
-        @Html.ActionLink("Create New", "Create")
+        <a href="@Url.Action("Create","Pastores")" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Nuevo Pastor</a>&nbsp;
+		<a href="@Url.Action("Index","HistoriaEspirituals")" class="btn btn-default"><i class="fa fa-book fa-lg" aria-hidden="true"></i> Historial espiritual</a>&nbsp;
     </p>
+	<div style="overflow:auto;">
+    <div class="table-responsive table-hover">
     <table class="table">
         <tr>
             <th>
@@ -145,5 +144,5 @@
     }
     
     </table>
-</body>
-</html>
+	</div>
+</div>
