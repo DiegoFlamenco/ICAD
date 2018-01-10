@@ -4,9 +4,6 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
-
-<html>
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Details</title>
@@ -171,8 +168,6 @@
         </dl>
     </div>
     <p>
-        @Html.ActionLink("Edit", "Edit", new { id = Model.IdPastor }) |
-        @Html.ActionLink("Back to List", "Index")
+        @Html.ActionLink("Edit", "Editar", new { id = Model.IdPastor }) |
+        @Html.ActionLink("Regresar al listado anterior", "Index")
     </p>
-</body>
-</html>
