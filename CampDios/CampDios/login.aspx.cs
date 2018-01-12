@@ -48,18 +48,24 @@ namespace CampDios
                 //-----**conn = new SqlConnection("server=SQL5024.site4now.net;Integrated Security=SSPI;database=DB_A27118_ICAD");
                 //-----**conn.Open();
 
+                //prueba conexion
+                var usuario = db.Usuarios.Select(u => u.Login == userName && u.Contraseña == passWord);
+                string varpas = Convert.ToString(usuario.Last);
+                lookupPassword = varpas;
+
                 // Crear SqlCommand para seleccionar un campo de contraseña desde la tabla de usuarios dado el nombre de usuario proporcionado.
-                var psw = db.Usuarios.Select
+                /*var psw = db.Usuarios.Select
                 cmd = new SqlCommand("Select pwd from users where uname=@userName", conn);
                 cmd.Parameters.Add("@userName", SqlDbType.VarChar, 25);
                 cmd.Parameters["@userName"].Value = userName;
+                */
 
                 // Ejecutar el comando y capturar el campo de contraseña en la cadena lookupPassword.
-                lookupPassword = (string)cmd.ExecuteScalar();
+                //lookupPassword = (string)cmd.ExecuteScalar();
 
                 // Comando de limpieza y objetos de conexión.
-                cmd.Dispose();
-                conn.Dispose();
+                /*cmd.Dispose();
+                conn.Dispose();*/
             }
             catch (Exception ex)
             {
