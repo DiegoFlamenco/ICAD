@@ -54,6 +54,15 @@ namespace CampDios.Modelos
         public virtual DbSet<Usuarios_Opciones> Usuarios_Opciones { get; set; }
         public virtual DbSet<Zona> Zona { get; set; }
     
+        public virtual ObjectResult<GetUserAction_Result> GetUserAction(string userName)
+        {
+            var userNameParameter = userName != null ?
+                new ObjectParameter("UserName", userName) :
+                new ObjectParameter("UserName", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetUserAction_Result>("GetUserAction", userNameParameter);
+        }
+    
         public virtual ObjectResult<seleccionar_aprendiz_Result> seleccionar_aprendiz()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<seleccionar_aprendiz_Result>("seleccionar_aprendiz");

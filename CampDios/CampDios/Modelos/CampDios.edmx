@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="CampDiosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DB_A27118_ICADModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Capacitaciones">
           <Key>
             <PropertyRef Name="IdCapacitacion" />
@@ -828,6 +828,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetUserAction" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="UserName" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="seleccionar_aprendiz" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="seleccionar_lider" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="seleccionar_miembro" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
@@ -835,7 +838,7 @@
         <Function Name="seleccionar_pastor_iglesia" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="seleccionar_pastor_zona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="seleccionar_supervisor_zona" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <EntityContainer Name="CampDiosModelStoreContainer">
+        <EntityContainer Name="DB_A27118_ICADModelStoreContainer">
           <EntitySet Name="Capacitaciones" EntityType="Self.Capacitaciones" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Comunidad" EntityType="Self.Comunidad" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DetalleFamilia" EntityType="Self.DetalleFamilia" Schema="dbo" store:Type="Tables" />
@@ -1055,7 +1058,7 @@
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="CampDiosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="DB_A27118_ICADModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Capacitaciones">
           <Key>
             <PropertyRef Name="IdCapacitacion" />
@@ -2188,14 +2191,24 @@
             <End Role="Usuarios" EntitySet="Usuarios" />
             <End Role="Usuarios_Opciones" EntitySet="Usuarios_Opciones" />
           </AssociationSet>
-          <FunctionImport Name="seleccionar_aprendiz" ReturnType="Collection(CampDiosModel.seleccionar_aprendiz_Result)" />
-          <FunctionImport Name="seleccionar_lider" ReturnType="Collection(CampDiosModel.seleccionar_lider_Result)" />
-          <FunctionImport Name="seleccionar_miembro" ReturnType="Collection(CampDiosModel.seleccionar_miembro_Result)" />
-          <FunctionImport Name="seleccionar_pastor_general" ReturnType="Collection(CampDiosModel.seleccionar_pastor_general_Result)" />
-          <FunctionImport Name="seleccionar_pastor_iglesia" ReturnType="Collection(CampDiosModel.seleccionar_pastor_iglesia_Result)" />
-          <FunctionImport Name="seleccionar_pastor_zona" ReturnType="Collection(CampDiosModel.seleccionar_pastor_zona_Result)" />
-          <FunctionImport Name="seleccionar_supervisor_zona" ReturnType="Collection(CampDiosModel.seleccionar_supervisor_zona_Result)" />
+          <FunctionImport Name="GetUserAction" ReturnType="Collection(DB_A27118_ICADModel.GetUserAction_Result)">
+            <Parameter Name="UserName" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="seleccionar_aprendiz" ReturnType="Collection(DB_A27118_ICADModel.seleccionar_aprendiz_Result)" />
+          <FunctionImport Name="seleccionar_lider" ReturnType="Collection(DB_A27118_ICADModel.seleccionar_lider_Result)" />
+          <FunctionImport Name="seleccionar_miembro" ReturnType="Collection(DB_A27118_ICADModel.seleccionar_miembro_Result)" />
+          <FunctionImport Name="seleccionar_pastor_general" ReturnType="Collection(DB_A27118_ICADModel.seleccionar_pastor_general_Result)" />
+          <FunctionImport Name="seleccionar_pastor_iglesia" ReturnType="Collection(DB_A27118_ICADModel.seleccionar_pastor_iglesia_Result)" />
+          <FunctionImport Name="seleccionar_pastor_zona" ReturnType="Collection(DB_A27118_ICADModel.seleccionar_pastor_zona_Result)" />
+          <FunctionImport Name="seleccionar_supervisor_zona" ReturnType="Collection(DB_A27118_ICADModel.seleccionar_supervisor_zona_Result)" />
         </EntityContainer>
+        <ComplexType Name="GetUserAction_Result">
+          <Property Type="Int32" Name="Usuarios_id" Nullable="false" />
+          <Property Type="String" Name="Login" Nullable="false" MaxLength="45" />
+          <Property Type="String" Name="Contraseña" Nullable="false" MaxLength="45" />
+          <Property Type="DateTime" Name="Fecha_creacion" Nullable="true" Precision="23" />
+          <Property Type="Int32" Name="Miembro_id" Nullable="false" />
+        </ComplexType>
         <ComplexType Name="seleccionar_aprendiz_Result">
           <Property Type="Int32" Name="IdMiembro" Nullable="false" />
           <Property Type="String" Name="Nombres" Nullable="true" MaxLength="103" />
@@ -2229,9 +2242,9 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="CampDiosModelStoreContainer" CdmEntityContainer="CampDiosEntities">
+        <EntityContainerMapping StorageEntityContainer="DB_A27118_ICADModelStoreContainer" CdmEntityContainer="CampDiosEntities">
           <EntitySetMapping Name="Capacitaciones">
-            <EntityTypeMapping TypeName="CampDiosModel.Capacitaciones">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Capacitaciones">
               <MappingFragment StoreEntitySet="Capacitaciones">
                 <ScalarProperty Name="IdCapacitacion" ColumnName="IdCapacitacion" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2240,7 +2253,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Comunidad">
-            <EntityTypeMapping TypeName="CampDiosModel.Comunidad">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Comunidad">
               <MappingFragment StoreEntitySet="Comunidad">
                 <ScalarProperty Name="IdComunidad" ColumnName="IdComunidad" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2252,7 +2265,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DetalleFamilia">
-            <EntityTypeMapping TypeName="CampDiosModel.DetalleFamilia">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.DetalleFamilia">
               <MappingFragment StoreEntitySet="DetalleFamilia">
                 <ScalarProperty Name="IdDetalleFamilia" ColumnName="IdDetalleFamilia" />
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
@@ -2262,7 +2275,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DetalleGrupo">
-            <EntityTypeMapping TypeName="CampDiosModel.DetalleGrupo">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.DetalleGrupo">
               <MappingFragment StoreEntitySet="DetalleGrupo">
                 <ScalarProperty Name="IdDetalleGrupo" ColumnName="IdDetalleGrupo" />
                 <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
@@ -2271,7 +2284,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Dias">
-            <EntityTypeMapping TypeName="CampDiosModel.Dias">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Dias">
               <MappingFragment StoreEntitySet="Dias">
                 <ScalarProperty Name="IdDia" ColumnName="IdDia" />
                 <ScalarProperty Name="Dia" ColumnName="Dia" />
@@ -2279,7 +2292,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="EstadoCivil">
-            <EntityTypeMapping TypeName="CampDiosModel.EstadoCivil">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.EstadoCivil">
               <MappingFragment StoreEntitySet="EstadoCivil">
                 <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
                 <ScalarProperty Name="Estado" ColumnName="Estado" />
@@ -2287,7 +2300,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Finanzas">
-            <EntityTypeMapping TypeName="CampDiosModel.Finanzas">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Finanzas">
               <MappingFragment StoreEntitySet="Finanzas">
                 <ScalarProperty Name="IdFinanza" ColumnName="IdFinanza" />
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
@@ -2299,7 +2312,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Grupo">
-            <EntityTypeMapping TypeName="CampDiosModel.Grupo">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Grupo">
               <MappingFragment StoreEntitySet="Grupo">
                 <ScalarProperty Name="IdGrupo" ColumnName="IdGrupo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2313,7 +2326,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="HistoriaEspiritual">
-            <EntityTypeMapping TypeName="CampDiosModel.HistoriaEspiritual">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.HistoriaEspiritual">
               <MappingFragment StoreEntitySet="HistoriaEspiritual">
                 <ScalarProperty Name="IdHistoria" ColumnName="IdHistoria" />
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
@@ -2324,7 +2337,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Iglesia">
-            <EntityTypeMapping TypeName="CampDiosModel.Iglesia">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Iglesia">
               <MappingFragment StoreEntitySet="Iglesia">
                 <ScalarProperty Name="IdIglesia" ColumnName="IdIglesia" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2338,7 +2351,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="LiderazgoCorporativo">
-            <EntityTypeMapping TypeName="CampDiosModel.LiderazgoCorporativo">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.LiderazgoCorporativo">
               <MappingFragment StoreEntitySet="LiderazgoCorporativo">
                 <ScalarProperty Name="IdCorporativo" ColumnName="IdCorporativo" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2347,7 +2360,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Miembros">
-            <EntityTypeMapping TypeName="CampDiosModel.Miembros">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Miembros">
               <MappingFragment StoreEntitySet="Miembros">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
@@ -2373,7 +2386,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Modulos">
-            <EntityTypeMapping TypeName="CampDiosModel.Modulos">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Modulos">
               <MappingFragment StoreEntitySet="Modulos">
                 <ScalarProperty Name="Modulos_Id" ColumnName="Modulos_Id" />
                 <ScalarProperty Name="Nombre_Modulos" ColumnName="Nombre_Modulos" />
@@ -2381,7 +2394,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Opciones">
-            <EntityTypeMapping TypeName="CampDiosModel.Opciones">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Opciones">
               <MappingFragment StoreEntitySet="Opciones">
                 <ScalarProperty Name="Opciones_Id" ColumnName="Opciones_Id" />
                 <ScalarProperty Name="Nombre_Opciones" ColumnName="Nombre_Opciones" />
@@ -2390,7 +2403,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Parentescos">
-            <EntityTypeMapping TypeName="CampDiosModel.Parentescos">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Parentescos">
               <MappingFragment StoreEntitySet="Parentescos">
                 <ScalarProperty Name="IdParentesco" ColumnName="IdParentesco" />
                 <ScalarProperty Name="Parentesco" ColumnName="Parentesco" />
@@ -2398,7 +2411,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pastores">
-            <EntityTypeMapping TypeName="CampDiosModel.Pastores">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Pastores">
               <MappingFragment StoreEntitySet="Pastores">
                 <ScalarProperty Name="IdPastor" ColumnName="IdPastor" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
@@ -2424,7 +2437,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Profesion">
-            <EntityTypeMapping TypeName="CampDiosModel.Profesion">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Profesion">
               <MappingFragment StoreEntitySet="Profesion">
                 <ScalarProperty Name="IdProfesion" ColumnName="IdProfesion" />
                 <ScalarProperty Name="Oficio" ColumnName="Oficio" />
@@ -2433,7 +2446,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="CampDiosModel.Roles">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Roles">
               <MappingFragment StoreEntitySet="Roles">
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
                 <ScalarProperty Name="Rol" ColumnName="Rol" />
@@ -2441,7 +2454,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="RolesPastor">
-            <EntityTypeMapping TypeName="CampDiosModel.RolesPastor">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.RolesPastor">
               <MappingFragment StoreEntitySet="RolesPastor">
                 <ScalarProperty Name="IdRolPastor" ColumnName="IdRolPastor" />
                 <ScalarProperty Name="RolPastor" ColumnName="RolPastor" />
@@ -2449,7 +2462,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Sexo">
-            <EntityTypeMapping TypeName="CampDiosModel.Sexo">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Sexo">
               <MappingFragment StoreEntitySet="Sexo">
                 <ScalarProperty Name="IdSexo" ColumnName="IdSexo" />
                 <ScalarProperty Name="Sexo1" ColumnName="Sexo" />
@@ -2457,7 +2470,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tipo_Grupo">
-            <EntityTypeMapping TypeName="CampDiosModel.Tipo_Grupo">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Tipo_Grupo">
               <MappingFragment StoreEntitySet="Tipo_Grupo">
                 <ScalarProperty Name="IdTipoGrupo" ColumnName="IdTipoGrupo" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
@@ -2465,7 +2478,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TipoOfrenda">
-            <EntityTypeMapping TypeName="CampDiosModel.TipoOfrenda">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.TipoOfrenda">
               <MappingFragment StoreEntitySet="TipoOfrenda">
                 <ScalarProperty Name="IdTIpoOfrenda" ColumnName="IdTIpoOfrenda" />
                 <ScalarProperty Name="TipoOfrenda1" ColumnName="TipoOfrenda" />
@@ -2473,7 +2486,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="TipoReunion">
-            <EntityTypeMapping TypeName="CampDiosModel.TipoReunion">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.TipoReunion">
               <MappingFragment StoreEntitySet="TipoReunion">
                 <ScalarProperty Name="IdTipoReunion" ColumnName="IdTipoReunion" />
                 <ScalarProperty Name="TipoReunion1" ColumnName="TipoReunion" />
@@ -2481,7 +2494,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Usuarios">
-            <EntityTypeMapping TypeName="CampDiosModel.Usuarios">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Usuarios">
               <MappingFragment StoreEntitySet="Usuarios">
                 <ScalarProperty Name="Usuarios_id" ColumnName="Usuarios_id" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
@@ -2492,7 +2505,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Usuarios_Opciones">
-            <EntityTypeMapping TypeName="CampDiosModel.Usuarios_Opciones">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Usuarios_Opciones">
               <MappingFragment StoreEntitySet="Usuarios_Opciones">
                 <ScalarProperty Name="idUsuario_Opciones" ColumnName="idUsuario_Opciones" />
                 <ScalarProperty Name="Usuarios_Usuario_Id" ColumnName="Usuarios_Usuario_Id" />
@@ -2504,7 +2517,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Zona">
-            <EntityTypeMapping TypeName="CampDiosModel.Zona">
+            <EntityTypeMapping TypeName="DB_A27118_ICADModel.Zona">
               <MappingFragment StoreEntitySet="Zona">
                 <ScalarProperty Name="IdZona" ColumnName="IdZona" />
                 <ScalarProperty Name="Nombre" ColumnName="Nombre" />
@@ -2515,57 +2528,68 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_aprendiz" FunctionName="CampDiosModel.Store.seleccionar_aprendiz">
+          <FunctionImportMapping FunctionImportName="GetUserAction" FunctionName="DB_A27118_ICADModel.Store.GetUserAction">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_aprendiz_Result">
+              <ComplexTypeMapping TypeName="DB_A27118_ICADModel.GetUserAction_Result">
+                <ScalarProperty Name="Usuarios_id" ColumnName="Usuarios_id" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+                <ScalarProperty Name="Fecha_creacion" ColumnName="Fecha_creacion" />
+                <ScalarProperty Name="Miembro_id" ColumnName="Miembro_id" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="seleccionar_aprendiz" FunctionName="DB_A27118_ICADModel.Store.seleccionar_aprendiz">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="DB_A27118_ICADModel.seleccionar_aprendiz_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_lider" FunctionName="CampDiosModel.Store.seleccionar_lider">
+          <FunctionImportMapping FunctionImportName="seleccionar_lider" FunctionName="DB_A27118_ICADModel.Store.seleccionar_lider">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_lider_Result">
+              <ComplexTypeMapping TypeName="DB_A27118_ICADModel.seleccionar_lider_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_miembro" FunctionName="CampDiosModel.Store.seleccionar_miembro">
+          <FunctionImportMapping FunctionImportName="seleccionar_miembro" FunctionName="DB_A27118_ICADModel.Store.seleccionar_miembro">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_miembro_Result">
+              <ComplexTypeMapping TypeName="DB_A27118_ICADModel.seleccionar_miembro_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_pastor_general" FunctionName="CampDiosModel.Store.seleccionar_pastor_general">
+          <FunctionImportMapping FunctionImportName="seleccionar_pastor_general" FunctionName="DB_A27118_ICADModel.Store.seleccionar_pastor_general">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_pastor_general_Result">
+              <ComplexTypeMapping TypeName="DB_A27118_ICADModel.seleccionar_pastor_general_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_pastor_iglesia" FunctionName="CampDiosModel.Store.seleccionar_pastor_iglesia">
+          <FunctionImportMapping FunctionImportName="seleccionar_pastor_iglesia" FunctionName="DB_A27118_ICADModel.Store.seleccionar_pastor_iglesia">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_pastor_iglesia_Result">
+              <ComplexTypeMapping TypeName="DB_A27118_ICADModel.seleccionar_pastor_iglesia_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_pastor_zona" FunctionName="CampDiosModel.Store.seleccionar_pastor_zona">
+          <FunctionImportMapping FunctionImportName="seleccionar_pastor_zona" FunctionName="DB_A27118_ICADModel.Store.seleccionar_pastor_zona">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_pastor_zona_Result">
+              <ComplexTypeMapping TypeName="DB_A27118_ICADModel.seleccionar_pastor_zona_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="seleccionar_supervisor_zona" FunctionName="CampDiosModel.Store.seleccionar_supervisor_zona">
+          <FunctionImportMapping FunctionImportName="seleccionar_supervisor_zona" FunctionName="DB_A27118_ICADModel.Store.seleccionar_supervisor_zona">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="CampDiosModel.seleccionar_supervisor_zona_Result">
+              <ComplexTypeMapping TypeName="DB_A27118_ICADModel.seleccionar_supervisor_zona_Result">
                 <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
                 <ScalarProperty Name="Nombres" ColumnName="Nombres" />
               </ComplexTypeMapping>
