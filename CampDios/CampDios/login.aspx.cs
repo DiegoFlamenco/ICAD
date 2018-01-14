@@ -49,7 +49,7 @@ namespace CampDios
                 //-----**conn.Open();
 
                 // Crear SqlCommand para seleccionar un campo de contraseña desde la tabla de usuarios dado el nombre de usuario proporcionado.
-                var psw = db.Usuarios.Select
+                /*var psw = db.Usuarios.Select
                 cmd = new SqlCommand("Select pwd from users where uname=@userName", conn);
                 cmd.Parameters.Add("@userName", SqlDbType.VarChar, 25);
                 cmd.Parameters["@userName"].Value = userName;
@@ -59,7 +59,7 @@ namespace CampDios
 
                 // Comando de limpieza y objetos de conexión.
                 cmd.Dispose();
-                conn.Dispose();
+                conn.Dispose();*/
             }
             catch (Exception ex)
             {
