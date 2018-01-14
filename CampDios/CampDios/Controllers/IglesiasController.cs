@@ -14,8 +14,7 @@ namespace CampDios.Controllers
     {
         private CampDiosEntities db = new CampDiosEntities();
         // GET: Iglesias
-        //[Authorize(db.Opciones.Where(o => o.Nombre_Opciones == "Administrador"))]
-        //[Authorize(Roles ="Administrador")]
+        [AuthorizeUserAccesLevel (UserRole = "admin")]
         public ActionResult Index()
         {
             var iglesia = db.Iglesia.Include(i => i.Miembros);

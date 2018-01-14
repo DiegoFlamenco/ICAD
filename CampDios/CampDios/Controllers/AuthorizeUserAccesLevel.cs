@@ -11,13 +11,16 @@ namespace System.Web.Mvc
         public string UserRole { get; set; }
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
+            CampDiosEntities db = new CampDiosEntities();
             var isAuthorized = base.AuthorizeCore(httpContext);
             if (!isAuthorized)
             {
                 return false;
             }
-            string CurrentUserRole = "Admin";
-            if (this.UserRole.Contains(CurrentUserRole))
+            string currentUser = HttpContext.Current.User.Identity.Name.ToString();
+            GetUserAction_Result res = db.GetUserAction(currentUser).FirstOrDefault();
+            string CurrentUserLogin = res.Login;
+            if (this.UserRole.Contains(CurrentUserLogin))
             {
                 return true;
             }
