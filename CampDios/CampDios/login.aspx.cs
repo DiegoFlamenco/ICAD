@@ -50,8 +50,8 @@ namespace CampDios
 
                 //prueba conexion
                 var usuario = db.Usuarios.Select(u => u.Login == userName && u.Contraseña == passWord);
-                string varpas = Convert.ToString(usuario.Last);
-                lookupPassword = varpas;
+               // string varpas = Convert.ToString(usuario.Last);
+               // lookupPassword = varpas;
 
                 // Crear SqlCommand para seleccionar un campo de contraseña desde la tabla de usuarios dado el nombre de usuario proporcionado.
                 /*var psw = db.Usuarios.Select
@@ -64,8 +64,8 @@ namespace CampDios
                 //lookupPassword = (string)cmd.ExecuteScalar();
 
                 // Comando de limpieza y objetos de conexión.
-                cmd.Dispose();
-                conn.Dispose();
+               // cmd.Dispose();
+                //conn.Dispose();
             }
             catch (Exception ex)
             {
