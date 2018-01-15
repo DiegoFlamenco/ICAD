@@ -12,7 +12,7 @@ using CampDios.Models;
 
 namespace CampDios.Controllers
 {
-    [Authorize]
+    /*[Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
@@ -481,5 +481,5 @@ namespace CampDios.Controllers
             }
         }
         #endregion
-    }
+    }*/
 }

@@ -9,7 +9,7 @@ using Microsoft.Owin.Security;
 using CampDios.Models;
 
 namespace CampDios.Controllers
-{
+{/*
     [Authorize]
     public class ManageController : Controller
     {
@@ -385,5 +385,5 @@ namespace CampDios.Controllers
         }
 
 #endregion
-    }
+    }*/
 }
