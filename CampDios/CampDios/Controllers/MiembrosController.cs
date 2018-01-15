@@ -10,6 +10,7 @@ using CampDios.Modelos;
 
 namespace CampDios.Controllers
 {
+    [Authorize]
     public class MiembrosController : Controller
     {
         private CampDiosEntities db = new CampDiosEntities();
@@ -72,7 +73,6 @@ namespace CampDios.Controllers
         }
 
         // GET: Miembros/Details/5
-        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -88,7 +88,6 @@ namespace CampDios.Controllers
         }
 
         // GET: Miembros/Create
-        [Authorize]
         public ActionResult Create()
         {
             ViewBag.IdCapacitacion = new SelectList(db.Capacitaciones, "IdCapacitacion", "Nombre");
@@ -106,7 +105,6 @@ namespace CampDios.Controllers
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "IdMiembro,Nombres,Apellidos,DUI,NIT,FechaNacimiento,Direccion,Direccion1,Direccion2,Email,Tel,Cel,Sexo,IdEstadoCivil,IdProfesion,IdCapacitacion,IdRol,IdHMayor,IdCorporativo,IdIglesia")] Miembros miembros)
         {
@@ -130,7 +128,6 @@ namespace CampDios.Controllers
         }
 
         // GET: Miembros/Edit/5
-        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -157,7 +154,6 @@ namespace CampDios.Controllers
         // Para protegerse de ataques de publicación excesiva, habilite las propiedades específicas a las que desea enlazarse. Para obtener 
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "IdMiembro,Nombres,Apellidos,DUI,NIT,FechaNacimiento,Direccion,Direccion1,Direccion2,Email,Tel,Cel,Sexo,IdEstadoCivil,IdProfesion,IdCapacitacion,IdRol,IdHMayor,IdCorporativo,IdIglesia")] Miembros miembros)
         {
@@ -179,7 +175,6 @@ namespace CampDios.Controllers
         }
 
         // GET: Miembros/Delete/5
-        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -195,7 +190,6 @@ namespace CampDios.Controllers
         }
 
         // POST: Miembros/Delete/5
-        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

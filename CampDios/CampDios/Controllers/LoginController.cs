@@ -10,13 +10,13 @@ namespace CampDios.Controllers
 {
     public class LoginController : Controller
     {
-        
+
         public ActionResult login()
         {
             return View();
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult dologin(Usuarios user)
         {
             using (CampDiosEntities db = new CampDiosEntities())
@@ -25,11 +25,32 @@ namespace CampDios.Controllers
                 //var opc = db.Usuarios_Opciones.Where(o => o.Opciones_Opciones_Id == user.)
                 if (usr != null)
                 {
-                    FormsAuthentication.SetAuthCookie(usr.Login,false);
+                    FormsAuthentication.SetAuthCookie(usr.Login ,false);
                     Session["Usuarios_id"] = usr.Usuarios_id.ToString();
                     Session["Login"] = usr.Login.ToString();
                     //Session["Permisos"] =
                     return RedirectToAction("LoggedIn");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Usuario o contraseña Incorrectos.");
+                }
+            }
+            return View("login");
+        }*/
+
+        public ActionResult dologin(string txtUserName, string txtPassword)
+        {
+            using (CampDiosEntities db = new CampDiosEntities())
+            {
+                var usr = db.Usuarios.Where(u => u.Login == txtUserName && u.Contraseña == txtPassword).FirstOrDefault();
+                if (usr != null)
+                {
+                    FormsAuthentication.SetAuthCookie(usr.Login, false);
+                    Session["Usuarios_id"] = usr.Usuarios_id.ToString();
+                    Session["Login"] = usr.Login.ToString();
+                    //Session["Permisos"] =
+                    return RedirectToAction("Index","Miembros");
                 }
                 else
                 {
@@ -54,6 +75,7 @@ namespace CampDios.Controllers
         public ActionResult LogOut()
         {
             Session.Clear();
+            FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
     }
