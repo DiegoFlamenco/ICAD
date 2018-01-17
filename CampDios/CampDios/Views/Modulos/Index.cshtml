@@ -4,10 +4,13 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Administración de Módulos</h2>
 
 <p>
-    <a href="@Url.Action("Create","Modulos")" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Nuevo modulo</a>&nbsp;
+    <a href="@Url.Action("Create","Modulos")" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Nuevo Módulo</a>&nbsp;
+    <a href="@Url.Action("Index","Usuarios")" class="btn btn-default"><i class="fa fa-book fa-lg" aria-hidden="true"></i> Usuarios</a>&nbsp;
+    <a href="@Url.Action("Index","Opciones")" class="btn btn-default"><i class="fa fa-book fa-lg" aria-hidden="true"></i> Opciones(Vistas)</a>&nbsp;
+    <a href="@Url.Action("Index","Usuarios_Opciones")" class="btn btn-default"><i class="fa fa-book fa-lg" aria-hidden="true"></i> Permisos</a>&nbsp;
 </p>
 <table class="table">
     <tr>
