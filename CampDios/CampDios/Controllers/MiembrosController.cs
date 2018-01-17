@@ -209,7 +209,7 @@ namespace CampDios.Controllers
             base.Dispose(disposing);
         }
 
-        //Metodos creados por el programador
+      
 
         //Metodo para calcular la edad de las personas
         private int ComputeAge(DateTime birthdate) {

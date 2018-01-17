@@ -10,12 +10,12 @@ using CampDios.Modelos;
 
 namespace CampDios.Controllers
 {
+    [Authorize]
     public class UsuariosController : Controller
     {
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: Usuarios
-        [Authorize]
         public ActionResult Index()
         {
             return View(db.Usuarios.ToList());

@@ -10,12 +10,12 @@ using CampDios.Modelos;
 
 namespace CampDios.Controllers
 {
+    [Authorize]
     public class DetalleFamiliasController : Controller
     {
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: DetalleFamilias
-        [Authorize]
         public ActionResult Index()
         {
             var detalleFamilia = db.DetalleFamilia.Include(d => d.Miembros).Include(d => d.Miembros1).Include(d => d.Parentescos);

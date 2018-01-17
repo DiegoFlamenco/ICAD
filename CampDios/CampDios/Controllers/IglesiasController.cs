@@ -10,12 +10,12 @@ using CampDios.Modelos;
 
 namespace CampDios.Controllers
 {
+    [Authorize]
     public class IglesiasController : Controller
     {
         private CampDiosEntities db = new CampDiosEntities();
         // GET: Iglesias
-        //[Authorize]
-        [AuthorizeUserAccesLevel (UserRole = "user")]
+        //[AuthorizeUserAccesLevel (UserRole = "user")]
         public ActionResult Index()
         {
             var iglesia = db.Iglesia.Include(i => i.Miembros);

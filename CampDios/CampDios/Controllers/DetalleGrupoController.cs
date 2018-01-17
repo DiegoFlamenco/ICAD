@@ -10,6 +10,7 @@ using CampDios.Modelos;
 
 namespace CampDios.Controllers
 {
+    [Authorize]
     public class DetalleGrupoController : Controller
     {
         private CampDiosEntities db = new CampDiosEntities();
