@@ -15,6 +15,7 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: Zonas
+        [Authorize]
         public ActionResult Index()
         {
             var zona = db.Zona.Include(z => z.Iglesia).Include(z => z.Miembros);

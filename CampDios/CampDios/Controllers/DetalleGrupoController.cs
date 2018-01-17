@@ -15,6 +15,7 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: DetalleGrupo
+        [Authorize]
         public ActionResult Index()
         {
             var detalleGrupo = db.DetalleGrupo.Include(d => d.Grupo).Include(d => d.Miembros);

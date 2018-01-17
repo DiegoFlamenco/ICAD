@@ -15,6 +15,8 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: Pastores
+        //[Authorize]
+        [AuthorizeUserAccesLevel(UserRole = "user")]
         public ActionResult Index()
         {
             var pastores = db.Pastores.Include(p => p.Capacitaciones).Include(p => p.EstadoCivil).Include(p => p.Iglesia1).Include(p => p.LiderazgoCorporativo).Include(p => p.Pastores2).Include(p => p.Profesion).Include(p => p.RolesPastor).Include(p => p.Sexo1);

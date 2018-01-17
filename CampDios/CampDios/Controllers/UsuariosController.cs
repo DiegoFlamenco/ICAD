@@ -15,6 +15,7 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: Usuarios
+        [Authorize]
         public ActionResult Index()
         {
             return View(db.Usuarios.ToList());

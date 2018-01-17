@@ -76,7 +76,7 @@ namespace CampDios.Controllers
         {
             Session.Clear();
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("login", "Login");
         }
     }
 }

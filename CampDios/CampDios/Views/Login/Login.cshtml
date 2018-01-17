@@ -5,17 +5,25 @@
 }
 
     <div style="width:100%;">
-        <div class="panel panel-primary" style="width: 400px; margin: 0 auto;">
+        <div class="panel panel-primary" style="width: 350px; margin: 0 auto;">
             <div class="panel panel-heading">
-                Authentication Form
+                <span class="glyphicon glyphicon-user"></span>  LOGIN
             </div>
             <div class=pane panel-panel-body>
                 <form id="frmlogic" method="post" action="/Login/dologin">
-                    User Name
-                    <input type="text" name="txtUserName" id="txtUserName" class="form-control" />
-                    Password
-                    <input type="password" name="txtPassword" id="txtPassword" class="form-control" />
-                    <input type="submit" name=btnSubmit class="btn btn-lg btn-primary" value="Login" />
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-envelope"></i></span>
+                        <input type="text" name="txtUserName" id="txtUserName" class="form-control" placeholder="Usuario" aria-describedby="sizing-addon1" required />
+                    </div>
+                    <br>
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon" id="sizing-addon1"><i class="glyphicon glyphicon-lock"></i></span>
+                        <input type="password" name="txtPassword" id="txtPassword" class="form-control"placeholder="******" aria-describedby="sizing-addon1" required />
+                    </div>
+                    <br>
+                    <div class="panel-footer clearfix">
+                        <input type="submit" name=btnSubmit class="btn btn-lg btn-primary btn-block btn-signin" value="Ingresar" />
+                    </div>
                 </form>
             </div>
         </div>

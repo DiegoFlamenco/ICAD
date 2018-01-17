@@ -14,6 +14,7 @@ namespace CampDios.Controllers
     {
         private CampDiosEntities db = new CampDiosEntities();
         // GET: Iglesias
+        //[Authorize]
         [AuthorizeUserAccesLevel (UserRole = "admin")]
         public ActionResult Index()
         {
