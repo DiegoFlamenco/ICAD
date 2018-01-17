@@ -15,7 +15,8 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: Comunidad
-        [Authorize]
+        //[Authorize]
+        [AuthorizeUserAccesLevel(UserRole = "admin")]
         public ActionResult Index()
         {
             var comunidad = db.Comunidad.Include(c => c.Miembros).Include(c => c.Zona);
