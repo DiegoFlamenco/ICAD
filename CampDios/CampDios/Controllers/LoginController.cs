@@ -47,10 +47,10 @@ namespace CampDios.Controllers
                 if (usr != null)
                 {
                     FormsAuthentication.SetAuthCookie(usr.Login, false);
-                    Session["Usuarios_id"] = usr.Usuarios_id.ToString();
-                    Session["Login"] = usr.Login.ToString();
+                    //Session["Usuarios_id"] = usr.Usuarios_id.ToString();
+                    //Session["Login"] = usr.Login.ToString();
                     //Session["Permisos"] =
-                    return RedirectToAction("Index","Miembros");
+                    return RedirectToAction("Index","Home");
                 }
                 else
                 {

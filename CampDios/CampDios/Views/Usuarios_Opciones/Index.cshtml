@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="@Url.Action("Create","Usuarios_Opciones")" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Nuevo modulo</a>&nbsp;
 </p>
 <table class="table">
     <tr>
@@ -46,11 +46,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.Usuarios.Login)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.idUsuario_Opciones }) |
-            @Html.ActionLink("Details", "Details", new { id=item.idUsuario_Opciones }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.idUsuario_Opciones })
-        </td>
+
+        <td>@Html.ActionLink("Editar", "Edit", new { id = item.idUsuario_Opciones }, new { @class = "btn btn-success" })</td>
+        <td>@Html.ActionLink("Detalles", "Details", null, new { id = item.idUsuario_Opciones }, new { @class = "btn btn-info" })</td>
+        <td>@Html.ActionLink("Borrar", "Delete", null, new { id = item.idUsuario_Opciones }, new { @class = "btn btn-danger" })</td>
+
     </tr>
 }
 

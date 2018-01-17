@@ -1,7 +1,7 @@
 ﻿@model CampDios.Modelos.Opciones
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Opiones-Details";
 }
 
 <h2>Details</h2>
@@ -29,6 +29,8 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Opciones_Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdMiembro }, new { @class = "btn btn-success" }) &nbsp;&nbsp;
+    <a href="javascript:history.back();" class="btn btn-default">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
+    </a>
 </p>
