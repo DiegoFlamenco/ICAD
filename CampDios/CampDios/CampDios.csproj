@@ -182,8 +182,10 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MiembrosController.cs" />
     <Compile Include="Controllers\ModulosController.cs" />
+    <Compile Include="Controllers\OpcionesController.cs" />
     <Compile Include="Controllers\PastoresController.cs" />
     <Compile Include="Controllers\UsuariosController.cs" />
+    <Compile Include="Controllers\Usuarios_OpcionesController.cs" />
     <Compile Include="Controllers\ZonasController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -472,6 +474,16 @@
     <Content Include="Views\Modulos\Details.cshtml" />
     <Content Include="Views\Modulos\Edit.cshtml" />
     <Content Include="Views\Modulos\Index.cshtml" />
+    <Content Include="Views\Opciones\Create.cshtml" />
+    <Content Include="Views\Opciones\Delete.cshtml" />
+    <Content Include="Views\Opciones\Details.cshtml" />
+    <Content Include="Views\Opciones\Edit.cshtml" />
+    <Content Include="Views\Opciones\Index.cshtml" />
+    <Content Include="Views\Usuarios_Opciones\Create.cshtml" />
+    <Content Include="Views\Usuarios_Opciones\Delete.cshtml" />
+    <Content Include="Views\Usuarios_Opciones\Details.cshtml" />
+    <Content Include="Views\Usuarios_Opciones\Edit.cshtml" />
+    <Content Include="Views\Usuarios_Opciones\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
