@@ -40,11 +40,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.Miembro_id)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Usuarios_id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Usuarios_id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Usuarios_id })
-        </td>
+
+        <td>@Html.ActionLink("Editar", "Edit", new { id = item.Usuarios_id }, new { @class = "btn btn-success" })</td>
+        <td>@Html.ActionLink("Detalles", "Details", null, new { id = item.Usuarios_id }, new { @class = "btn btn-info" })</td>
+        <td>@Html.ActionLink("Borrar", "Delete", null, new { id = item.Usuarios_id }, new { @class = "btn btn-danger" })</td>
+
     </tr>
 }
 
