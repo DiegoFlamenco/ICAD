@@ -63,7 +63,7 @@ namespace CampDios.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdIglesia,Nombre,Direccion,Tel,Tel2,Tel3,Email,IdMiembro")] Iglesia iglesia)
+        public ActionResult Create([Bind(Include = "IdIglesia,Nombre,Direccion,Tel,Tel2,Tel3,Email,IdPastor")] Iglesia iglesia)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace CampDios.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdPastor = new SelectList(db.Pastores, "IdPastor", "Nombres", iglesia.IdMiembro);
+            ViewBag.IdPastor = new SelectList(db.Pastores, "IdPastor", "Nombres", iglesia.IdPastor);
             return View(iglesia);
         }
 
@@ -88,7 +88,7 @@ namespace CampDios.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.IdPastor = new SelectList(db.Pastores, "IdPastor", "Nombres", iglesia.IdMiembro);
+            ViewBag.IdPastor = new SelectList(db.Pastores, "IdPastor", "Nombres", iglesia.IdPastor);
             return View(iglesia);
         }
 
@@ -105,7 +105,7 @@ namespace CampDios.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdPastor = new SelectList(db.Pastores, "IdPastor", "Nombres", iglesia.IdMiembro);
+            ViewBag.IdPastor = new SelectList(db.Pastores, "IdPastor", "Nombres", iglesia.IdPastor);
             return View(iglesia);
         }
 

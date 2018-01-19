@@ -1,30 +1,31 @@
 ﻿@model IEnumerable<CampDios.Modelos.Zona>
 
+
 @{
     ViewBag.Title = "Detalle de Zonas";
 }
 
-<h2>ZonaDetalle</h2>
+<h2>Detalle de Zona</h2>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.IdZona)
+            <h5><strong> Id Zona</strong></h5>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Nombre)
+            <h5><strong>Nombre</strong></h5>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Descripcion)
+            <h5><strong>Descripción</strong></h5>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Direccion)
+            <h5><strong>Dirección</strong></h5>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Iglesia.Nombre)
+            <h5><strong>Iglesia</strong></h5>
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Miembros.Nombres)
+            <h5><strong>Pastor de zona</strong></h5>
         </th>
         <th></th>
     </tr>
@@ -47,7 +48,7 @@
             @Html.DisplayFor(modelItem => item.Iglesia.Nombre)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Miembros.Nombres)
+            @Html.DisplayFor(modelItem => item.Pastores.Nombres)
         </td>
         <td><a href="@Url.Action("Edit","Zonas", new { id = item.IdZona })" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Editar</a>&nbsp;</td>
         <td><a href="@Url.Action("Details","Zonas", new { id = item.IdZona })" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Detalles</a>&nbsp;</td>

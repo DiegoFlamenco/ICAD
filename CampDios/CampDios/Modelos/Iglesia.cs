@@ -29,7 +29,7 @@ namespace CampDios.Modelos
         public string Tel2 { get; set; }
         public string Tel3 { get; set; }
         public string Email { get; set; }
-        public Nullable<int> IdMiembro { get; set; }
+        public Nullable<int> IdPastor { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HistoriaEspiritual> HistoriaEspiritual { get; set; }

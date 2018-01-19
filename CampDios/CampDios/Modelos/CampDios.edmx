@@ -100,7 +100,7 @@
           <Property Name="Tel2" Type="varchar" MaxLength="10" />
           <Property Name="Tel3" Type="varchar" MaxLength="10" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdMiembro" Type="int" />
+          <Property Name="IdPastor" Type="int" />
         </EntityType>
         <EntityType Name="LiderazgoCorporativo">
           <Key>
@@ -462,7 +462,7 @@
               <PropertyRef Name="IdPastor" />
             </Principal>
             <Dependent Role="Iglesia">
-              <PropertyRef Name="IdMiembro" />
+              <PropertyRef Name="IdPastor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1015,7 +1015,7 @@
           <Property Name="Tel2" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Tel3" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="IdMiembro" Type="Int32" />
+          <Property Name="IdPastor" Type="Int32" />
           <NavigationProperty Name="HistoriaEspiritual" Relationship="Self.FK_HistoriaEspiritual_Iglesia" FromRole="Iglesia" ToRole="HistoriaEspiritual" />
           <NavigationProperty Name="Pastores" Relationship="Self.FK_Iglesia_Pastores" FromRole="Iglesia" ToRole="Pastores" />
           <NavigationProperty Name="Miembros" Relationship="Self.FK_Miembros_Iglesia" FromRole="Iglesia" ToRole="Miembros" />
@@ -1476,7 +1476,7 @@
               <PropertyRef Name="IdPastor" />
             </Principal>
             <Dependent Role="Iglesia">
-              <PropertyRef Name="IdMiembro" />
+              <PropertyRef Name="IdPastor" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2002,7 +2002,7 @@
                 <ScalarProperty Name="Tel2" ColumnName="Tel2" />
                 <ScalarProperty Name="Tel3" ColumnName="Tel3" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="IdMiembro" ColumnName="IdMiembro" />
+                <ScalarProperty Name="IdPastor" ColumnName="IdPastor" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
