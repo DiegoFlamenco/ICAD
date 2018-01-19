@@ -17,14 +17,8 @@ namespace CampDios.Modelos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Pastores()
         {
-            this.Comunidad = new HashSet<Comunidad>();
-            this.DetalleFamilia = new HashSet<DetalleFamilia>();
-            this.DetalleFamilia1 = new HashSet<DetalleFamilia>();
             this.DetalleGrupo = new HashSet<DetalleGrupo>();
-            this.Finanzas = new HashSet<Finanzas>();
-            this.HistoriaEspiritual = new HashSet<HistoriaEspiritual>();
             this.Iglesia = new HashSet<Iglesia>();
-            this.Pastores1 = new HashSet<Pastores>();
             this.Zona = new HashSet<Zona>();
         }
     
@@ -45,31 +39,15 @@ namespace CampDios.Modelos
         public int IdProfesion { get; set; }
         public int IdCapacitacion { get; set; }
         public int IdRolPastor { get; set; }
-        public int IdHMayor { get; set; }
         public int IdCorporativo { get; set; }
-        public int IdIglesia { get; set; }
     
         public virtual Capacitaciones Capacitaciones { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Comunidad> Comunidad { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetalleFamilia> DetalleFamilia { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DetalleFamilia> DetalleFamilia1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<DetalleGrupo> DetalleGrupo { get; set; }
         public virtual EstadoCivil EstadoCivil { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Finanzas> Finanzas { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HistoriaEspiritual> HistoriaEspiritual { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Iglesia> Iglesia { get; set; }
-        public virtual Iglesia Iglesia1 { get; set; }
         public virtual LiderazgoCorporativo LiderazgoCorporativo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Pastores> Pastores1 { get; set; }
-        public virtual Pastores Pastores2 { get; set; }
         public virtual Profesion Profesion { get; set; }
         public virtual RolesPastor RolesPastor { get; set; }
         public virtual Sexo Sexo1 { get; set; }

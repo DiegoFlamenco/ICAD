@@ -13,7 +13,7 @@ namespace CampDios.Modelos
     
     public partial class seleccionar_pastor_general_Result
     {
-        public int IdMiembro { get; set; }
+        public int IdPastor { get; set; }
         public string Nombres { get; set; }
     }
 }

@@ -88,11 +88,6 @@ namespace CampDios.Modelos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<seleccionar_pastor_general_Result>("seleccionar_pastor_general");
         }
     
-        public virtual ObjectResult<seleccionar_pastor_iglesia_Result> seleccionar_pastor_iglesia()
-        {
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<seleccionar_pastor_iglesia_Result>("seleccionar_pastor_iglesia");
-        }
-    
         public virtual ObjectResult<seleccionar_pastor_zona_Result> seleccionar_pastor_zona()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<seleccionar_pastor_zona_Result>("seleccionar_pastor_zona");

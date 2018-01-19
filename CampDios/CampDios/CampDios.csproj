@@ -287,9 +287,6 @@
     <Compile Include="Modelos\seleccionar_pastor_general_Result.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>
-    <Compile Include="Modelos\seleccionar_pastor_iglesia_Result.cs">
-      <DependentUpon>CampDios.tt</DependentUpon>
-    </Compile>
     <Compile Include="Modelos\seleccionar_pastor_zona_Result.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>
@@ -465,11 +462,6 @@
     <Content Include="Views\Usuarios\Details.cshtml" />
     <Content Include="Views\Usuarios\Edit.cshtml" />
     <Content Include="Views\Usuarios\Index.cshtml" />
-    <Content Include="Views\Pastores\Create.cshtml" />
-    <Content Include="Views\Pastores\Delete.cshtml" />
-    <Content Include="Views\Pastores\Details.cshtml" />
-    <Content Include="Views\Pastores\Edit.cshtml" />
-    <Content Include="Views\Pastores\Index.cshtml" />
     <Content Include="Views\Login\LoggedIn.cshtml" />
     <Content Include="Views\Login\login.cshtml" />
     <Content Include="Views\Modulos\Create.cshtml" />
@@ -487,6 +479,11 @@
     <Content Include="Views\Usuarios_Opciones\Details.cshtml" />
     <Content Include="Views\Usuarios_Opciones\Edit.cshtml" />
     <Content Include="Views\Usuarios_Opciones\Index.cshtml" />
+    <Content Include="Views\Pastores\Create.cshtml" />
+    <Content Include="Views\Pastores\Delete.cshtml" />
+    <Content Include="Views\Pastores\Details.cshtml" />
+    <Content Include="Views\Pastores\Edit.cshtml" />
+    <Content Include="Views\Pastores\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

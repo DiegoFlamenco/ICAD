@@ -1,63 +1,129 @@
 ﻿@model IEnumerable<CampDios.Modelos.Pastores>
 
 @{
-    ViewBag.Title = "Miembros-Inicio";
+    ViewBag.Title = "Index";
 }
 
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>Index</title>
-</head>
-    <p>
-        <a href="@Url.Action("Create","Pastores")" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Nuevo Pastor</a>&nbsp;
-		<a href="@Url.Action("Index","HistoriaEspirituals")" class="btn btn-default"><i class="fa fa-book fa-lg" aria-hidden="true"></i> Historial espiritual</a>&nbsp;
-    </p>
-	<div style="overflow:auto;">
-    <div class="table-responsive table-hover">
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombres)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Apellidos)
-            </th>   
-			<th>
-				Edad
-			</th>        
-            <th>
-                @Html.DisplayNameFor(model => model.Iglesia1.Nombre)
-            </th>           
-            <th>
-                @Html.DisplayNameFor(model => model.Sexo1.Sexo1)
-            </th>
-            <th></th>
-            <th>Opciones</th>
-            <th></th>
-        </tr>
-    
-    @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombres)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Apellidos)
-            </td>           
-            <td>
-                @Html.DisplayFor(modelItem => item.Iglesia1.Nombre)
-            </td>           
-            <td>
-                @Html.DisplayFor(modelItem => item.Sexo1.Sexo1)
-            </td>
-            <td>
-                <td>@Html.ActionLink("Editar", "Editar", new { id=item.IdPastor }, new { @class = "btn btn-success"})</td> 
-                <td>@Html.ActionLink("Detalles", "Detalles", new { id=item.IdPastor }, new { @class = "btn btn-info"})</td>
-                <td>@Html.ActionLink("Borrar", "Borrar", new { id=item.IdPastor }, new { @class = "btn btn-danger"})</td>
-            </td>
-        </tr>
-    }
-    
-    </table>
-	</div>
-</div>
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombres)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Apellidos)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DUI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NIT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaNacimiento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccion1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Direccion2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Tel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Capacitaciones.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EstadoCivil.Estado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LiderazgoCorporativo.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Profesion.Oficio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RolesPastor.RolPastor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sexo1.Sexo1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Apellidos)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DUI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NIT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaNacimiento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Direccion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Direccion1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Direccion2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Tel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Capacitaciones.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EstadoCivil.Estado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LiderazgoCorporativo.Nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Profesion.Oficio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RolesPastor.RolPastor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sexo1.Sexo1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdPastor }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdPastor }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdPastor })
+        </td>
+    </tr>
+}
+
+</table>

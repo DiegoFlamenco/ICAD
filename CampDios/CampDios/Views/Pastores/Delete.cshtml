@@ -1,179 +1,160 @@
 ﻿@model CampDios.Modelos.Pastores
 
 @{
-    Layout = null;
+    ViewBag.Title = "Delete";
 }
 
-<center><h2>Pastores-Borrar</h2></center>
+<h2>Delete</h2>
 
-<h3>¿Desea borrar este Pastor?</h3>
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Pastores</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombres)
+        </dt>
 
-    <div>
-        <h4>Pastores</h4>
-        <hr />
-        <dl class="dl-horizontal">
-            <dt>
-                @Html.DisplayNameFor(model => model.Nombres)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Nombres)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Apellidos)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Apellidos)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.DUI)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.DUI)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.NIT)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.NIT)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.FechaNacimiento)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.FechaNacimiento)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Direccion)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Direccion)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Direccion1)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Direccion1)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Direccion2)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Direccion2)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Email)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Email)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Tel)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Tel)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Cel)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Cel)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Capacitaciones.Nombre)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Capacitaciones.Nombre)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.EstadoCivil.Estado)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.EstadoCivil.Estado)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Iglesia1.Nombre)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Iglesia1.Nombre)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.LiderazgoCorporativo.Nombre)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.LiderazgoCorporativo.Nombre)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Pastores2.Nombres)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Pastores2.Nombres)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Profesion.Oficio)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Profesion.Oficio)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.RolesPastor.RolPastor)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.RolesPastor.RolPastor)
-            </dd>
-    
-            <dt>
-                @Html.DisplayNameFor(model => model.Sexo1.Sexo1)
-            </dt>
-    
-            <dd>
-                @Html.DisplayFor(model => model.Sexo1.Sexo1)
-            </dd>
-    
-        </dl>
-    
-        @using (Html.BeginForm()) {
-            @Html.AntiForgeryToken()
-    
-            <div class="form-actions no-color">
-                <input type="submit" value="Borrar" class="btn btn-danger" /> &nbsp;&nbsp;
-                 <a href="javascript:history.back();" class="btn btn-default">
-                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
-            </a>
-            </div>
-        }
-    </div>
+        <dd>
+            @Html.DisplayFor(model => model.Nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Apellidos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apellidos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DUI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DUI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NIT)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NIT)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaNacimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaNacimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Direccion1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direccion1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Direccion2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direccion2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Cel)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cel)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Capacitaciones.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Capacitaciones.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EstadoCivil.Estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EstadoCivil.Estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LiderazgoCorporativo.Nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LiderazgoCorporativo.Nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Profesion.Oficio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Profesion.Oficio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RolesPastor.RolPastor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RolesPastor.RolPastor)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Sexo1.Sexo1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Sexo1.Sexo1)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -30,7 +30,6 @@ namespace CampDios.Modelos
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comunidad> Comunidad { get; set; }
         public virtual Iglesia Iglesia { get; set; }
-        public virtual Miembros Miembros { get; set; }
         public virtual Pastores Pastores { get; set; }
     }
 }

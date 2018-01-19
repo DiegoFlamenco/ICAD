@@ -22,7 +22,5 @@ namespace CampDios.Modelos
         public virtual Miembros Miembros { get; set; }
         public virtual Miembros Miembros1 { get; set; }
         public virtual Parentescos Parentescos { get; set; }
-        public virtual Pastores Pastores { get; set; }
-        public virtual Pastores Pastores1 { get; set; }
     }
 }

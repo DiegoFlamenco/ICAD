@@ -23,10 +23,8 @@ namespace CampDios.Modelos
             this.DetalleGrupo = new HashSet<DetalleGrupo>();
             this.Finanzas = new HashSet<Finanzas>();
             this.HistoriaEspiritual = new HashSet<HistoriaEspiritual>();
-            this.Iglesia = new HashSet<Iglesia>();
             this.Miembros1 = new HashSet<Miembros>();
             this.Usuarios = new HashSet<Usuarios>();
-            this.Zona = new HashSet<Zona>();
         }
     
         public int IdMiembro { get; set; }
@@ -64,9 +62,7 @@ namespace CampDios.Modelos
         public virtual ICollection<Finanzas> Finanzas { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HistoriaEspiritual> HistoriaEspiritual { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Iglesia> Iglesia { get; set; }
-        public virtual Iglesia Iglesia1 { get; set; }
+        public virtual Iglesia Iglesia { get; set; }
         public virtual LiderazgoCorporativo LiderazgoCorporativo { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Miembros> Miembros1 { get; set; }
@@ -76,7 +72,5 @@ namespace CampDios.Modelos
         public virtual Sexo Sexo1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Usuarios> Usuarios { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Zona> Zona { get; set; }
     }
 }

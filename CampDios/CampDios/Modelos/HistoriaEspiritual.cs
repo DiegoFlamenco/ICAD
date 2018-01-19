@@ -22,6 +22,5 @@ namespace CampDios.Modelos
     
         public virtual Iglesia Iglesia { get; set; }
         public virtual Miembros Miembros { get; set; }
-        public virtual Pastores Pastores { get; set; }
     }
 }

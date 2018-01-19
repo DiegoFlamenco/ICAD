@@ -19,7 +19,7 @@ namespace CampDios.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            var zona = db.Zona.Include(z => z.Iglesia).Include(z => z.Miembros);
+            var zona = db.Zona.Include(z => z.Iglesia).Include(z => z.Pastores);
             return View(zona.ToList());
         }
 
@@ -49,7 +49,7 @@ namespace CampDios.Controllers
         {
             ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre");
             var result = db.Database.SqlQuery<seleccionar_pastor_zona_Result>("exec seleccionar_pastor_zona"); //llamando al procedimiento almacenado "seleccionar_pastor_zona"
-            ViewBag.IdPastorZona = new SelectList(result.ToList(), "IdMiembro", "Nombres");// pasando lo que viene del Stored Procedure a el dropdown
+            ViewBag.IdPastorZona = new SelectList(result.ToList(), "IdPastor", "Nombres");// pasando lo que viene del Stored Procedure a el dropdown
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace CampDios.Controllers
             }
 
             ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre", zona.IdIglesia); 
-            ViewBag.IdPastorZona = new SelectList(db.Miembros, "IdMiembro", "Nombres", zona.IdPastorZona);
+            ViewBag.IdPastorZona = new SelectList(db.Pastores, "IdPastor", "Nombres", zona.IdPastorZona);
             return View(zona);
         }
 
@@ -85,7 +85,7 @@ namespace CampDios.Controllers
                 return HttpNotFound();
             }
             ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre", zona.IdIglesia);
-            ViewBag.IdPastorZona = new SelectList(db.Miembros, "IdMiembro", "Nombres", zona.IdPastorZona);
+            ViewBag.IdPastorZona = new SelectList(db.Pastores, "IdPastor", "Nombres", zona.IdPastorZona);
             return View(zona);
         }
 
@@ -103,7 +103,7 @@ namespace CampDios.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre", zona.IdIglesia);
-            ViewBag.IdPastorZona = new SelectList(db.Miembros, "IdMiembro", "Nombres", zona.IdPastorZona);
+            ViewBag.IdPastorZona = new SelectList(db.Pastores, "IdPastor", "Nombres", zona.IdPastorZona);
             return View(zona);
         }
 

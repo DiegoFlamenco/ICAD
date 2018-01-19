@@ -10,16 +10,14 @@ using CampDios.Modelos;
 
 namespace CampDios.Controllers
 {
-    [Authorize]
     public class PastoresController : Controller
     {
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: Pastores
-        //[AuthorizeUserAccesLevel(UserRole = "user")]
         public ActionResult Index()
         {
-            var pastores = db.Pastores.Include(p => p.Capacitaciones).Include(p => p.EstadoCivil).Include(p => p.Iglesia1).Include(p => p.LiderazgoCorporativo).Include(p => p.Pastores2).Include(p => p.Profesion).Include(p => p.RolesPastor).Include(p => p.Sexo1);
+            var pastores = db.Pastores.Include(p => p.Capacitaciones).Include(p => p.EstadoCivil).Include(p => p.LiderazgoCorporativo).Include(p => p.Profesion).Include(p => p.RolesPastor).Include(p => p.Sexo1);
             return View(pastores.ToList());
         }
 
@@ -43,9 +41,7 @@ namespace CampDios.Controllers
         {
             ViewBag.IdCapacitacion = new SelectList(db.Capacitaciones, "IdCapacitacion", "Nombre");
             ViewBag.IdEstadoCivil = new SelectList(db.EstadoCivil, "IdEstado", "Estado");
-            ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre");
             ViewBag.IdCorporativo = new SelectList(db.LiderazgoCorporativo, "IdCorporativo", "Nombre");
-            ViewBag.IdHMayor = new SelectList(db.Miembros, "IdMiembro", "Nombres");
             ViewBag.IdProfesion = new SelectList(db.Profesion, "IdProfesion", "Oficio");
             ViewBag.IdRolPastor = new SelectList(db.RolesPastor, "IdRolPastor", "RolPastor");
             ViewBag.Sexo = new SelectList(db.Sexo, "IdSexo", "Sexo1");
@@ -57,7 +53,7 @@ namespace CampDios.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "IdPastor,Nombres,Apellidos,DUI,NIT,FechaNacimiento,Direccion,Direccion1,Direccion2,Email,Tel,Cel,Sexo,IdEstadoCivil,IdProfesion,IdCapacitacion,IdRolPastor,IdHMayor,IdCorporativo,IdIglesia")] Pastores pastores)
+        public ActionResult Create([Bind(Include = "IdPastor,Nombres,Apellidos,DUI,NIT,FechaNacimiento,Direccion,Direccion1,Direccion2,Email,Tel,Cel,Sexo,IdEstadoCivil,IdProfesion,IdCapacitacion,IdRolPastor,IdCorporativo")] Pastores pastores)
         {
             if (ModelState.IsValid)
             {
@@ -68,9 +64,7 @@ namespace CampDios.Controllers
 
             ViewBag.IdCapacitacion = new SelectList(db.Capacitaciones, "IdCapacitacion", "Nombre", pastores.IdCapacitacion);
             ViewBag.IdEstadoCivil = new SelectList(db.EstadoCivil, "IdEstado", "Estado", pastores.IdEstadoCivil);
-            ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre", pastores.IdIglesia);
             ViewBag.IdCorporativo = new SelectList(db.LiderazgoCorporativo, "IdCorporativo", "Nombre", pastores.IdCorporativo);
-            ViewBag.IdHMayor = new SelectList(db.Pastores, "IdPastor", "Nombres", pastores.IdHMayor);
             ViewBag.IdProfesion = new SelectList(db.Profesion, "IdProfesion", "Oficio", pastores.IdProfesion);
             ViewBag.IdRolPastor = new SelectList(db.RolesPastor, "IdRolPastor", "RolPastor", pastores.IdRolPastor);
             ViewBag.Sexo = new SelectList(db.Sexo, "IdSexo", "Sexo1", pastores.Sexo);
@@ -91,9 +85,7 @@ namespace CampDios.Controllers
             }
             ViewBag.IdCapacitacion = new SelectList(db.Capacitaciones, "IdCapacitacion", "Nombre", pastores.IdCapacitacion);
             ViewBag.IdEstadoCivil = new SelectList(db.EstadoCivil, "IdEstado", "Estado", pastores.IdEstadoCivil);
-            ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre", pastores.IdIglesia);
             ViewBag.IdCorporativo = new SelectList(db.LiderazgoCorporativo, "IdCorporativo", "Nombre", pastores.IdCorporativo);
-            ViewBag.IdHMayor = new SelectList(db.Pastores, "IdPastor", "Nombres", pastores.IdHMayor);
             ViewBag.IdProfesion = new SelectList(db.Profesion, "IdProfesion", "Oficio", pastores.IdProfesion);
             ViewBag.IdRolPastor = new SelectList(db.RolesPastor, "IdRolPastor", "RolPastor", pastores.IdRolPastor);
             ViewBag.Sexo = new SelectList(db.Sexo, "IdSexo", "Sexo1", pastores.Sexo);
@@ -105,7 +97,7 @@ namespace CampDios.Controllers
         // más información vea http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IdPastor,Nombres,Apellidos,DUI,NIT,FechaNacimiento,Direccion,Direccion1,Direccion2,Email,Tel,Cel,Sexo,IdEstadoCivil,IdProfesion,IdCapacitacion,IdRolPastor,IdHMayor,IdCorporativo,IdIglesia")] Pastores pastores)
+        public ActionResult Edit([Bind(Include = "IdPastor,Nombres,Apellidos,DUI,NIT,FechaNacimiento,Direccion,Direccion1,Direccion2,Email,Tel,Cel,Sexo,IdEstadoCivil,IdProfesion,IdCapacitacion,IdRolPastor,IdCorporativo")] Pastores pastores)
         {
             if (ModelState.IsValid)
             {
@@ -115,9 +107,7 @@ namespace CampDios.Controllers
             }
             ViewBag.IdCapacitacion = new SelectList(db.Capacitaciones, "IdCapacitacion", "Nombre", pastores.IdCapacitacion);
             ViewBag.IdEstadoCivil = new SelectList(db.EstadoCivil, "IdEstado", "Estado", pastores.IdEstadoCivil);
-            ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre", pastores.IdIglesia);
             ViewBag.IdCorporativo = new SelectList(db.LiderazgoCorporativo, "IdCorporativo", "Nombre", pastores.IdCorporativo);
-            ViewBag.IdHMayor = new SelectList(db.Pastores, "IdPastor", "Nombres", pastores.IdHMayor);
             ViewBag.IdProfesion = new SelectList(db.Profesion, "IdProfesion", "Oficio", pastores.IdProfesion);
             ViewBag.IdRolPastor = new SelectList(db.RolesPastor, "IdRolPastor", "RolPastor", pastores.IdRolPastor);
             ViewBag.Sexo = new SelectList(db.Sexo, "IdSexo", "Sexo1", pastores.Sexo);

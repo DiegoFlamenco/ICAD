@@ -53,9 +53,8 @@ namespace CampDios.Controllers
         // GET: Iglesias/Create
         public ActionResult Create()
         {
-            var result = db.Database.SqlQuery<seleccionar_pastor_iglesia_Result>("exec seleccionar_pastor_iglesia");
-            ViewBag.IdMiembro = new SelectList(result.ToList(), "IdPastor", "Nombres");
-            //ViewBag.IdMiembro = new SelectList(db.Miembros, "IdMiembro", "Nombres");
+            
+            ViewBag.IdPastor = new SelectList(db.Pastores, "IdPastor", "Nombres");
             return View();
         }
 
@@ -73,7 +72,7 @@ namespace CampDios.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.IdMiembro = new SelectList(db.Miembros, "IdMiembro", "Nombres", iglesia.IdMiembro);
+            ViewBag.IdPastor = new SelectList(db.Pastores, "IdPastor", "Nombres", iglesia.IdMiembro);
             return View(iglesia);
         }
 
@@ -106,7 +105,7 @@ namespace CampDios.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.IdMiembro = new SelectList(db.Miembros, "IdMiembro", "Nombres", iglesia.IdMiembro);
+            ViewBag.IdPastor = new SelectList(db.Pastores, "IdPastor", "Nombres", iglesia.IdMiembro);
             return View(iglesia);
         }
 
