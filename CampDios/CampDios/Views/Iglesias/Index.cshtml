@@ -7,7 +7,7 @@
 <center><h2>Iglesias - Inicio (Numero de iglesias @Model.Count())</h2></center>
 
 <p>
-    <a href="@Url.Action("Create","Iglesias")" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Nueva iglesia</a>&nbsp;
+    <a href="@Url.Action("Create", "Iglesias")" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Nueva iglesia</a>&nbsp;
 </p>
 <table class="table">
     <tr>
@@ -31,7 +31,7 @@
         </th>
         <th>
             Pastor de iglesia
-            <!--@Html.DisplayNameFor(model => model.Miembros.Nombres)-->
+            <!--@Html.DisplayNameFor(model => model.Pastores.Nombres)-->
         </th>
         <th></th>
         <th>Opciones</th>
@@ -59,7 +59,7 @@
             @Html.DisplayFor(modelItem => item.Email)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Miembros.Nombres)
+            @Html.DisplayFor(modelItem => item.Pastores.Nombres)
         </td> 
         <td>@Html.ActionLink("Editar", "Edit", new { id = item.IdIglesia }, new { @class = "btn btn-success" })</td>
         <td>@Html.ActionLink("Detalles", "Details", null, new { id = item.IdIglesia }, new { @class = "btn btn-info" })</td>
