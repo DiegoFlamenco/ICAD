@@ -278,6 +278,9 @@
     <Compile Include="Modelos\seleccionar_lider_Result.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>
+    <Compile Include="Modelos\seleccionar_miembro_nombreCompleto_Result.cs">
+      <DependentUpon>CampDios.tt</DependentUpon>
+    </Compile>
     <Compile Include="Modelos\seleccionar_miembro_Result.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>

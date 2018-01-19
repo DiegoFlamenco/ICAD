@@ -11,9 +11,9 @@ namespace CampDios.Modelos
 {
     using System;
     
-    public partial class seleccionar_pastor_iglesia_Result
+    public partial class seleccionar_miembro_nombreCompleto_Result
     {
-        public int IdPastor { get; set; }
+        public int IdMiembro { get; set; }
         public string Column1 { get; set; }
     }
 }

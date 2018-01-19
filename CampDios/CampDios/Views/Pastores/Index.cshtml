@@ -16,9 +16,6 @@
     <div class="table-responsive table-hover">
     <table class="table">
         <tr>
-			<th>
-                @Html.DisplayNameFor(model => model.IdPastor)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nombres)
             </th>
@@ -54,9 +51,9 @@
                 @Html.DisplayFor(modelItem => item.Sexo1.Sexo1)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Editar", new { id=item.IdPastor }) |
-                @Html.ActionLink("Details", "Detalles", new { id=item.IdPastor }) |
-                @Html.ActionLink("Delete", "Borrar", new { id=item.IdPastor })
+                <td>@Html.ActionLink("Editar", "Editar", new { id=item.IdPastor }, new { @class = "btn btn-success"})</td> 
+                <td>@Html.ActionLink("Detalles", "Detalles", new { id=item.IdPastor }, new { @class = "btn btn-info"})</td>
+                <td>@Html.ActionLink("Borrar", "Borrar", new { id=item.IdPastor }, new { @class = "btn btn-danger"})</td>
             </td>
         </tr>
     }

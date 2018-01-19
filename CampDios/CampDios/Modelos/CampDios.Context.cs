@@ -78,6 +78,11 @@ namespace CampDios.Modelos
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<seleccionar_miembro_Result>("seleccionar_miembro");
         }
     
+        public virtual ObjectResult<seleccionar_miembro_nombreCompleto_Result> seleccionar_miembro_nombreCompleto()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<seleccionar_miembro_nombreCompleto_Result>("seleccionar_miembro_nombreCompleto");
+        }
+    
         public virtual ObjectResult<seleccionar_pastor_general_Result> seleccionar_pastor_general()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<seleccionar_pastor_general_Result>("seleccionar_pastor_general");

@@ -25,7 +25,6 @@ namespace CampDios.Modelos
             this.HistoriaEspiritual = new HashSet<HistoriaEspiritual>();
             this.Iglesia = new HashSet<Iglesia>();
             this.Pastores1 = new HashSet<Pastores>();
-            this.Usuarios = new HashSet<Usuarios>();
             this.Zona = new HashSet<Zona>();
         }
     
@@ -34,14 +33,14 @@ namespace CampDios.Modelos
         public string Apellidos { get; set; }
         public string DUI { get; set; }
         public string NIT { get; set; }
-        public Nullable<System.DateTime> FechaNacimiento { get; set; }
+        public System.DateTime FechaNacimiento { get; set; }
         public string Direccion { get; set; }
         public string Direccion1 { get; set; }
         public string Direccion2 { get; set; }
         public string Email { get; set; }
         public string Tel { get; set; }
         public string Cel { get; set; }
-        public Nullable<int> Sexo { get; set; }
+        public int Sexo { get; set; }
         public int IdEstadoCivil { get; set; }
         public int IdProfesion { get; set; }
         public int IdCapacitacion { get; set; }
@@ -74,8 +73,6 @@ namespace CampDios.Modelos
         public virtual Profesion Profesion { get; set; }
         public virtual RolesPastor RolesPastor { get; set; }
         public virtual Sexo Sexo1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Usuarios> Usuarios { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Zona> Zona { get; set; }
     }
