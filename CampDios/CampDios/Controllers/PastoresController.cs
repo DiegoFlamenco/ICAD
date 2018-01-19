@@ -45,7 +45,7 @@ namespace CampDios.Controllers
             ViewBag.IdEstadoCivil = new SelectList(db.EstadoCivil, "IdEstado", "Estado");
             ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre");
             ViewBag.IdCorporativo = new SelectList(db.LiderazgoCorporativo, "IdCorporativo", "Nombre");
-            ViewBag.IdHMayor = new SelectList(db.Pastores, "IdPastor", "Nombres");
+            ViewBag.IdHMayor = new SelectList(db.Miembros, "IdMiembro", "Nombres");
             ViewBag.IdProfesion = new SelectList(db.Profesion, "IdProfesion", "Oficio");
             ViewBag.IdRolPastor = new SelectList(db.RolesPastor, "IdRolPastor", "RolPastor");
             ViewBag.Sexo = new SelectList(db.Sexo, "IdSexo", "Sexo1");
