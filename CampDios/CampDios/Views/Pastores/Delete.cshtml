@@ -1,12 +1,12 @@
 ﻿@model CampDios.Modelos.Pastores
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "Pastores-Borrar";
 }
 
-<h2>Delete</h2>
+<h2>Pastores-Borrar</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>¿Desea borrar este pastor?</h3>
 <div>
     <h4>Pastores</h4>
     <hr />
@@ -151,10 +151,12 @@
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
-
+        
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Borrar" class="btn btn-danger" /> &nbsp;&nbsp;
+            <a href="javascript:history.back();" class="btn btn-default">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
+            </a>
         </div>
     }
 </div>

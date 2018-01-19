@@ -1,13 +1,12 @@
 ﻿@model IEnumerable<CampDios.Modelos.Pastores>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Pastores-Inicio";
 }
-
-<h2>Index</h2>
+<center><h2>Pastores - Inicio)</h2></center>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="@Url.Action("Create","Pastores")" class="btn btn-primary"><i class="fa fa-plus-square fa-lg" aria-hidden="true"></i> Nuevo pastor</a>&nbsp;
 </p>
 <table class="table">
     <tr>
@@ -118,11 +117,11 @@
         <td>
             @Html.DisplayFor(modelItem => item.Sexo1.Sexo1)
         </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IdPastor }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IdPastor }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IdPastor })
-        </td>
+        <td>@Html.ActionLink("Editar", "Edit", new { id = item.IdPastor }, new { @class = "btn btn-success" })</td>
+        <td>@Html.ActionLink("Detalles", "Details", null, new { id = item.IdPastor }, new { @class = "btn btn-info" })</td>
+        <td>@Html.ActionLink("Borrar", "Delete", null, new { id = item.IdPastor }, new { @class = "btn btn-danger" })</td>
+
+        
     </tr>
 }
 

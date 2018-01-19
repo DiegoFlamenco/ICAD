@@ -1,10 +1,10 @@
 ﻿@model CampDios.Modelos.Pastores
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Pastores Detalles";
 }
 
-<h2>Details</h2>
+<h2>Pastores-Detalles</h2>
 
 <div>
     <h4>Pastores</h4>
@@ -149,6 +149,8 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.IdPastor }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Editar", "Edit", new { id = Model.IdPastor }, new { @class = "btn btn-success" }) &nbsp;&nbsp;
+    <a href="javascript:history.back();" class="btn btn-default">
+        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> Volver al listado
+    </a>
 </p>
