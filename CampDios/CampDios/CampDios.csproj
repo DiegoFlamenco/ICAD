@@ -312,6 +312,7 @@
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>
     <Compile Include="Modelos\ViewModel\Miembros-Edad.cs" />
+    <Compile Include="Modelos\ViewModel\Pastores-Edad.cs" />
     <Compile Include="Modelos\Zona.cs">
       <DependentUpon>CampDios.tt</DependentUpon>
     </Compile>

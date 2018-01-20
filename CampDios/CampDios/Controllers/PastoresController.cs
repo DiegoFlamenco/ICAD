@@ -17,8 +17,34 @@ namespace CampDios.Controllers
         // GET: Pastores
         public ActionResult Index()
         {
-            var pastores = db.Pastores.Include(p => p.Capacitaciones).Include(p => p.EstadoCivil).Include(p => p.LiderazgoCorporativo).Include(p => p.Profesion).Include(p => p.RolesPastor).Include(p => p.Sexo1);
-            return View(pastores.ToList());
+            var result = db.Pastores
+                .Include(m => m.DetalleGrupo)
+                .Include(m => m.Iglesia)
+                .Include(m => m.Zona)
+                .ToList().
+                Select(a => new Pastores_Edad
+                {
+                    IdPastor = a.IdPastor,
+                    Nombres = a.Nombres,
+                    Apellidos = a.Apellidos,
+                    DUI = a.DUI,
+                    NIT = a.NIT,
+                    FechaNacimiento = a.FechaNacimiento,
+                    //Aqui va la edad 
+                    Edad = ComputeAge(a.FechaNacimiento),
+                    Direccion = a.Direccion,
+                    Direccion1 = a.Direccion1,
+                    Direccion2 = a.Direccion2,
+                    Email = a.Email,
+                    Tel = a.Tel,
+                    Cel = a.Cel,
+                    Sexo = a.Sexo,
+                    IdEstadoCivil = a.EstadoCivil.IdEstado,
+                    IdProfesion = a.Profesion.IdProfesion,
+                    IdCapacitacion = a.Capacitaciones.IdCapacitacion,
+                    IdCorporativo = a.LiderazgoCorporativo.IdCorporativo,
+                }).ToList();
+            return View(result);
         }
 
         // GET: Pastores/Details/5
@@ -148,5 +174,18 @@ namespace CampDios.Controllers
             }
             base.Dispose(disposing);
         }
+
+        //Metodo para calcular la edad de las personas
+        private int ComputeAge(DateTime birthdate)
+        {
+            DateTime ahora = DateTime.Today;
+            int edad = ahora.Year - birthdate.Year;
+            if (birthdate > DateTime.Today.AddYears(-edad))
+            {
+                edad--;
+            }
+            return edad;
+        }
+
     }
 }
