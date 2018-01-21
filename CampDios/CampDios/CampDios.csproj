@@ -424,11 +424,6 @@
     <Content Include="Views\Iglesias\Details.cshtml" />
     <Content Include="Views\Iglesias\Edit.cshtml" />
     <Content Include="Views\Iglesias\Index.cshtml" />
-    <Content Include="Views\HistoriaEspirituals\Create.cshtml" />
-    <Content Include="Views\HistoriaEspirituals\Delete.cshtml" />
-    <Content Include="Views\HistoriaEspirituals\Details.cshtml" />
-    <Content Include="Views\HistoriaEspirituals\Edit.cshtml" />
-    <Content Include="Views\HistoriaEspirituals\Index.cshtml" />
     <Content Include="Views\Zonas\Create.cshtml" />
     <Content Include="Views\Zonas\Delete.cshtml" />
     <Content Include="Views\Zonas\Details.cshtml" />
@@ -485,6 +480,11 @@
     <Content Include="Views\Pastores\Details.cshtml" />
     <Content Include="Views\Pastores\Edit.cshtml" />
     <Content Include="Views\Pastores\Index.cshtml" />
+    <Content Include="Views\HistoriaEspirituals\Create.cshtml" />
+    <Content Include="Views\HistoriaEspirituals\Delete.cshtml" />
+    <Content Include="Views\HistoriaEspirituals\Details.cshtml" />
+    <Content Include="Views\HistoriaEspirituals\Edit.cshtml" />
+    <Content Include="Views\HistoriaEspirituals\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

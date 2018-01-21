@@ -16,7 +16,6 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: HistoriaEspirituals
-        [Authorize]
         public ActionResult Index()
         {
             var historiaEspiritual = db.HistoriaEspiritual.Include(h => h.Iglesia).Include(h => h.Miembros);

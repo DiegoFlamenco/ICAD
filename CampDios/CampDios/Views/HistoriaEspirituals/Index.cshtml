@@ -13,29 +13,22 @@
 <table class="table">
     <tr>
         <th>
-            Miembro
-            <!--@Html.DisplayNameFor(model => model.Miembros.Nombres)-->
-        </th>
-        <th>
             @Html.DisplayNameFor(model => model.FechaConversion)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.FechaBautismo)
         </th>
         <th>
-            Iglesa de bautismo
-            <!--@Html.DisplayNameFor(model => model.Iglesia.Nombre)-->
-        </th> 
-        <th></th>
-        <th>Opciones</th>
+            @Html.DisplayNameFor(model => model.Iglesia.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Miembros.Nombres)
+        </th>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Miembros.Nombres)
-        </td>
         <td>
             @Html.DisplayFor(modelItem => item.FechaConversion)
         </td>
@@ -44,10 +37,13 @@
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Iglesia.Nombre)
-        </td> 
-        <td>@Html.ActionLink("Editar", "Edit", new { id = item.IdMiembro }, new { @class = "btn btn-success" })</td>
-        <td>@Html.ActionLink("Detalles", "Details", null, new { id = item.IdMiembro }, new { @class = "btn btn-info" })</td>
-        <td>@Html.ActionLink("Borrar", "Delete", null, new { id = item.IdMiembro }, new { @class = "btn btn-danger" })</td> 
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Miembros.Nombres)
+        </td>
+             <td>@Html.ActionLink("Editar", "Edit", new { id = item.IdHistoria }, new { @class = "btn btn-success" })</td>
+        <td>@Html.ActionLink("Detalles", "Details", null, new { id = item.IdHistoria }, new { @class = "btn btn-info" })</td>
+        <td>@Html.ActionLink("Borrar", "Delete", null, new { id = item.IdHistoria }, new { @class = "btn btn-danger" })</td> 
     </tr>
 }
 

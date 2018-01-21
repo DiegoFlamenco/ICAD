@@ -7,16 +7,10 @@
 <center><h2>Historia Espiritual - Borrar</h2></center>
 
 <h3>¿Esta seguro que desea borrar esta historia espiritual?</h3>
-<div> 
+<div>
+    <h4>HistoriaEspiritual</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Miembros.Nombres)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Miembros.Nombres)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.FechaConversion)
         </dt>
@@ -39,10 +33,20 @@
 
         <dd>
             @Html.DisplayFor(model => model.Iglesia.Nombre)
-        </dd> 
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Miembros.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Miembros.Nombres)
+        </dd>
+
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

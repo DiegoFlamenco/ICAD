@@ -6,16 +6,10 @@
 
 <center><h2>Historia Espiritual - Detalles</h2></center>
 
-<div> 
+<div>
+    <h4>HistoriaEspiritual</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Miembros.Nombres)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Miembros.Nombres)
-        </dd>
         <dt>
             @Html.DisplayNameFor(model => model.FechaConversion)
         </dt>
@@ -38,7 +32,16 @@
 
         <dd>
             @Html.DisplayFor(model => model.Iglesia.Nombre)
-        </dd> 
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Miembros.Nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Miembros.Nombres)
+        </dd>
+
     </dl>
 </div>
 <p>
