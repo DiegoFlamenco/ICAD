@@ -8,7 +8,8 @@ namespace System.Web.Mvc
 {
     public class AuthorizeUserAccesLevel : AuthorizeAttribute
     {
-        public string UserRole { get; set; }
+        public bool UserRole { get; set; }
+
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
             CampDiosEntities db = new CampDiosEntities();
@@ -17,10 +18,21 @@ namespace System.Web.Mvc
             {
                 return false;
             }
-            string currentUser = HttpContext.Current.User.Identity.Name.ToString();
+
+            /*string currentUser = HttpContext.Current.User.Identity.Name.ToString();
             GetUserAction_Result res = db.GetUserAction(currentUser).FirstOrDefault();
             string CurrentUserLogin = res.Login;
-            if (this.UserRole.Contains(CurrentUserLogin))
+            */
+
+            //var usr = db.Usuarios.Where(u => u.Login == user.Login && u.Contraseña == user.Contraseña).FirstOrDefault();
+
+
+
+            string currentUser = HttpContext.Current.User.Identity.Name.ToString();
+
+            var res = db.Usuarios_Opciones.Where(u => u.Edicion == UserRole && u.Usuarios.Login == currentUser).FirstOrDefault();
+
+            if (res != null)
             {
                 return true;
             }

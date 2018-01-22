@@ -10,7 +10,7 @@ using CampDios.Modelos;
 
 namespace CampDios.Controllers
 {
-    [Authorize]
+    
     public class PastoresController : Controller
     {
         private CampDiosEntities db = new CampDiosEntities();
@@ -48,6 +48,7 @@ namespace CampDios.Controllers
             return View(result);
         }
 
+        
         // GET: Pastores/Details/5
         public ActionResult Details(int? id)
         {
@@ -98,6 +99,7 @@ namespace CampDios.Controllers
             return View(pastores);
         }
 
+        [AuthorizeUserAccesLevel(UserRole = true)]
         // GET: Pastores/Edit/5
         public ActionResult Edit(int? id)
         {

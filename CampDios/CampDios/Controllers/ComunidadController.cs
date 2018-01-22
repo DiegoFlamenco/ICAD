@@ -17,7 +17,7 @@ namespace CampDios.Controllers
 
         // GET: Comunidad
         //[Authorize]
-        [AuthorizeUserAccesLevel(UserRole = "admin")]
+        //[AuthorizeUserAccesLevel(UserRole = "admin")]
         public ActionResult Index()
         {
             var comunidad = db.Comunidad.Include(c => c.Miembros).Include(c => c.Zona);
