@@ -30,7 +30,7 @@ namespace System.Web.Mvc
 
             string currentUser = HttpContext.Current.User.Identity.Name.ToString();
 
-            var res = db.Usuarios_Opciones.Where(u => u.Edicion == UserRole && u.Usuarios.Login == currentUser).FirstOrDefault();
+            var res = db.Usuarios_Opciones.Where(u => u.Edicion == UserRole && u.Usuarios.Login == currentUser && u.Opciones.Nombre_Opciones == "Pastores").FirstOrDefault();
 
             if (res != null)
             {
