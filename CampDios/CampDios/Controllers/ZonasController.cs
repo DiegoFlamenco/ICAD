@@ -16,7 +16,7 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: Zonas
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Zona")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Zona", Permiso = "Lectura")]
         public ActionResult Index()
         {
             var zona = db.Zona.Include(z => z.Iglesia).Include(z => z.Pastores);
@@ -24,7 +24,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Zonas/Details/5
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Zona")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Zona", Permiso = "Lectura")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -40,7 +40,7 @@ namespace CampDios.Controllers
         }
 
 
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Zona")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Zona", Permiso = "Lectura")]
         public ActionResult ComunidadDetalle(int? id)
         {        
             var comunidad = db.Comunidad.Where(c => c.IdZona == id);
@@ -48,7 +48,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Zonas/Create
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Zona")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Zona", Permiso = "Escritura")]
         public ActionResult Create()
         {
             ViewBag.IdIglesia = new SelectList(db.Iglesia, "IdIglesia", "Nombre");
@@ -77,7 +77,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Zonas/Edit/5
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Zona")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Zona", Permiso = "Edicion")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -113,7 +113,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Zonas/Delete/5
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Zonas")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Zonas", Permiso = "Edicion")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -16,7 +16,7 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: Miembros
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros", Permiso = "Lectura")]
         public ActionResult Index()
         {
             var result = db.Miembros
@@ -73,7 +73,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Miembros/Details/5
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros", Permiso = "Lectura")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -89,7 +89,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Miembros/Create
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros", Permiso = "Escritura")]
         public ActionResult Create()
         {
             ViewBag.IdCapacitacion = new SelectList(db.Capacitaciones, "IdCapacitacion", "Nombre");
@@ -130,7 +130,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Miembros/Edit/5
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros", Permiso = "Edicion")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -178,7 +178,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Miembros/Delete/5
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros", Permiso = "Edicion")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

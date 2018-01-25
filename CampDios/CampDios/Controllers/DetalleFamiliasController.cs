@@ -83,7 +83,7 @@ namespace CampDios.Controllers
         }
 
         // GET: DetalleFamilias/Edit/5
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Parentesco")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Parentesco", Permiso = "Edicion")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -123,7 +123,7 @@ namespace CampDios.Controllers
         }
 
         // GET: DetalleFamilias/Delete/5
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Parentesco")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Parentesco", Permiso = "Edicion")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
