@@ -16,14 +16,15 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: Comunidad
-        //[Authorize]
-        //[AuthorizeUserAccesLevel(UserRole = "admin")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad")]
         public ActionResult Index()
         {
             var comunidad = db.Comunidad.Include(c => c.Miembros).Include(c => c.Zona);
             return View(comunidad.ToList());
         }
 
+
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad")]
         // GET: Comunidad/Details/5
         public ActionResult Details(int? id)
         {
@@ -39,7 +40,8 @@ namespace CampDios.Controllers
             return View(comunidad);
         }
 
-       public ActionResult GrupoDetalle(int? id)
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad")]
+        public ActionResult GrupoDetalle(int? id)
         {
             var grupo = db.Grupo.Where(g => g.IdComunidad == id);
             return View(grupo);
@@ -47,6 +49,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Comunidad/Create
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad")]
         public ActionResult Create()
         {
             /*var result = db.Database.SqlQuery<seleccionar_lider_Result1>("exec seleccionar_lider"); //llamando al procedimiento almacenado "seleccionar_lider"
@@ -76,7 +79,8 @@ namespace CampDios.Controllers
             ViewBag.IdZona = new SelectList(db.Zona, "IdZona", "Nombre", comunidad.IdZona);
             return View(comunidad);
         }
-
+        
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad")]
         // GET: Comunidad/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -111,7 +115,8 @@ namespace CampDios.Controllers
             ViewBag.IdZona = new SelectList(db.Zona, "IdZona", "Nombre", comunidad.IdZona);
             return View(comunidad);
         }
-
+        
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad")]
         // GET: Comunidad/Delete/5
         public ActionResult Delete(int? id)
         {

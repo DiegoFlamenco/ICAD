@@ -16,6 +16,7 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: DetalleFamilias
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "DetalleFamilias")]
         public ActionResult Index()
         {
             var detalleFamilia = db.DetalleFamilia.Include(d => d.Miembros).Include(d => d.Miembros1).Include(d => d.Parentescos);
@@ -23,6 +24,7 @@ namespace CampDios.Controllers
         }
 
         // GET: DetalleFamilias/Details/5
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "DetalleFamilias")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,6 +40,7 @@ namespace CampDios.Controllers
         }
 
         // GET: DetalleFamilias/Create
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "DetalleFamilias")]
         public ActionResult Create()
         {
            
@@ -80,6 +83,7 @@ namespace CampDios.Controllers
         }
 
         // GET: DetalleFamilias/Edit/5
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "DetalleFamilias")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -119,6 +123,7 @@ namespace CampDios.Controllers
         }
 
         // GET: DetalleFamilias/Delete/5
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "DetalleFamilias")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -15,7 +15,7 @@ namespace CampDios.Controllers
     {
         private CampDiosEntities db = new CampDiosEntities();
         // GET: Iglesias
-        //[AuthorizeUserAccesLevel (UserRole = "user")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Iglesias")]
         public ActionResult Index()
         {
             var iglesia = db.Iglesia.Include(i => i.Miembros);
@@ -23,6 +23,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Iglesias/Details/5
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Iglesias")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,12 +38,15 @@ namespace CampDios.Controllers
             return View(iglesia);
         }
 
+
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Iglesias")]
         public ActionResult ZonaDetalle(int? id)
         {
             var zona = db.Zona.Where(z => z.IdIglesia == id);
             return View(zona);
         }
-
+        
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Iglesias")]
         public ActionResult MiembrosDetalle(int? id)
         {
             var miembro = db.Miembros.Where(m => m.IdIglesia == id);
@@ -51,6 +55,7 @@ namespace CampDios.Controllers
 
 
         // GET: Iglesias/Create
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Iglesias")]
         public ActionResult Create()
         {
             
@@ -77,6 +82,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Iglesias/Edit/5
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Iglesias")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -110,6 +116,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Iglesias/Delete/5
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Iglesias")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

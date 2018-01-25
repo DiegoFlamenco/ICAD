@@ -16,12 +16,14 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: Modulos
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Modulos")]
         public ActionResult Index()
         {
             return View(db.Modulos.ToList());
         }
 
         // GET: Modulos/Details/5
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Modulos")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Modulos/Create
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Modulos")]
         public ActionResult Create()
         {
             return View();
@@ -60,6 +63,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Modulos/Edit/5
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Modulos")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -91,6 +95,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Modulos/Delete/5
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Modulos")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

@@ -16,12 +16,14 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: Usuarios
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Usuarios")]
         public ActionResult Index()
         {
             return View(db.Usuarios.ToList());
         }
 
         // GET: Usuarios/Details/5
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Usuarios")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,6 +39,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Usuarios/Create
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Usuarios")]
         public ActionResult Create()
         {
             ViewBag.Miembro_Id = new SelectList(db.Miembros, "IdMiembro", "Nombres");
@@ -61,6 +64,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Usuarios/Edit/5
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Usuarios")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -93,7 +97,8 @@ namespace CampDios.Controllers
             return View(usuarios);
         }
 
-        // GET: Usuarios/Delete/5
+        // GET: Usuarios/Delete/
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Usuarios")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

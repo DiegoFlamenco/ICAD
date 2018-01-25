@@ -15,6 +15,7 @@ namespace CampDios.Controllers
     {
         private CampDiosEntities db = new CampDiosEntities();
 
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Pastores")]
         // GET: Pastores
         public ActionResult Index()
         {
@@ -48,7 +49,7 @@ namespace CampDios.Controllers
             return View(result);
         }
 
-        
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Pastores")]
         // GET: Pastores/Details/5
         public ActionResult Details(int? id)
         {
@@ -64,6 +65,7 @@ namespace CampDios.Controllers
             return View(pastores);
         }
 
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Pastores")]
         // GET: Pastores/Create
         public ActionResult Create()
         {
@@ -143,6 +145,7 @@ namespace CampDios.Controllers
             return View(pastores);
         }
 
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Pastores")]
         // GET: Pastores/Delete/5
         public ActionResult Delete(int? id)
         {

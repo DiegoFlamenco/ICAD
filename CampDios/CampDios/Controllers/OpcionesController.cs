@@ -16,6 +16,7 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: Opciones
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Opciones")]
         public ActionResult Index()
         {
             var opciones = db.Opciones.Include(o => o.Modulos);
@@ -23,6 +24,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Opciones/Details/5
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Opciones")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,6 +40,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Opciones/Create
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Opciones")]
         public ActionResult Create()
         {
             ViewBag.Modulos_Modulos_Id = new SelectList(db.Modulos, "Modulos_Id", "Nombre_Modulos");
@@ -63,6 +66,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Opciones/Edit/5
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Opciones")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -96,6 +100,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Opciones/Delete/5
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Opciones")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

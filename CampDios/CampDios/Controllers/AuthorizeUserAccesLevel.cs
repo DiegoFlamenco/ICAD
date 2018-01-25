@@ -19,16 +19,7 @@ namespace System.Web.Mvc
             {
                 return false;
             }
-
-            /*string currentUser = HttpContext.Current.User.Identity.Name.ToString();
-            GetUserAction_Result res = db.GetUserAction(currentUser).FirstOrDefault();
-            string CurrentUserLogin = res.Login;
-            */
-
-            //var usr = db.Usuarios.Where(u => u.Login == user.Login && u.Contraseña == user.Contraseña).FirstOrDefault();
-
-
-
+            
             string currentUser = HttpContext.Current.User.Identity.Name.ToString();
 
             var res = db.Usuarios_Opciones.Where(u => u.Edicion == UserRole && u.Usuarios.Login == currentUser && u.Opciones.Nombre_Opciones == Vista).FirstOrDefault();
