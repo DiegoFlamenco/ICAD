@@ -99,7 +99,7 @@ namespace CampDios.Controllers
             return View(pastores);
         }
 
-        [AuthorizeUserAccesLevel(UserRole = true)]
+        [AuthorizeUserAccesLevel(UserRole = true,Vista = "Pastores" )]
         // GET: Pastores/Edit/5
         public ActionResult Edit(int? id)
         {

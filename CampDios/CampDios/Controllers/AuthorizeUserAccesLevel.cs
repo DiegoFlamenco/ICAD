@@ -9,6 +9,7 @@ namespace System.Web.Mvc
     public class AuthorizeUserAccesLevel : AuthorizeAttribute
     {
         public bool UserRole { get; set; }
+        public string Vista { get; set; }
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
@@ -30,7 +31,7 @@ namespace System.Web.Mvc
 
             string currentUser = HttpContext.Current.User.Identity.Name.ToString();
 
-            var res = db.Usuarios_Opciones.Where(u => u.Edicion == UserRole && u.Usuarios.Login == currentUser && u.Opciones.Nombre_Opciones == "Pastores").FirstOrDefault();
+            var res = db.Usuarios_Opciones.Where(u => u.Edicion == UserRole && u.Usuarios.Login == currentUser && u.Opciones.Nombre_Opciones == Vista).FirstOrDefault();
 
             if (res != null)
             {
