@@ -15,7 +15,7 @@ namespace CampDios.Controllers
     {
         private CampDiosEntities db = new CampDiosEntities();
 
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Pastores")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Pastores" , Permiso ="Lectura")]
         // GET: Pastores
         public ActionResult Index()
         {
@@ -49,7 +49,7 @@ namespace CampDios.Controllers
             return View(result);
         }
 
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Pastores")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Pastores", Permiso = "Lectura")]
         // GET: Pastores/Details/5
         public ActionResult Details(int? id)
         {
@@ -65,7 +65,7 @@ namespace CampDios.Controllers
             return View(pastores);
         }
 
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Pastores")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Pastores", Permiso = "Escritura")]
         // GET: Pastores/Create
         public ActionResult Create()
         {
@@ -101,7 +101,7 @@ namespace CampDios.Controllers
             return View(pastores);
         }
 
-        [AuthorizeUserAccesLevel(UserRole = true,Vista = "Pastores" )]
+        [AuthorizeUserAccesLevel(UserRole = true,Vista = "Pastores", Permiso = "Edicion" )]
         // GET: Pastores/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -145,7 +145,7 @@ namespace CampDios.Controllers
             return View(pastores);
         }
 
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Pastores")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Pastores", Permiso = "Edicion")]
         // GET: Pastores/Delete/5
         public ActionResult Delete(int? id)
         {

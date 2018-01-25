@@ -16,7 +16,7 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: Comunidad
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad", Permiso = "Lectura")]
         public ActionResult Index()
         {
             var comunidad = db.Comunidad.Include(c => c.Miembros).Include(c => c.Zona);
@@ -24,7 +24,7 @@ namespace CampDios.Controllers
         }
 
 
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad", Permiso = "Lectura")]
         // GET: Comunidad/Details/5
         public ActionResult Details(int? id)
         {
@@ -40,7 +40,7 @@ namespace CampDios.Controllers
             return View(comunidad);
         }
 
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad", Permiso = "Lectura")]
         public ActionResult GrupoDetalle(int? id)
         {
             var grupo = db.Grupo.Where(g => g.IdComunidad == id);
@@ -49,7 +49,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Comunidad/Create
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad", Permiso = "Escritura")]
         public ActionResult Create()
         {
             /*var result = db.Database.SqlQuery<seleccionar_lider_Result1>("exec seleccionar_lider"); //llamando al procedimiento almacenado "seleccionar_lider"
@@ -80,7 +80,7 @@ namespace CampDios.Controllers
             return View(comunidad);
         }
         
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad", Permiso = "Editar")]
         // GET: Comunidad/Edit/5
         public ActionResult Edit(int? id)
         {
@@ -116,7 +116,7 @@ namespace CampDios.Controllers
             return View(comunidad);
         }
         
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Comunidad", Permiso = "Edicion")]
         // GET: Comunidad/Delete/5
         public ActionResult Delete(int? id)
         {
