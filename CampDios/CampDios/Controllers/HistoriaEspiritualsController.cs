@@ -16,7 +16,7 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: HistoriaEspirituals
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "HistoriaEspirituals")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros")]
         public ActionResult Index()
         {
             var historiaEspiritual = db.HistoriaEspiritual.Include(h => h.Iglesia).Include(h => h.Miembros);
@@ -24,7 +24,7 @@ namespace CampDios.Controllers
         }
 
         // GET: HistoriaEspirituals/Details/5
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "HistoriaEspirituals")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -40,7 +40,7 @@ namespace CampDios.Controllers
         }
 
         // GET: HistoriaEspirituals/Create
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "HistoriaEspirituals")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros")]
         public ActionResult Create()
         {
             ViewBag.IglesiaBautismo = new SelectList(db.Iglesia, "IdIglesia", "Nombre");
@@ -68,7 +68,7 @@ namespace CampDios.Controllers
         }
 
         // GET: HistoriaEspirituals/Edit/5
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "HistoriaEspirituals")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -104,7 +104,7 @@ namespace CampDios.Controllers
         }
 
         // GET: HistoriaEspirituals/Delete/5
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "HistoriaEspirituals")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Miembros")]
         public ActionResult Delete(int? id)
         {
             if (id == null)

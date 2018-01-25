@@ -16,7 +16,7 @@ namespace CampDios.Controllers
         private CampDiosEntities db = new CampDiosEntities();
 
         // GET: Usuarios_Opciones
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Usuarios_Opciones")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Administrador")]
         public ActionResult Index()
         {
             var usuarios_Opciones = db.Usuarios_Opciones.Include(u => u.Opciones).Include(u => u.Usuarios);
@@ -24,7 +24,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Usuarios_Opciones/Details/5
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Usuarios_Opciones")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Administrador")]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -40,7 +40,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Usuarios_Opciones/Create
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Usuarios_Opciones")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Administrador")]
         public ActionResult Create()
         {
             ViewBag.Opciones_Opciones_Id = new SelectList(db.Opciones, "Opciones_Id", "Nombre_Opciones");
@@ -68,7 +68,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Usuarios_Opciones/Edit/5
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Usuarios_Opciones")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Administrador")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -104,7 +104,7 @@ namespace CampDios.Controllers
         }
 
         // GET: Usuarios_Opciones/Delete/5
-        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Usuarios_Opciones")]
+        [AuthorizeUserAccesLevel(UserRole = true, Vista = "Administrador")]
         public ActionResult Delete(int? id)
         {
             if (id == null)
